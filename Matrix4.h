@@ -1,6 +1,7 @@
 #ifndef MATRIX4_H
 #define MATRIX4_H
 
+#include <cassert>
 #include <string>
 
 class Vector3;
@@ -24,6 +25,7 @@ public:
     float get(int,int);
     
     Matrix4& operator=(Matrix4);
+    float* operator[](int);
     
     float* ptr();
     

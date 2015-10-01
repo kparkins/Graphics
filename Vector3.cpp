@@ -84,13 +84,17 @@ float Vector3::dot(Vector3 a) {
 
 Vector3 Vector3::cross(Vector3 a) {
     return Vector3(m[1] * a[2] - m[2] * a[1], 
-              0 - (m[0] * a[2] - m[2] * a[0]), 
+                  (m[2] * a[0] - m[0] * a[2]),
                    m[0] * a[1] - m[1] * a[0]);
 }
 
 float Vector3::angle(Vector3 a) {
-    //TODO case where magnitude is 0 / NaN
-    return acos(this->dot(a) / (this->magnitude() * a.magnitude()));
+    float m1 = this->magnitude();
+    float m2 = a.magnitude();
+    if (m1 > 0.f && m2 > 0.f) {
+        return acosf(this->dot(a) / (m1 * m2));
+    }
+    return 0.f;
 }
 
 float Vector3::magnitude(void) {
@@ -105,8 +109,7 @@ Vector3 Vector3::normalize(void) {
 }
 
 Vector4 Vector3::toVector4(float w) {
-    Vector4 b(m[0], m[1], m[2], w);
-    return b;
+    return Vector4(m[0], m[1], m[2], w);
 }
 
 void Vector3::print(std::string comment) {

@@ -49,7 +49,7 @@ Vector4 Vector4::subtract(Vector4& a) {
     return Vector4(m[0] - a[0], m[1] - a[1], m[2] - a[2], m[3] - a[3]);
 }
 
-Vector4 Vector4::operator - (Vector4 a) {
+Vector4 Vector4::operator-(Vector4 a) {
     return this->subtract(a);
 }
 

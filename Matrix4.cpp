@@ -47,8 +47,12 @@ float Matrix4::get(int column, int element) {
 }
 
 Matrix4& Matrix4::operator=(Matrix4 a) {
-    std::memcpy(m, a.m, sizeof(m));
+    memcpy(static_cast<void*>(&m), static_cast<void*>(&a), sizeof(m));
     return *this;
+}
+
+float* Matrix4::operator[](int i) {
+    return &m[i][0];
 }
 
 float* Matrix4::ptr() {
@@ -56,64 +60,78 @@ float* Matrix4::ptr() {
 }
 
 void Matrix4::identity() {
-    static const float ident[4][4]={{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
-    std::memcpy(m, ident, sizeof(m));
+    static const float ident[4][4] = {
+        {1,0,0,0},
+        {0,1,0,0},
+        {0,0,1,0},
+        {0,0,0,1}
+    };
+    memcpy(static_cast<void*>(&m), ident, sizeof(m));
 }
 
 Matrix4 Matrix4::multiply(Matrix4 a) {
-    Matrix4 b;
+    Matrix4 c;
     
-    //Implement a more performant Matrix * Matrix multiplication
-    
-    //The current implementation below is not very efficient:
-    //It allocates an additional 8 vectors on the stack and calls their constructors
-    //It also calls off to additional functions (which create even more vectors!)
-    //Which results in a lot of time being wasted on memory operations
-    //This is bad, really bad, ultra bad D:
-    
-    //Hint: Loops!
-    //Hint for the ambitious: SIMD!
-    
-    Vector4 row1(m[0][0], m[1][0], m[2][0], m[3][0]);
-    Vector4 row2(m[0][1], m[1][1], m[2][1], m[3][1]);
-    Vector4 row3(m[0][2], m[1][2], m[2][2], m[3][2]);
-    Vector4 row4(m[0][3], m[1][3], m[2][3], m[3][3]);
-    
-    Vector4 col1(a.m[0][0], a.m[0][1], a.m[0][2], a.m[0][3]);
-    Vector4 col2(a.m[1][0], a.m[1][1], a.m[1][2], a.m[1][3]);
-    Vector4 col3(a.m[2][0], a.m[2][1], a.m[2][2], a.m[2][3]);
-    Vector4 col4(a.m[3][0], a.m[3][1], a.m[3][2], a.m[3][3]);
-
-    b.set(row1.dot(col1), row2.dot(col1), row3.dot(col1), row4.dot(col1),
-             row1.dot(col2), row2.dot(col2), row3.dot(col2), row4.dot(col2),
-             row1.dot(col3), row2.dot(col3), row3.dot(col3), row4.dot(col3),
-             row1.dot(col4), row2.dot(col4), row3.dot(col4), row4.dot(col4) );
-
-    return b;
+    for (int row = 0; row < 4; ++row) {
+        for (int col = 0; col < 4; ++col) {
+            c[col][row] = m[col][0] * a[0][row] + m[col][1] * a[1][row] +
+                          m[col][2] * a[2][row] + m[col][3] * a[3][row];
+        }
+    }
+    return c;
 }
 
-Matrix4 Matrix4::operator * (Matrix4 a) {
+/* OLD IMPLEMENTATION
+ Matrix b;
+ this->print("m1");
+ a.print("m2");
+ 
+ Vector4 row1(m[0][0], m[1][0], m[2][0], m[3][0]);
+ Vector4 row2(m[0][1], m[1][1], m[2][1], m[3][1]);
+ Vector4 row3(m[0][2], m[1][2], m[2][2], m[3][2]);
+ Vector4 row4(m[0][3], m[1][3], m[2][3], m[3][3]);
+ 
+ Vector4 col1(a.m[0][0], a.m[0][1], a.m[0][2], a.m[0][3]);
+ Vector4 col2(a.m[1][0], a.m[1][1], a.m[1][2], a.m[1][3]);
+ Vector4 col3(a.m[2][0], a.m[2][1], a.m[2][2], a.m[2][3]);
+ Vector4 col4(a.m[3][0], a.m[3][1], a.m[3][2], a.m[3][3]);
+ 
+ b.set(row1.dot(col1), row2.dot(col1), row3.dot(col1), row4.dot(col1),
+ row1.dot(col2), row2.dot(col2), row3.dot(col2), row4.dot(col2),
+ row1.dot(col3), row2.dot(col3), row3.dot(col3), row4.dot(col3),
+ row1.dot(col4), row2.dot(col4), row3.dot(col4), row4.dot(col4) );
+ float* bptr = b.ptr();
+ float* cptr = c.ptr();
+ 
+ for(int i = 0; i < 16; ++i) {
+ assert(*bptr++ == *cptr++);
+ }
+ c.print("result ");
+ */
+
+Matrix4 Matrix4::operator*(Matrix4 a) {
     return multiply(a);
 }
 
 Vector4 Matrix4::multiply(Vector4 a) {
-    Vector4 b;
-    
-    //Implement Matrix * Vector4 multiplication
-    
+    Vector4 b(0.f, 0.f, 0.f, 0.f);
+    float* bptr = b.ptr();
+    for(int i = 0; i < 4; ++i) {
+        *bptr++ = m[i][0] * a[0] + m[i][1] * a[1] + m[i][2] * a[2] + m[i][3] * a[3];
+    }
     return b;
 }
 
-Vector4 Matrix4::operator * (Vector4 a) {
+Vector4 Matrix4::operator*(Vector4 a) {
     return multiply(a);
 }
 
 Vector3 Matrix4::multiply(Vector3 a) {
-    Vector3 b;
-    
-    //Implement Matrix * Vector3 multiplication
-    //Assume the 4th component is 0
-    
+    Vector3 b(0.f, 0.f, 0.f);
+    float* bptr = b.ptr();
+    for(int i = 0; i < 4; ++i) {
+        *bptr++ = m[i][0] * a[0] + m[i][1] * a[1] + m[i][2] * a[2];
+    }
     return b;
 }
 
