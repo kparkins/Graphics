@@ -35,7 +35,7 @@ public:
 
 protected:
     
-    float m[4];
+    __attribute__ ((aligned(16))) float m[4];
 
 };
 

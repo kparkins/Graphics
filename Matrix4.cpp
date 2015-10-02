@@ -72,35 +72,63 @@ void Matrix4::identity() {
 Matrix4 Matrix4::multiply(Matrix4 a) {
     Matrix4 b;
   
-    for (int row = 0; row < 4; ++row) {
+    /*for (int row = 0; row < 4; ++row) {
         for (int col = 0; col < 4; ++col) {
             b[col][row] = m[0][row] * a[col][0] +
                           m[1][row] * a[col][1] +
                           m[2][row] * a[col][2] +
                           m[3][row] * a[col][3];
         }
-    }
+    } */
     
- 
+    __m128 m0c = _mm_load_ps(m[0]);
+    __m128 m1c = _mm_load_ps(m[1]);
+    __m128 m2c = _mm_load_ps(m[2]);
+    __m128 m3c = _mm_load_ps(m[3]);
+    
+    
+    __m128 a0v = _mm_set1_ps(a[0][0]);
+    __m128 a1v = _mm_set1_ps(a[0][1]);
+    __m128 a2v = _mm_set1_ps(a[0][2]);
+    __m128 a3v = _mm_set1_ps(a[0][3]);
+    
+    __m128 r0 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
+                           _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
+    
+    _mm_store_ps(&b[0][0], r0);
+    
+    a0v = _mm_set1_ps(a[1][0]);
+    a1v = _mm_set1_ps(a[1][1]);
+    a2v = _mm_set1_ps(a[1][2]);
+    a3v = _mm_set1_ps(a[1][3]);
+    
+    __m128 r1 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
+                           _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
+    
+    _mm_store_ps(&b[1][0], r1);
+    
+    a0v = _mm_set1_ps(a[2][0]);
+    a1v = _mm_set1_ps(a[2][1]);
+    a2v = _mm_set1_ps(a[2][2]);
+    a3v = _mm_set1_ps(a[2][3]);
+    
+    __m128 r2 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
+                           _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
+    
+    _mm_store_ps(&b[2][0], r2);
+    
+    a0v = _mm_set1_ps(a[3][0]);
+    a1v = _mm_set1_ps(a[3][1]);
+    a2v = _mm_set1_ps(a[3][2]);
+    a3v = _mm_set1_ps(a[3][3]);
+    
+    __m128 r3 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
+                           _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
+    
+    _mm_store_ps(&b[3][0], r3);
     return b;
 }
 
-/*
- Vector4 row1(m[0][0], m[1][0], m[2][0], m[3][0]);
- Vector4 row2(m[0][1], m[1][1], m[2][1], m[3][1]);
- Vector4 row3(m[0][2], m[1][2], m[2][2], m[3][2]);
- Vector4 row4(m[0][3], m[1][3], m[2][3], m[3][3]);
- 
- Vector4 col1(a.m[0][0], a.m[0][1], a.m[0][2], a.m[0][3]);
- Vector4 col2(a.m[1][0], a.m[1][1], a.m[1][2], a.m[1][3]);
- Vector4 col3(a.m[2][0], a.m[2][1], a.m[2][2], a.m[2][3]);
- Vector4 col4(a.m[3][0], a.m[3][1], a.m[3][2], a.m[3][3]);
- 
- b.set(row1.dot(col1), row2.dot(col1), row3.dot(col1), row4.dot(col1),
- row1.dot(col2), row2.dot(col2), row3.dot(col2), row4.dot(col2),
- row1.dot(col3), row2.dot(col3), row3.dot(col3), row4.dot(col3),
- row1.dot(col4), row2.dot(col4), row3.dot(col4), row4.dot(col4) );
- */
 
 Matrix4 Matrix4::operator*(Matrix4 a) {
     return multiply(a);
@@ -108,10 +136,23 @@ Matrix4 Matrix4::operator*(Matrix4 a) {
 
 Vector4 Matrix4::multiply(Vector4 a) {
     Vector4 b(0.f, 0.f, 0.f, 0.f);
-    float* bptr = b.ptr();
+    /*float* bptr = b.ptr();
     for(int i = 0; i < 4; ++i) {
         *bptr++ = m[0][i] * a[0] + m[1][i] * a[1] + m[2][i] * a[2] + m[3][i] * a[3];
-    }
+    }*/
+    __m128 m0c = _mm_load_ps(m[0]);
+    __m128 m1c = _mm_load_ps(m[1]);
+    __m128 m2c = _mm_load_ps(m[2]);
+    __m128 m3c = _mm_load_ps(m[3]);
+    __m128 a0v = _mm_set1_ps(a[0]);
+    __m128 a1v = _mm_set1_ps(a[1]);
+    __m128 a2v = _mm_set1_ps(a[2]);
+    __m128 a3v = _mm_set1_ps(a[3]);
+    
+    __m128 result = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
+                               _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
+    _mm_store_ps(b.ptr(), result);
+    
     return b;
 }
 
@@ -121,10 +162,20 @@ Vector4 Matrix4::operator*(Vector4 a) {
 
 Vector3 Matrix4::multiply(Vector3 a) {
     Vector3 b(0.f, 0.f, 0.f);
-    float* bptr = b.ptr();
+   /* float* bptr = b.ptr();
     for(int i = 0; i < 3; ++i) {
         *bptr++ = m[0][i] * a[0] + m[1][i] * a[1] + m[2][i] * a[2];
-    }
+    }*/
+    
+    __m128 m0c = _mm_load_ps(m[0]);
+    __m128 m1c = _mm_load_ps(m[1]);
+    __m128 m2c = _mm_load_ps(m[2]);
+    __m128 a0v = _mm_set1_ps(a[0]);
+    __m128 a1v = _mm_set1_ps(a[1]);
+    __m128 a2v = _mm_set1_ps(a[2]);
+    
+    __m128 result = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)), _mm_mul_ps(m2c, a2v));
+    _mm_store_ps(b.ptr(), result);
     return b;
 }
 
@@ -200,7 +251,7 @@ Matrix4 Matrix4::makeScale(float s) {
 }
 
 Matrix4 Matrix4::makeScale(float sx, float sy, float sz) {
-    identity();
+    this->identity();
     
     //Configure this matrix to be a sclaing by sx, sy, sz
     m[0][0] *= sx;
@@ -211,7 +262,7 @@ Matrix4 Matrix4::makeScale(float sx, float sy, float sz) {
 }
 
 Matrix4 Matrix4::makeTranslate(float x, float y, float z) {
-    identity();
+    this->identity();
     
     //Configure this matrix to be a translation by vector 'a'
     m[3][0] = x;

@@ -1,2 +1,3 @@
 *.o
 cube
+*.DS_Store
