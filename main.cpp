@@ -42,6 +42,8 @@ int main(int argc, char *argv[]) {
     glutDisplayFunc(Window::displayCallback);
     glutReshapeFunc(Window::reshapeCallback);
     glutIdleFunc(Window::idleCallback);
+    glutKeyboardFunc(Window::keyCallback);
+    
     //Register the callback for the keyboard
     //Register the callback for the keyboard function keys
     //Register the callback for the mouse

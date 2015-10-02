@@ -60,10 +60,6 @@ public:
     
 protected:
     
-    //These are in column-major
-    //The first index is for the column, and the second is for the row
-    //Ex: m[2][1] is the 3rd column (index 2) and second element in that column (index 1)
-    //This is the matrix format used by OpenGL internally.
     float m[4][4];
     
 };

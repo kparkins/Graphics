@@ -99,7 +99,35 @@ void Cube::update(UpdateData& data) {
 void Cube::spin(float radians) {
     Matrix4 rotation;
     rotation.makeRotateY(radians);
-    
     toWorld = toWorld * rotation;
 }
 
+
+void Cube::spinY(float radians) {
+    Matrix4 rot;
+    rot.makeRotateY(radians);
+    toWorld = toWorld * rot;
+}
+void Cube::spinX(float radians) {
+    Matrix4 rot;
+    rot.makeRotateX(radians);
+    toWorld = toWorld * rot;
+}
+
+void Cube::spinZ(float radians) {
+    Matrix4 rot;
+    rot.makeRotateZ(radians);
+    toWorld = toWorld * rot;
+}
+
+void Cube::scale(float value) {
+    Matrix4 mat;
+    mat.makeScale(value);
+    toWorld = toWorld * mat;
+}
+
+void Cube::translate(Vector3 translate) {
+    Matrix4 trans;
+    trans.makeTranslate(translate);
+    toWorld = trans * toWorld;
+}

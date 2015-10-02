@@ -52,7 +52,7 @@ Matrix4& Matrix4::operator=(Matrix4 a) {
 }
 
 float* Matrix4::operator[](int i) {
-    return &m[i][0];
+    return m[i];
 }
 
 float* Matrix4::ptr() {
@@ -70,44 +70,35 @@ void Matrix4::identity() {
 }
 
 Matrix4 Matrix4::multiply(Matrix4 a) {
-    Matrix4 c;
-    
+    Matrix4 b;
+  
     for (int row = 0; row < 4; ++row) {
         for (int col = 0; col < 4; ++col) {
-            c[col][row] = m[col][0] * a[0][row] + m[col][1] * a[1][row] +
-                          m[col][2] * a[2][row] + m[col][3] * a[3][row];
+            b[col][row] = m[0][row] * a[col][0] +
+                          m[1][row] * a[col][1] +
+                          m[2][row] * a[col][2] +
+                          m[3][row] * a[col][3];
         }
     }
-    return c;
+    /*
+    Vector4 row1(m[0][0], m[1][0], m[2][0], m[3][0]);
+    Vector4 row2(m[0][1], m[1][1], m[2][1], m[3][1]);
+    Vector4 row3(m[0][2], m[1][2], m[2][2], m[3][2]);
+    Vector4 row4(m[0][3], m[1][3], m[2][3], m[3][3]);
+    
+    Vector4 col1(a.m[0][0], a.m[0][1], a.m[0][2], a.m[0][3]);
+    Vector4 col2(a.m[1][0], a.m[1][1], a.m[1][2], a.m[1][3]);
+    Vector4 col3(a.m[2][0], a.m[2][1], a.m[2][2], a.m[2][3]);
+    Vector4 col4(a.m[3][0], a.m[3][1], a.m[3][2], a.m[3][3]);
+    
+    b.set(row1.dot(col1), row2.dot(col1), row3.dot(col1), row4.dot(col1),
+          row1.dot(col2), row2.dot(col2), row3.dot(col2), row4.dot(col2),
+          row1.dot(col3), row2.dot(col3), row3.dot(col3), row4.dot(col3),
+          row1.dot(col4), row2.dot(col4), row3.dot(col4), row4.dot(col4) );
+    */
+    return b;
 }
 
-/* OLD IMPLEMENTATION
- Matrix b;
- this->print("m1");
- a.print("m2");
- 
- Vector4 row1(m[0][0], m[1][0], m[2][0], m[3][0]);
- Vector4 row2(m[0][1], m[1][1], m[2][1], m[3][1]);
- Vector4 row3(m[0][2], m[1][2], m[2][2], m[3][2]);
- Vector4 row4(m[0][3], m[1][3], m[2][3], m[3][3]);
- 
- Vector4 col1(a.m[0][0], a.m[0][1], a.m[0][2], a.m[0][3]);
- Vector4 col2(a.m[1][0], a.m[1][1], a.m[1][2], a.m[1][3]);
- Vector4 col3(a.m[2][0], a.m[2][1], a.m[2][2], a.m[2][3]);
- Vector4 col4(a.m[3][0], a.m[3][1], a.m[3][2], a.m[3][3]);
- 
- b.set(row1.dot(col1), row2.dot(col1), row3.dot(col1), row4.dot(col1),
- row1.dot(col2), row2.dot(col2), row3.dot(col2), row4.dot(col2),
- row1.dot(col3), row2.dot(col3), row3.dot(col3), row4.dot(col3),
- row1.dot(col4), row2.dot(col4), row3.dot(col4), row4.dot(col4) );
- float* bptr = b.ptr();
- float* cptr = c.ptr();
- 
- for(int i = 0; i < 16; ++i) {
- assert(*bptr++ == *cptr++);
- }
- c.print("result ");
- */
 
 Matrix4 Matrix4::operator*(Matrix4 a) {
     return multiply(a);
@@ -117,7 +108,7 @@ Vector4 Matrix4::multiply(Vector4 a) {
     Vector4 b(0.f, 0.f, 0.f, 0.f);
     float* bptr = b.ptr();
     for(int i = 0; i < 4; ++i) {
-        *bptr++ = m[i][0] * a[0] + m[i][1] * a[1] + m[i][2] * a[2] + m[i][3] * a[3];
+        *bptr++ = m[0][i] * a[0] + m[1][i] * a[1] + m[2][i] * a[2] + m[3][i] * a[3];
     }
     return b;
 }
@@ -130,19 +121,22 @@ Vector3 Matrix4::multiply(Vector3 a) {
     Vector3 b(0.f, 0.f, 0.f);
     float* bptr = b.ptr();
     for(int i = 0; i < 4; ++i) {
-        *bptr++ = m[i][0] * a[0] + m[i][1] * a[1] + m[i][2] * a[2];
+        *bptr++ = m[0][i] * a[0] + m[1][i] * a[1] + m[2][i] * a[2];
     }
     return b;
 }
 
-Vector3 Matrix4::operator * (Vector3 a) {
+Vector3 Matrix4::operator*(Vector3 a) {
     return multiply(a);
 }
 
 Matrix4 Matrix4::makeRotateX(float angle) {
     identity();
     
-    //Configure this matrix to be a rotation about the X-Axis by 'angle' radians
+    m[1][1] = cos(angle);
+    m[1][2] = sin(angle);
+    m[2][1] = -sin(angle);
+    m[2][2] = cos(angle);
     
     return *this;
 }
@@ -162,6 +156,10 @@ Matrix4 Matrix4::makeRotateZ(float angle) {
     identity();
     
     //Configure this matrix to be a rotation about the Z-Axis by 'angle' radians
+    m[0][0] = cos(angle);
+    m[0][1] = sin(angle);
+    m[1][0] = -sin(angle);
+    m[1][1] = cos(angle);
     
     return *this;
 }
@@ -182,6 +180,9 @@ Matrix4 Matrix4::makeScale(float sx, float sy, float sz) {
     identity();
     
     //Configure this matrix to be a sclaing by sx, sy, sz
+    m[0][0] *= sx;
+    m[1][1] *= sy;
+    m[2][2] *= sz;
 
     return *this;
 }
@@ -190,6 +191,9 @@ Matrix4 Matrix4::makeTranslate(float x, float y, float z) {
     identity();
     
     //Configure this matrix to be a translation by vector 'a'
+    m[3][0] = x;
+    m[3][1] = y;
+    m[3][2] = z;
     
     return *this;
 }

@@ -13,6 +13,7 @@
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
+float Window::spinValue = .005;
 
 
 void Window::initialize(void) {
@@ -20,6 +21,7 @@ void Window::initialize(void) {
     Vector4 lightPos(0.0, 10.0, 15.0, 1.0);
     Globals::light.position = lightPos;
     Globals::light.quadraticAttenuation = 0.02;
+    Window::spinValue = .005;
     
     //Initialize cube matrix:
     Globals::cube.toWorld.identity();
@@ -37,7 +39,7 @@ void Window::idleCallback() {
     Globals::updateData.dt = 1.0/60.0;// 60 fps
     
     //Rotate cube; if it spins too fast try smaller values and vice versa
-    Globals::cube.spin(0.0005);
+    Globals::cube.spin(spinValue);
     
     //Call the update function on cube
     Globals::cube.update(Globals::updateData);
@@ -95,6 +97,42 @@ void Window::displayCallback() {
     glutSwapBuffers();
 }
 
+void Window::keyCallback(unsigned char key, int x, int y) {
+    switch (key) {
+        case 'x':
+            Globals::cube.translate(Vector3(1.f,0.f,0.f));
+            break;
+        case 'X':
+            Globals::cube.translate(Vector3(-1.f,0.f,0.f));
+            break;
+        case 'y':
+            Globals::cube.translate(Vector3(0.f,1.f,0.f));
+            break;
+        case 'Y':
+            Globals::cube.translate(Vector3(0.f,-1.f,0.f));
+            break;
+        case 'z':
+            Globals::cube.translate(Vector3(0.f,0.f,1.f));
+            break;
+        case 'Z':
+            Globals::cube.translate(Vector3(0.f,0.f,-1.f));
+            break;
+        case 'c':
+            Window::spinValue *= -1.f;
+            break;
+        case 'r':
+            Globals::cube.toWorld.identity();
+            break;
+        case 's':
+            Globals::cube.scale(.8);
+            break;
+        case 'S':
+            Globals::cube.scale(1.2);
+            break;
+        default:
+            break;
+    }
+}
 
 //TODO: Keyboard callbacks!
 
