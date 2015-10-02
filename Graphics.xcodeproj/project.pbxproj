@@ -46,6 +46,9 @@
 		2702E7381BBEFEBF00E880A3 /* Matrix4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix4.cpp; sourceTree = SOURCE_ROOT; };
 		2702E7391BBEFEBF00E880A3 /* Vector3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector3.cpp; sourceTree = SOURCE_ROOT; };
 		2702E73A1BBEFEBF00E880A3 /* Vector4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector4.cpp; sourceTree = SOURCE_ROOT; };
+		2702E73E1BBF071F00E880A3 /* Matrix4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Matrix4.inl; sourceTree = SOURCE_ROOT; };
+		2702E73F1BBF071F00E880A3 /* Vector3.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector3.inl; sourceTree = SOURCE_ROOT; };
+		2702E7401BBF071F00E880A3 /* Vector4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector4.inl; sourceTree = SOURCE_ROOT; };
 		D40AFA7E1AD1E2E7008D61CC /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = SOURCE_ROOT; };
 		D40AFA7F1AD1E2E7008D61CC /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = SOURCE_ROOT; };
 		D42FFC1E1AAFC90E006F8E9C /* Graphics */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graphics; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,10 +152,13 @@
 				D40AFA7E1AD1E2E7008D61CC /* Shader.cpp */,
 				D40AFA7F1AD1E2E7008D61CC /* Shader.h */,
 				2702E73A1BBEFEBF00E880A3 /* Vector4.cpp */,
+				2702E7401BBF071F00E880A3 /* Vector4.inl */,
 				D42FFC511AAFCF71006F8E9C /* Vector4.h */,
 				2702E7391BBEFEBF00E880A3 /* Vector3.cpp */,
+				2702E73F1BBF071F00E880A3 /* Vector3.inl */,
 				D42FFC3C1AAFCF71006F8E9C /* Vector3.h */,
 				2702E7381BBEFEBF00E880A3 /* Matrix4.cpp */,
+				2702E73E1BBF071F00E880A3 /* Matrix4.inl */,
 				D42FFC2B1AAFCC9C006F8E9C /* Matrix4.h */,
 				D4FEE23D1AC895C6006CF92D /* MathTestBench.cpp */,
 				D4FEE23E1AC895C6006CF92D /* MathTestBench.h */,

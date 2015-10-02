@@ -17,49 +17,42 @@ public:
     Vector3(float, float, float);
     virtual ~Vector3(void);
     
-    float* ptr();
+    inline void set(float, float, float);
+    inline void set(int index, float value);
     
-    void set(float, float, float);
-    void set(int index, float value);
-    float& operator[](int);
+    inline float& x();
+    inline float& y();
+    inline float& z();
     
-    Vector3 add(Vector3);
-    Vector3 operator+(Vector3);
+    inline float& operator[](int);
+    inline float* ptr();
     
-    Vector3 subtract(Vector3);
-    Vector3 operator-(Vector3);
+    inline Vector3 add(Vector3);
+    inline Vector3 operator+(Vector3);
     
-    Vector3 negate(void);
-    Vector3 scale(float);
-    Vector3 multiply(float);
-    Vector3 operator*(float);
-    Vector3 multiply(Vector3);
-    Vector3 operator*(Vector3);
+    inline Vector3 subtract(Vector3);
+    inline Vector3 operator-(Vector3);
     
-    float dot(Vector3);
-    Vector3 cross(Vector3);
+    inline Vector3 negate(void);
+    inline Vector3 scale(float);
+    inline Vector3 multiply(float);
+    inline Vector3 operator*(float);
+    inline Vector3 multiply(Vector3);
+    inline Vector3 operator*(Vector3);
     
-    float angle(Vector3);
+    inline float dot(Vector3);
+    inline Vector3 cross(Vector3);
     
-    float magnitude(void);
+    inline float angle(Vector3);
     
-    Vector3 normalize(void);
+    inline float magnitude(void);
+    
+    inline Vector3 normalize(void);
     
     Vector4 toVector4(float);
     
-    void print(std::string);
-    
-    inline float& x() {
-        return m[0];
-    }
-    
-    inline float& y() {
-        return m[1];
-    }
-    
-    inline float& z() {
-        return m[2];
-    }
+    inline void print(std::string);
+
 
 protected:
     
@@ -67,4 +60,5 @@ protected:
     
 };
 
+#include "Vector3.inl"
 #endif

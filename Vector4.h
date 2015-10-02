@@ -16,30 +16,35 @@ public:
     Vector4(float, float, float);
     Vector4(float, float, float, float);
     
-    float* ptr();
-    float& operator[](int);
+    inline float& x();
+    inline float& y();
+    inline float& z();
+    inline float& w();
+    inline float* ptr();
+    inline float& operator[](int);
     
-    void set(float,float,float,float);
+    inline void set(float,float,float,float);
     
     
-    Vector4 add(Vector4&);
-    Vector4 operator+(Vector4);
+    inline Vector4 add(Vector4&);
+    inline Vector4 operator+(Vector4);
     
-    Vector4 subtract(Vector4&);
-    Vector4 operator-(Vector4);
+    inline Vector4 subtract(Vector4&);
+    inline Vector4 operator-(Vector4);
     
-    Vector4 dehomogenize();
+    inline Vector4 dehomogenize();
     
     Vector3 toVector3();
     
-    float dot(Vector4);
+    inline float dot(Vector4);
     
-    void print(std::string);
-
+    inline void print(std::string);
+    
 protected:
     
     __attribute__ ((aligned(16))) float m[4];
 
 };
 
+#include "Vector4.inl"
 #endif
