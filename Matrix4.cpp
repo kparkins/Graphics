@@ -80,25 +80,25 @@ Matrix4 Matrix4::multiply(Matrix4 a) {
                           m[3][row] * a[col][3];
         }
     }
-    /*
-    Vector4 row1(m[0][0], m[1][0], m[2][0], m[3][0]);
-    Vector4 row2(m[0][1], m[1][1], m[2][1], m[3][1]);
-    Vector4 row3(m[0][2], m[1][2], m[2][2], m[3][2]);
-    Vector4 row4(m[0][3], m[1][3], m[2][3], m[3][3]);
-    
-    Vector4 col1(a.m[0][0], a.m[0][1], a.m[0][2], a.m[0][3]);
-    Vector4 col2(a.m[1][0], a.m[1][1], a.m[1][2], a.m[1][3]);
-    Vector4 col3(a.m[2][0], a.m[2][1], a.m[2][2], a.m[2][3]);
-    Vector4 col4(a.m[3][0], a.m[3][1], a.m[3][2], a.m[3][3]);
-    
-    b.set(row1.dot(col1), row2.dot(col1), row3.dot(col1), row4.dot(col1),
-          row1.dot(col2), row2.dot(col2), row3.dot(col2), row4.dot(col2),
-          row1.dot(col3), row2.dot(col3), row3.dot(col3), row4.dot(col3),
-          row1.dot(col4), row2.dot(col4), row3.dot(col4), row4.dot(col4) );
-    */
     return b;
 }
 
+/*
+ Vector4 row1(m[0][0], m[1][0], m[2][0], m[3][0]);
+ Vector4 row2(m[0][1], m[1][1], m[2][1], m[3][1]);
+ Vector4 row3(m[0][2], m[1][2], m[2][2], m[3][2]);
+ Vector4 row4(m[0][3], m[1][3], m[2][3], m[3][3]);
+ 
+ Vector4 col1(a.m[0][0], a.m[0][1], a.m[0][2], a.m[0][3]);
+ Vector4 col2(a.m[1][0], a.m[1][1], a.m[1][2], a.m[1][3]);
+ Vector4 col3(a.m[2][0], a.m[2][1], a.m[2][2], a.m[2][3]);
+ Vector4 col4(a.m[3][0], a.m[3][1], a.m[3][2], a.m[3][3]);
+ 
+ b.set(row1.dot(col1), row2.dot(col1), row3.dot(col1), row4.dot(col1),
+ row1.dot(col2), row2.dot(col2), row3.dot(col2), row4.dot(col2),
+ row1.dot(col3), row2.dot(col3), row3.dot(col3), row4.dot(col3),
+ row1.dot(col4), row2.dot(col4), row3.dot(col4), row4.dot(col4) );
+ */
 
 Matrix4 Matrix4::operator*(Matrix4 a) {
     return multiply(a);
@@ -120,7 +120,7 @@ Vector4 Matrix4::operator*(Vector4 a) {
 Vector3 Matrix4::multiply(Vector3 a) {
     Vector3 b(0.f, 0.f, 0.f);
     float* bptr = b.ptr();
-    for(int i = 0; i < 4; ++i) {
+    for(int i = 0; i < 3; ++i) {
         *bptr++ = m[0][i] * a[0] + m[1][i] * a[1] + m[2][i] * a[2];
     }
     return b;
@@ -166,9 +166,8 @@ Matrix4 Matrix4::makeRotateZ(float angle) {
 
 Matrix4 Matrix4::makeRotateArbitrary(Vector3 a, float angle) {
     identity();
-    
     a = a.normalize();
-    //Configure this matrix to be a rotation about the 'a' axis by 'angle' radians
+    
     float cos0 = cos(angle);
     float sin0 = sin(angle);
     float omcos0 = 1 - cos0;
