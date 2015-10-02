@@ -8,3 +8,4 @@ Light Globals::light;
 
 DrawData Globals::drawData;
 UpdateData Globals::updateData;
+Sphere Globals::sphere(4.f, 100.f, 10.f);

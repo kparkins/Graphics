@@ -80,6 +80,8 @@ Matrix4 Matrix4::multiply(Matrix4 a) {
                           m[3][row] * a[col][3];
         }
     }
+    
+ 
     return b;
 }
 

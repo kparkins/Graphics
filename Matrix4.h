@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <string>
+#include "immintrin.h"
 
 class Vector3;
 class Vector4;
@@ -60,7 +61,7 @@ public:
     
 protected:
     
-    float m[4][4];
+    __attribute__ ((aligned(16))) float m[4][4];
     
 };
 

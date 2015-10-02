@@ -5,6 +5,7 @@
 #include "Cube.h"
 #include "Light.h"
 #include "DrawData.h"
+#include "Sphere.h"
 #include "UpdateData.h"
 
 class Globals {
@@ -16,6 +17,7 @@ public:
     static Light light;
     static DrawData drawData;
     static UpdateData updateData;
+    static Sphere sphere;
     //Feel free to add more member variables as needed
     
 };

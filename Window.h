@@ -7,6 +7,7 @@ public:
     
     static int width, height; 	            // window size
     static float spinValue;
+    static bool useSphere;
     
     static void initialize(void);
     static void idleCallback(void);

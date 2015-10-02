@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include "Drawable.h"
+#include "Vector3.h"
 
 class Sphere : public Drawable {
     
 public:
     
+    Vector3 velocity;
     double radius;
     int slices, stacks;
     
