@@ -44,6 +44,18 @@ public:
     Vector4 toVector4(float);
     
     void print(std::string);
+    
+    inline float& x() {
+        return m[0];
+    }
+    
+    inline float& y() {
+        return m[1];
+    }
+    
+    inline float& z() {
+        return m[2];
+    }
 
 protected:
     

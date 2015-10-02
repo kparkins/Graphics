@@ -103,21 +103,21 @@ void Cube::spin(float radians) {
 }
 
 
-void Cube::spinY(float radians) {
+void Cube::orbitY(float radians) {
     Matrix4 rot;
     rot.makeRotateY(radians);
-    toWorld = toWorld * rot;
+    toWorld = rot * toWorld;
 }
-void Cube::spinX(float radians) {
+void Cube::orbitX(float radians) {
     Matrix4 rot;
     rot.makeRotateX(radians);
-    toWorld = toWorld * rot;
+    toWorld = rot * toWorld;
 }
 
-void Cube::spinZ(float radians) {
+void Cube::orbitZ(float radians) {
     Matrix4 rot;
     rot.makeRotateZ(radians);
-    toWorld = toWorld * rot;
+    toWorld = rot * toWorld;
 }
 
 void Cube::scale(float value) {

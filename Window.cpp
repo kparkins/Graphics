@@ -98,24 +98,25 @@ void Window::displayCallback() {
 }
 
 void Window::keyCallback(unsigned char key, int x, int y) {
+    static int keyPressCounter;
     switch (key) {
         case 'x':
-            Globals::cube.translate(Vector3(1.f,0.f,0.f));
+            Globals::cube.translate(Vector3(-1.f, 0.f, 0.f));
             break;
         case 'X':
-            Globals::cube.translate(Vector3(-1.f,0.f,0.f));
+            Globals::cube.translate(Vector3(1.f, 0.f, 0.f));
             break;
         case 'y':
-            Globals::cube.translate(Vector3(0.f,1.f,0.f));
+            Globals::cube.translate(Vector3(0.f, -1.f, 0.f));
             break;
         case 'Y':
-            Globals::cube.translate(Vector3(0.f,-1.f,0.f));
+            Globals::cube.translate(Vector3(0.f, 1.f, 0.f));
             break;
         case 'z':
-            Globals::cube.translate(Vector3(0.f,0.f,1.f));
+            Globals::cube.translate(Vector3(0.f, 0.f, 1.f));
             break;
         case 'Z':
-            Globals::cube.translate(Vector3(0.f,0.f,-1.f));
+            Globals::cube.translate(Vector3(0.f, 0.f, -1.f));
             break;
         case 'c':
             Window::spinValue *= -1.f;
@@ -124,14 +125,24 @@ void Window::keyCallback(unsigned char key, int x, int y) {
             Globals::cube.toWorld.identity();
             break;
         case 's':
-            Globals::cube.scale(.8);
+            Globals::cube.scale(.9);
             break;
         case 'S':
-            Globals::cube.scale(1.2);
+            Globals::cube.scale(1.1);
+            break;
+        case 'o':
+            Globals::cube.orbitZ(.1745);
+            break;
+        case 'O':
+            Globals::cube.orbitZ(-.1745);
             break;
         default:
             break;
     }
+    Vector3 position(Globals::cube.toWorld.get(3, 0),
+                     Globals::cube.toWorld.get(3, 1),
+                     Globals::cube.toWorld.get(3, 2));
+    position.print("Key Press # -- " + std::to_string(keyPressCounter++));
 }
 
 //TODO: Keyboard callbacks!

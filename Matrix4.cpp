@@ -167,7 +167,29 @@ Matrix4 Matrix4::makeRotateZ(float angle) {
 Matrix4 Matrix4::makeRotateArbitrary(Vector3 a, float angle) {
     identity();
     
+    a = a.normalize();
     //Configure this matrix to be a rotation about the 'a' axis by 'angle' radians
+    float cos0 = cos(angle);
+    float sin0 = sin(angle);
+    float omcos0 = 1 - cos0;
+    float ux = a.x();
+    float uy = a.y();
+    float uz = a.z();
+    float uzsin0 = uz * sin0;
+    float uxsin0 = ux * sin0;
+    float uysin0 = uy * sin0;
+    
+    m[0][0] = cos0 + ux * ux * omcos0;
+    m[0][1] = uy * ux * omcos0 + uzsin0;
+    m[0][2] = uz * ux * omcos0 - uysin0;
+    
+    m[1][0] = ux * uy * omcos0 - uzsin0;
+    m[1][1] = cos0 + uy * uy * omcos0;
+    m[1][2] = uz * uy * omcos0 + uxsin0;
+    
+    m[2][0] = ux * uz * omcos0 + uysin0;
+    m[2][1] = uy * uz * omcos0 - uxsin0;
+    m[2][2] = cos0 + uz * uz * omcos0;
     
     return *this;
 }

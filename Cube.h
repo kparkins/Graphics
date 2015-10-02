@@ -18,9 +18,9 @@ public:
     virtual void update(UpdateData &);
     
     void spin(float);
-    void spinX(float);
-    void spinY(float);
-    void spinZ(float);
+    void orbitX(float);
+    void orbitY(float);
+    void orbitZ(float);
     void scale(float);
     void translate(Vector3 translate);
     
