@@ -1,8 +1,5 @@
 #include "Vector4.h"
 #include "Vector3.h"
-#include <math.h>
-#include <iostream>
-#include <cstring>
 
 Vector4::Vector4() {
   memset(static_cast<void*>(&m), 0, sizeof(float) * 4);

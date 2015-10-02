@@ -2,6 +2,10 @@
 #define VECTOR3_H
 
 #include <string>
+#include <math.h>
+#include <iostream>
+#include <cstring>
+#include "Vector4.h"
 
 class Vector4;
 

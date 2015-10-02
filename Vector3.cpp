@@ -1,7 +1,4 @@
 #include "Vector3.h"
-#include <math.h>
-#include <iostream>
-#include <cstring>
 #include "Vector4.h"
 
 Vector3::Vector3() {
