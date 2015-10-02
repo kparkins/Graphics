@@ -26,8 +26,8 @@ float Matrix4::get(int column, int element) {
     return m[column][element];
 }
 
-Matrix4& Matrix4::operator=(Matrix4 a) {
-    memcpy(static_cast<void*>(&m), static_cast<void*>(&a), sizeof(m));
+Matrix4& Matrix4::operator=(const Matrix4 & a) {
+    memcpy(static_cast<void*>(&m), static_cast<const void*>(&a), sizeof(m));
     return *this;
 }
 
@@ -49,7 +49,7 @@ void Matrix4::identity() {
     memcpy(static_cast<void*>(&m), ident, sizeof(m));
 }
 
-Matrix4 Matrix4::multiply(Matrix4 a) {
+Matrix4 Matrix4::multiply(const Matrix4 & a) {
     Matrix4 b;
     
     /*for (int row = 0; row < 4; ++row) {
@@ -60,47 +60,46 @@ Matrix4 Matrix4::multiply(Matrix4 a) {
      m[3][row] * a[col][3];
      }
      } */
-    
     __m128 m0c = _mm_load_ps(m[0]);
     __m128 m1c = _mm_load_ps(m[1]);
     __m128 m2c = _mm_load_ps(m[2]);
     __m128 m3c = _mm_load_ps(m[3]);
     
     
-    __m128 a0v = _mm_set1_ps(a[0][0]);
-    __m128 a1v = _mm_set1_ps(a[0][1]);
-    __m128 a2v = _mm_set1_ps(a[0][2]);
-    __m128 a3v = _mm_set1_ps(a[0][3]);
+    __m128 a0v = _mm_set1_ps(a.m[0][0]);
+    __m128 a1v = _mm_set1_ps(a.m[0][1]);
+    __m128 a2v = _mm_set1_ps(a.m[0][2]);
+    __m128 a3v = _mm_set1_ps(a.m[0][3]);
     
     __m128 r0 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
                            _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
     
     _mm_store_ps(&b[0][0], r0);
     
-    a0v = _mm_set1_ps(a[1][0]);
-    a1v = _mm_set1_ps(a[1][1]);
-    a2v = _mm_set1_ps(a[1][2]);
-    a3v = _mm_set1_ps(a[1][3]);
+    a0v = _mm_set1_ps(a.m[1][0]);
+    a1v = _mm_set1_ps(a.m[1][1]);
+    a2v = _mm_set1_ps(a.m[1][2]);
+    a3v = _mm_set1_ps(a.m[1][3]);
     
     __m128 r1 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
                            _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
     
     _mm_store_ps(&b[1][0], r1);
     
-    a0v = _mm_set1_ps(a[2][0]);
-    a1v = _mm_set1_ps(a[2][1]);
-    a2v = _mm_set1_ps(a[2][2]);
-    a3v = _mm_set1_ps(a[2][3]);
+    a0v = _mm_set1_ps(a.m[2][0]);
+    a1v = _mm_set1_ps(a.m[2][1]);
+    a2v = _mm_set1_ps(a.m[2][2]);
+    a3v = _mm_set1_ps(a.m[2][3]);
     
     __m128 r2 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
                            _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
     
     _mm_store_ps(&b[2][0], r2);
     
-    a0v = _mm_set1_ps(a[3][0]);
-    a1v = _mm_set1_ps(a[3][1]);
-    a2v = _mm_set1_ps(a[3][2]);
-    a3v = _mm_set1_ps(a[3][3]);
+    a0v = _mm_set1_ps(a.m[3][0]);
+    a1v = _mm_set1_ps(a.m[3][1]);
+    a2v = _mm_set1_ps(a.m[3][2]);
+    a3v = _mm_set1_ps(a.m[3][3]);
     
     __m128 r3 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
                            _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
@@ -110,7 +109,7 @@ Matrix4 Matrix4::multiply(Matrix4 a) {
 }
 
 
-Matrix4 Matrix4::operator*(Matrix4 a) {
+Matrix4 Matrix4::operator*(const Matrix4 & a) {
     return multiply(a);
 }
 
@@ -175,7 +174,7 @@ Matrix4 Matrix4::makeTranslate(float x, float y, float z) {
     return *this;
 }
 
-void Matrix4::print(std::string comment) {
+void Matrix4::print(const std::string & comment) {
     //Width constants and variables
     static const int pointWidth = 1;
     static const int precisionWidth = 4;

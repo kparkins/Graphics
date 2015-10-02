@@ -16,7 +16,7 @@ Matrix4::Matrix4(float m00, float m01, float m02, float m03,
               m30, m31, m32, m33);
 }
 
-Vector4 Matrix4::multiply(Vector4 a) {
+Vector4 Matrix4::multiply(Vector4 & a) {
     Vector4 b(0.f, 0.f, 0.f, 0.f);
     /*float* bptr = b.ptr();
     for(int i = 0; i < 4; ++i) {
@@ -26,10 +26,10 @@ Vector4 Matrix4::multiply(Vector4 a) {
     __m128 m1c = _mm_load_ps(m[1]);
     __m128 m2c = _mm_load_ps(m[2]);
     __m128 m3c = _mm_load_ps(m[3]);
-    __m128 a0v = _mm_set1_ps(a[0]);
-    __m128 a1v = _mm_set1_ps(a[1]);
-    __m128 a2v = _mm_set1_ps(a[2]);
-    __m128 a3v = _mm_set1_ps(a[3]);
+    __m128 a0v = _mm_set1_ps(a.x());
+    __m128 a1v = _mm_set1_ps(a.y());
+    __m128 a2v = _mm_set1_ps(a.z());
+    __m128 a3v = _mm_set1_ps(a.w());
     
     __m128 result = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
                                _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
@@ -38,11 +38,11 @@ Vector4 Matrix4::multiply(Vector4 a) {
     return b;
 }
 
-Vector4 Matrix4::operator*(Vector4 a) {
+Vector4 Matrix4::operator*(Vector4 & a) {
     return multiply(a);
 }
 
-Vector3 Matrix4::multiply(Vector3 a) {
+Vector3 Matrix4::multiply(Vector3 & a) {
     Vector3 b(0.f, 0.f, 0.f);
    /* float* bptr = b.ptr();
     for(int i = 0; i < 3; ++i) {
@@ -52,22 +52,22 @@ Vector3 Matrix4::multiply(Vector3 a) {
     __m128 m0c = _mm_load_ps(m[0]);
     __m128 m1c = _mm_load_ps(m[1]);
     __m128 m2c = _mm_load_ps(m[2]);
-    __m128 a0v = _mm_set1_ps(a[0]);
-    __m128 a1v = _mm_set1_ps(a[1]);
-    __m128 a2v = _mm_set1_ps(a[2]);
+    __m128 a0v = _mm_set1_ps(a.x());
+    __m128 a1v = _mm_set1_ps(a.y());
+    __m128 a2v = _mm_set1_ps(a.z());
     
     __m128 result = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)), _mm_mul_ps(m2c, a2v));
     _mm_store_ps(b.ptr(), result);
     return b;
 }
 
-Vector3 Matrix4::operator*(Vector3 a) {
+Vector3 Matrix4::operator*(Vector3 & a) {
     return multiply(a);
 }
 
-Matrix4 Matrix4::makeRotateArbitrary(Vector3 a, float angle) {
-    identity();
-    a = a.normalize();
+Matrix4 Matrix4::makeRotateArbitrary(Vector3 & a, float angle) {
+    this->identity();
+    Vector3 b = a.normalize();
     
     float cos0 = cos(angle);
     float sin0 = sin(angle);
@@ -95,7 +95,7 @@ Matrix4 Matrix4::makeRotateArbitrary(Vector3 a, float angle) {
 }
 
 Matrix4 Matrix4::makeTranslate(Vector3 a) {
-    return makeTranslate(a[0], a[1], a[2]);
+    return makeTranslate(a.x(), a.y(), a.z());
 }
 
 Matrix4 Matrix4::transpose(void) {

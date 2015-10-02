@@ -29,24 +29,25 @@ public:
     
     inline float get(int,int);
     
-    inline Matrix4& operator=(Matrix4);
+    inline Matrix4& operator=(const Matrix4 &);
+    
     inline float* operator[](int);
     
     inline float* ptr();
     
     inline void identity();
     
-    inline Matrix4 multiply(Matrix4);
-    inline Matrix4 operator*(Matrix4);
-    Vector4 multiply(Vector4);
-    Vector4 operator*(Vector4);
-    Vector3 multiply(Vector3);
-    Vector3 operator*(Vector3);
+    inline Matrix4 multiply(const Matrix4 &);
+    inline Matrix4 operator*(const Matrix4 &);
+    Vector4 multiply(Vector4 &);
+    Vector4 operator*(Vector4 &);
+    Vector3 multiply(Vector3 &);
+    Vector3 operator*(Vector3 &);
     
     inline Matrix4 makeRotateX(float);
     inline Matrix4 makeRotateY(float);
     inline Matrix4 makeRotateZ(float);
-    Matrix4 makeRotateArbitrary(Vector3, float);
+    Matrix4 makeRotateArbitrary(Vector3 &, float);
     
     inline Matrix4 makeScale(float, float, float);
     inline Matrix4 makeScale(float);
@@ -61,7 +62,7 @@ public:
     Matrix4 makePerspectiveProjection(float, float, float, float, float);
     Matrix4 makeViewport(float, float, float, float);
     
-    inline void print(std::string);
+    inline void print(const std::string &);
     
 protected:
     
