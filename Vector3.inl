@@ -93,28 +93,36 @@ Vector3 Vector3::subtract(const Vector3 & a) const {
     return (*this) - a;
 }
 
+Vector3 Vector3::operator*(float a) const {
+    Vector3 b;
+    __m128 m0 = _mm_load_ps(&x);
+    __m128 a0 = _mm_set1_ps(a);
+    _mm_store_ps(&b.x, _mm_mul_ps(m0, a0));
+    return b;
+}
+
 Vector3 Vector3::negate(void) const {
-    return this->multiply(-1);
+    return (*this) * -1.f;
 }
 
 Vector3 Vector3::scale(float s) const {
-    return this->multiply(s);
+    return (*this) * s;
 }
 
 Vector3 Vector3::multiply(float a) const {
-    return Vector3(x * a, y * a, z * a);
-}
-
-Vector3 Vector3::operator * (float a) const {
-    return this->multiply(a);
-}
-
-Vector3 Vector3::multiply(const Vector3 & a) const {
-    return Vector3(x * a.x, y * a.y, z * a.z);
+    return (*this) * a;
 }
 
 Vector3 Vector3::operator*(const Vector3 & a) const {
-    return this->multiply(a);
+    Vector3 b;
+    __m128 m0 = _mm_load_ps(&x);
+    __m128 a0 = _mm_load_ps(&a.x);
+    _mm_store_ps(&b.x, _mm_mul_ps(m0, a0));
+    return b;
+}
+
+Vector3 Vector3::multiply(const Vector3 & a) const {
+    return (*this) * a;
 }
 
 float Vector3::dot(const Vector3 & a) const {
