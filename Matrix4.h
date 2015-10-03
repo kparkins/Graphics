@@ -44,16 +44,16 @@ public:
     Vector3 multiply(Vector3 &);
     Vector3 operator*(Vector3 &);
     
-    inline Matrix4 makeRotateX(float);
-    inline Matrix4 makeRotateY(float);
-    inline Matrix4 makeRotateZ(float);
-    Matrix4 makeRotateArbitrary(Vector3 &, float);
+    inline Matrix4& makeRotateX(float);
+    inline Matrix4& makeRotateY(float);
+    inline Matrix4& makeRotateZ(float);
+    Matrix4& makeRotateArbitrary(const Vector3 &, float);
     
-    inline Matrix4 makeScale(float, float, float);
-    inline Matrix4 makeScale(float);
+    inline Matrix4& makeScale(float, float, float);
+    inline Matrix4& makeScale(float);
     
-    inline Matrix4 makeTranslate(float, float, float);
-    Matrix4 makeTranslate(Vector3);
+    inline Matrix4& makeTranslate(float, float, float);
+    Matrix4& makeTranslate(const Vector3 &);
     
     Matrix4 transpose(void);
     Matrix4 inverse(void);

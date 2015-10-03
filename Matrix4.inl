@@ -49,7 +49,7 @@ void Matrix4::identity() {
     memcpy(static_cast<void*>(&m), ident, sizeof(m));
 }
 
-Matrix4 Matrix4::multiply(const Matrix4 & a) {
+Matrix4 Matrix4::operator*(const Matrix4 & a) {
     Matrix4 b;
     
     /*for (int row = 0; row < 4; ++row) {
@@ -109,11 +109,11 @@ Matrix4 Matrix4::multiply(const Matrix4 & a) {
 }
 
 
-Matrix4 Matrix4::operator*(const Matrix4 & a) {
-    return multiply(a);
+Matrix4 Matrix4::multiply(const Matrix4 & a) {
+    return (*this) * a;
 }
 
-Matrix4 Matrix4::makeRotateX(float angle) {
+Matrix4& Matrix4::makeRotateX(float angle) {
     this->identity();
     
     m[1][1] = cos(angle);
@@ -124,7 +124,7 @@ Matrix4 Matrix4::makeRotateX(float angle) {
     return *this;
 }
 
-Matrix4 Matrix4::makeRotateY(float angle) {
+Matrix4& Matrix4::makeRotateY(float angle) {
     this->identity();
     
     m[0][0] = cos(angle);
@@ -135,7 +135,7 @@ Matrix4 Matrix4::makeRotateY(float angle) {
     return *this;
 }
 
-Matrix4 Matrix4::makeRotateZ(float angle) {
+Matrix4& Matrix4::makeRotateZ(float angle) {
     this->identity();
     
     //Configure this matrix to be a rotation about the Z-Axis by 'angle' radians
@@ -147,7 +147,7 @@ Matrix4 Matrix4::makeRotateZ(float angle) {
     return *this;
 }
 
-Matrix4 Matrix4::makeScale(float sx, float sy, float sz) {
+Matrix4& Matrix4::makeScale(float sx, float sy, float sz) {
     this->identity();
     
     //Configure this matrix to be a sclaing by sx, sy, sz
@@ -158,12 +158,12 @@ Matrix4 Matrix4::makeScale(float sx, float sy, float sz) {
     return *this;
 }
 
-Matrix4 Matrix4::makeScale(float s) {
+Matrix4& Matrix4::makeScale(float s) {
     return makeScale(s, s, s);
 }
 
 
-Matrix4 Matrix4::makeTranslate(float x, float y, float z) {
+Matrix4& Matrix4::makeTranslate(float x, float y, float z) {
     this->identity();
     
     //Configure this matrix to be a translation by vector 'a'

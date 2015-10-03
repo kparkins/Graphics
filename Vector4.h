@@ -5,6 +5,7 @@
 #include <math.h>
 #include <iostream>
 #include <cstring>
+#include "immintrin.h"
 
 class Vector3;
 
@@ -16,33 +17,28 @@ public:
     Vector4(float, float, float);
     Vector4(float, float, float, float);
     
-    inline float& x();
-    inline float& y();
-    inline float& z();
-    inline float& w();
+    inline void set(float,float,float,float);
+    
     inline float* ptr();
     inline float& operator[](int);
     
-    inline void set(float,float,float,float);
+    inline Vector4 add(const Vector4 &) const;
+    inline Vector4 operator+(const Vector4 &) const;
     
+    inline Vector4 subtract(const Vector4 &) const;
+    inline Vector4 operator-(const Vector4 &) const;
     
-    inline Vector4 add(Vector4&);
-    inline Vector4 operator+(Vector4);
-    
-    inline Vector4 subtract(Vector4&);
-    inline Vector4 operator-(Vector4);
-    
-    inline Vector4 dehomogenize();
+    inline Vector4 dehomogenize() const;
     
     Vector3 toVector3();
     
-    inline float dot(Vector4);
+    inline float dot(const Vector4 &) const;
     
-    inline void print(std::string);
+    inline void print(const std::string &) const;
     
-protected:
-    
-    __attribute__ ((aligned(16))) float m[4];
+    struct {
+        float x,y,z,w;
+    } __attribute__ ((aligned(16)));
 
 };
 

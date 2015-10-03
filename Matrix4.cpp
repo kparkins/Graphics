@@ -16,20 +16,21 @@ Matrix4::Matrix4(float m00, float m01, float m02, float m03,
               m30, m31, m32, m33);
 }
 
-Vector4 Matrix4::multiply(Vector4 & a) {
+/*float* bptr = b.ptr();
+ for(int i = 0; i < 4; ++i) {
+ *bptr++ = m[0][i] * a[0] + m[1][i] * a[1] + m[2][i] * a[2] + m[3][i] * a[3];
+ }*/
+Vector4 Matrix4::operator*(Vector4 & a) {
     Vector4 b(0.f, 0.f, 0.f, 0.f);
-    /*float* bptr = b.ptr();
-    for(int i = 0; i < 4; ++i) {
-        *bptr++ = m[0][i] * a[0] + m[1][i] * a[1] + m[2][i] * a[2] + m[3][i] * a[3];
-    }*/
+ 
     __m128 m0c = _mm_load_ps(m[0]);
     __m128 m1c = _mm_load_ps(m[1]);
     __m128 m2c = _mm_load_ps(m[2]);
     __m128 m3c = _mm_load_ps(m[3]);
-    __m128 a0v = _mm_set1_ps(a.x());
-    __m128 a1v = _mm_set1_ps(a.y());
-    __m128 a2v = _mm_set1_ps(a.z());
-    __m128 a3v = _mm_set1_ps(a.w());
+    __m128 a0v = _mm_set1_ps(a.x);
+    __m128 a1v = _mm_set1_ps(a.y);
+    __m128 a2v = _mm_set1_ps(a.z);
+    __m128 a3v = _mm_set1_ps(a.w);
     
     __m128 result = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
                                _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
@@ -38,43 +39,45 @@ Vector4 Matrix4::multiply(Vector4 & a) {
     return b;
 }
 
-Vector4 Matrix4::operator*(Vector4 & a) {
-    return multiply(a);
+Vector4 Matrix4::multiply(Vector4 & a) {
+    return (*this) * a;
 }
 
-Vector3 Matrix4::multiply(Vector3 & a) {
+/* float* bptr = b.ptr();
+ for(int i = 0; i < 3; ++i) {
+ *bptr++ = m[0][i] * a[0] + m[1][i] * a[1] + m[2][i] * a[2];
+ }*/
+
+Vector3 Matrix4::operator*(Vector3 & a) {
     Vector3 b(0.f, 0.f, 0.f);
-   /* float* bptr = b.ptr();
-    for(int i = 0; i < 3; ++i) {
-        *bptr++ = m[0][i] * a[0] + m[1][i] * a[1] + m[2][i] * a[2];
-    }*/
-    
+
     __m128 m0c = _mm_load_ps(m[0]);
     __m128 m1c = _mm_load_ps(m[1]);
     __m128 m2c = _mm_load_ps(m[2]);
-    __m128 a0v = _mm_set1_ps(a.x());
-    __m128 a1v = _mm_set1_ps(a.y());
-    __m128 a2v = _mm_set1_ps(a.z());
+    __m128 a0v = _mm_set1_ps(a.x);
+    __m128 a1v = _mm_set1_ps(a.y);
+    __m128 a2v = _mm_set1_ps(a.z);
     
-    __m128 result = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)), _mm_mul_ps(m2c, a2v));
-    _mm_store_ps(b.ptr(), result);
+    __m128 result = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
+                               _mm_mul_ps(m2c, a2v));
+    _mm_store_ps(&b.x, result);
     return b;
 }
 
-Vector3 Matrix4::operator*(Vector3 & a) {
-    return multiply(a);
+Vector3 Matrix4::multiply(Vector3 & a) {
+    return (*this) * a;
 }
 
-Matrix4 Matrix4::makeRotateArbitrary(Vector3 & a, float angle) {
+Matrix4& Matrix4::makeRotateArbitrary(const Vector3 & a, float angle) {
     this->identity();
     Vector3 b = a.normalize();
     
     float cos0 = cos(angle);
     float sin0 = sin(angle);
     float omcos0 = 1 - cos0;
-    float ux = a.x();
-    float uy = a.y();
-    float uz = a.z();
+    float ux = b.x;
+    float uy = b.y;
+    float uz = b.z;
     float uzsin0 = uz * sin0;
     float uxsin0 = ux * sin0;
     float uysin0 = uy * sin0;
@@ -94,8 +97,8 @@ Matrix4 Matrix4::makeRotateArbitrary(Vector3 & a, float angle) {
     return *this;
 }
 
-Matrix4 Matrix4::makeTranslate(Vector3 a) {
-    return makeTranslate(a.x(), a.y(), a.z());
+Matrix4& Matrix4::makeTranslate(const Vector3 & a) {
+    return this->makeTranslate(a.x, a.y, a.z);
 }
 
 Matrix4 Matrix4::transpose(void) {

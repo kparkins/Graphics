@@ -4,6 +4,7 @@
 #include <string>
 #include <math.h>
 #include <iostream>
+#include "immintrin.h"
 #include <cstring>
 #include "Vector4.h"
 
@@ -18,45 +19,50 @@ public:
     virtual ~Vector3(void);
     
     inline void set(float, float, float);
-    inline void set(int index, float value);
-    
-    inline float& x();
-    inline float& y();
-    inline float& z();
-    
-    inline float& operator[](int);
+
     inline float* ptr();
+    inline const float* const_ptr();
+    inline float& operator[](int);
     
-    inline Vector3 add(Vector3);
-    inline Vector3 operator+(Vector3);
+    inline Vector3& operator*=(const Vector3&);
+    inline Vector3& operator+=(const Vector3&);
+    inline Vector3& operator-=(const Vector3&);
+    inline Vector3& operator=(const Vector3&);
     
-    inline Vector3 subtract(Vector3);
-    inline Vector3 operator-(Vector3);
+    inline Vector3& operator*=(float);
+    inline Vector3& operator+=(float);
+    inline Vector3& operator-=(float);
+    inline Vector3& operator=(float);
     
-    inline Vector3 negate(void);
-    inline Vector3 scale(float);
-    inline Vector3 multiply(float);
-    inline Vector3 operator*(float);
-    inline Vector3 multiply(Vector3);
-    inline Vector3 operator*(Vector3);
+    inline Vector3 add(const Vector3 &) const;
+    inline Vector3 operator+(const Vector3 &) const;
     
-    inline float dot(Vector3);
-    inline Vector3 cross(Vector3);
+    inline Vector3 subtract(const Vector3 &) const;
+    inline Vector3 operator-(const Vector3 &) const;
     
-    inline float angle(Vector3);
+    inline Vector3 negate(void) const;
+    inline Vector3 scale(float) const;
+    inline Vector3 multiply(float) const;
+    inline Vector3 operator*(float) const;
+    inline Vector3 multiply(const Vector3 &) const;
+    inline Vector3 operator*(const Vector3 &) const;
     
-    inline float magnitude(void);
+    inline float dot(const Vector3 &) const;
+    inline Vector3 cross(const Vector3 &) const;
     
-    inline Vector3 normalize(void);
+    inline float angle(const Vector3 &) const;
     
-    Vector4 toVector4(float);
+    inline float magnitude(void) const;
     
-    inline void print(std::string);
+    inline Vector3 normalize(void) const;
+    
+    Vector4 toVector4(float) const;
+    
+    inline void print(const std::string &)  const;
 
-
-protected:
-    
-    __attribute__ ((aligned(16))) float m[4];
+    struct {
+        float x,y,z,w;
+    } __attribute__ ((aligned(16)));
     
 };
 
