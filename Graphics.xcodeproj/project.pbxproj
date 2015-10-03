@@ -49,6 +49,7 @@
 		2702E73E1BBF071F00E880A3 /* Matrix4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Matrix4.inl; sourceTree = SOURCE_ROOT; };
 		2702E73F1BBF071F00E880A3 /* Vector3.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector3.inl; sourceTree = SOURCE_ROOT; };
 		2702E7401BBF071F00E880A3 /* Vector4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector4.inl; sourceTree = SOURCE_ROOT; };
+		2711520D1BBFA8A2007ECFCE /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Macros.h; path = ../Macros.h; sourceTree = "<group>"; };
 		D40AFA7E1AD1E2E7008D61CC /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = SOURCE_ROOT; };
 		D40AFA7F1AD1E2E7008D61CC /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = SOURCE_ROOT; };
 		D42FFC1E1AAFC90E006F8E9C /* Graphics */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graphics; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +123,7 @@
 		D42FFC201AAFC90E006F8E9C /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				2711520D1BBFA8A2007ECFCE /* Macros.h */,
 				D42FFC631AB67F52006F8E9C /* main.cpp */,
 				D42FFC2C1AAFCC9C006F8E9C /* Window.cpp */,
 				D42FFC301AAFCC9C006F8E9C /* Window.h */,

@@ -154,8 +154,3 @@ Vector3 Vector3::normalize(void) const {
     ? Vector3(x / magnitude, y / magnitude, z / magnitude)
     : Vector3(0.f, 0.f, 0.f);
 }
-
-void Vector3::print(const std::string & comment) const {
-    std::cout << comment << std::endl;
-    std::cout << "<x:" << x <<  ", y:" << y << ", z:" << z << ">" << std::endl;
-}

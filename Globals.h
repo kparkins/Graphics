@@ -8,6 +8,8 @@
 #include "Sphere.h"
 #include "UpdateData.h"
 
+
+
 class Globals {
     
 public:

@@ -62,8 +62,3 @@ Vector4 Vector4::dehomogenize() const {
 float Vector4::dot(const Vector4 & a) const {
     return (x * a.x) + (y * a.y) + (z * a.z) + (w * a.w);
 }
-
-void Vector4::print(const std::string & comment) const {
-    std::cout << comment << std::endl;
-    std::cout << "<x:" << x <<  ", y:" << y << ", z:" << z << ", w:" << z << ">" << std::endl;
-}

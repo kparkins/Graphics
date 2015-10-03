@@ -23,4 +23,7 @@ Vector3 Vector4::toVector3() {
     return Vector3(x, y, z);
 }
 
-
+void Vector4::print(const std::string & comment) const {
+    std::cout << comment << std::endl;
+    std::cout << "<x:" << x <<  ", y:" << y << ", z:" << z << ", w:" << z << ">" << std::endl;
+}

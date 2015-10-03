@@ -173,39 +173,3 @@ Matrix4& Matrix4::makeTranslate(float x, float y, float z) {
     
     return *this;
 }
-
-void Matrix4::print(const std::string & comment) {
-    //Width constants and variables
-    static const int pointWidth = 1;
-    static const int precisionWidth = 4;
-    int integerWidth = 1;
-    
-    //Determine the necessary width to the left of the decimal point
-    float* elementPtr = (float*)m;
-    float maxValue = fabsf(*(elementPtr++));
-    while(elementPtr++ < ((float*)m+16)) if(fabsf(*elementPtr) > maxValue) maxValue = fabsf(*elementPtr);
-    while(maxValue >= 10.0) { ++integerWidth; maxValue /= 10.0; }
-    
-    //Sum up the widths to determine the cell width needed
-    int cellWidth = integerWidth + pointWidth + precisionWidth;
-    
-    //Set the stream parameters for fixed number of digits after the decimal point
-    //and a set number of precision digits
-    std::cout << std::fixed;
-    std::cout << std::setprecision(precisionWidth);
-    
-    //Print the comment
-    std::cout << comment << std::endl;
-    
-    //Loop through the matrix elements, format each, and print them to screen
-    float cellValue;
-    for(int element = 0; element < 4; element++) {
-        std::cout << std::setw(1) << (element == 0 ? "[" : " ");
-        for(int vector = 0; vector < 4; vector++) {
-            cellValue =  m[vector][element];
-            std::cout << std::setw(cellWidth + (cellValue >= 0.0 ? 1 : 0)) << cellValue;
-            std::cout << std::setw(0) << (vector < 3 ? " " : "");
-        }
-        std::cout << std::setw(1) << (element == 3 ? "]" : " ") << std::endl;
-    }
-}

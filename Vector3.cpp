@@ -19,4 +19,7 @@ Vector4 Vector3::toVector4(float w) const {
     return Vector4(x, y, z, w);
 }
 
-
+void Vector3::print(const std::string & comment) const {
+    std::cout << comment << std::endl;
+    std::cout << "<x:" << x <<  ", y:" << y << ", z:" << z << ">" << std::endl;
+}

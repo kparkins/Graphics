@@ -5,7 +5,9 @@
 #include <math.h>
 #include <iostream>
 #include <cstring>
+
 #include "immintrin.h"
+#include "Macros.h"
 
 class Vector3;
 
@@ -17,24 +19,24 @@ public:
     Vector4(float, float, float);
     Vector4(float, float, float, float);
     
-    inline void set(float,float,float,float);
+    force_inline void set(float,float,float,float);
     
-    inline float* ptr();
-    inline float& operator[](int);
+    force_inline float* ptr();
+    force_inline float& operator[](int);
     
-    inline Vector4 add(const Vector4 &) const;
-    inline Vector4 operator+(const Vector4 &) const;
+    force_inline Vector4 add(const Vector4 &) const;
+    force_inline Vector4 operator+(const Vector4 &) const;
     
-    inline Vector4 subtract(const Vector4 &) const;
-    inline Vector4 operator-(const Vector4 &) const;
+    force_inline Vector4 subtract(const Vector4 &) const;
+    force_inline Vector4 operator-(const Vector4 &) const;
     
-    inline Vector4 dehomogenize() const;
+    force_inline Vector4 dehomogenize() const;
     
     Vector3 toVector3();
     
-    inline float dot(const Vector4 &) const;
+    force_inline float dot(const Vector4 &) const;
     
-    inline void print(const std::string &) const;
+    void print(const std::string &) const;
     
     struct {
         float x,y,z,w;
