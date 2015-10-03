@@ -64,7 +64,7 @@ public:
 
     struct {
         float x,y,z,w;
-    } __attribute__ ((aligned(16)));
+    } align_16;
     
 };
 

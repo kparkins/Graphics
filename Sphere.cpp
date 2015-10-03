@@ -29,12 +29,7 @@ void Sphere::draw(DrawData& data) {
 
 
 void Sphere::update(UpdateData& data) {
-    Matrix4 translate;
-    
-    translate.makeTranslate(Vector3(1.f,0.f,0.f));
-    translate.makeTranslate(velocity * data.dt);
-    
-    toWorld = translate * toWorld;
+    toWorld = Matrix4().makeTranslate(velocity * data.dt) * toWorld;
     
     Vector3 position(toWorld[3][0], toWorld[3][1], toWorld[3][2]);
 

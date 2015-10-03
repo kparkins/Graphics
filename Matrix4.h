@@ -69,7 +69,7 @@ public:
     
 protected:
     
-    __attribute__ ((aligned(16))) float m[4][4];
+    align_16 float m[4][4];
     
 };
 

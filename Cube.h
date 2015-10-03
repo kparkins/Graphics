@@ -10,7 +10,6 @@ public:
     
     float size;
     
-    
     Cube(float);
     virtual ~Cube(void);
     
