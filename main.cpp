@@ -55,8 +55,7 @@ int main(int argc, char *argv[]) {
            glGetString(GL_RENDERER),  // e.g. Intel HD Graphics 3000 OpenGL Engine
            glGetString(GL_VERSION)    // e.g. 3.2 INTEL-8.0.61
            );
-    std::printf("Supported GLSL version is %s.\n", (char *)glGetString(GL_SHADING_LANGUAGE_VERSION));
-    
+   
     //Initialize the Window:
     //The body of this function is a great place to load textures, shaders, etc.
     //and do any operations/calculations/configurations that only need to happen once.

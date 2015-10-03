@@ -21,7 +21,7 @@ public:
     void orbitY(float);
     void orbitZ(float);
     void scale(float);
-    void translate(Vector3 translate);
+    void translate(Vector3& translate);
     
 };
 

@@ -100,7 +100,7 @@ void MathTestBench::printTestsPassedLine(std::string name, int passed, int total
 }
 
 bool MathTestBench::approx(float a, float b) {
-    static const float delta = 0.0005;
+    static const float delta = 0.0005f;
     return fabs(a-b) < delta;
 }
 
@@ -212,10 +212,10 @@ bool MathTestBench::test_v3_multiply_f(void) {
     bool pass = 0x0;
     
     Vector3 a(1, 2, 3);
-    float b = 13.1;
+    float b = 13.1f;
     Vector3 c = a.multiply(b);
     
-    pass = approx(c[0], 13.1) && approx(c[1], 26.2) && approx(c[2], 39.3);
+    pass = approx(c[0], 13.1f) && approx(c[1], 26.2f) && approx(c[2], 39.3f);
     
     printTestLine("Vector3.multiply(float)", pass);
     return pass;
@@ -225,10 +225,10 @@ bool MathTestBench::test_v3_op_star_f(void) {
     bool pass = 0x0;
     
     Vector3 a(1, 2, 3);
-    float b = 13.1;
+    float b = 13.1f;
     Vector3 c = a * b;
     
-    pass = approx(c[0], 13.1) && approx(c[1], 26.2) && approx(c[2], 39.3);
+    pass = approx(c[0], 13.1f) && approx(c[1], 26.2f) && approx(c[2], 39.3f);
     
     printTestLine("Vector3.(*)(float)", pass);
     return pass;
@@ -267,7 +267,7 @@ bool MathTestBench::test_v3_angle(void) {
     Vector3 b(0, 0, 1);
     float c = a.angle(b);
     
-    pass = approx(c, PI_OVER_2);
+	pass = approx(c, static_cast<float>(PI_OVER_2));
     
     printTestLine("Vector3.angle", pass);
     return pass;
@@ -301,7 +301,7 @@ bool MathTestBench::test_v3_normalize(void) {
     bool pass = 0x0;
     
     Vector3 a(1, 1, 1);
-    float r = 1.0 / a.magnitude();
+    float r = 1.f / a.magnitude();
     Vector3 b = a.normalize();
     
     pass = approx(b[0], r) && approx(b[1], r) && approx(b[2], r);
@@ -497,7 +497,7 @@ bool MathTestBench::test_m4_makeRotateX(void) {
     bool pass = 0x0;
     
     Matrix4 a;
-    a.makeRotateX(PI_OVER_2);
+	a.makeRotateX(static_cast<float>(PI_OVER_2));
     
     Vector4 b(0, 0, -1, 0);
     
@@ -513,7 +513,7 @@ bool MathTestBench::test_m4_makeRotateY(void) {
     bool pass = 0x0;
     
     Matrix4 a;
-    a.makeRotateY(PI_OVER_2);
+	a.makeRotateY(static_cast<float>(PI_OVER_2));
     
     Vector4 b(0, 0, 1, 0);
     
@@ -529,7 +529,7 @@ bool MathTestBench::test_m4_makeRotateZ(void) {
     bool pass = 0x0;
     
     Matrix4 a;
-    a.makeRotateZ(PI_OVER_2);
+    a.makeRotateZ(static_cast<float>(PI_OVER_2));
     
     Vector4 b(1, 0, 0, 0);
     
@@ -546,7 +546,7 @@ bool MathTestBench::test_m4_makeRotateArbitrary(void) {
     
     Vector3 axis(0, 0, 1);
     Matrix4 a;
-    a.makeRotateArbitrary(axis, PI_OVER_2);
+    a.makeRotateArbitrary(axis, static_cast<float>(PI_OVER_2));
     
     Vector4 b(1, 0, 0, 0);
     

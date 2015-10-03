@@ -38,10 +38,15 @@ public:
     
     void print(const std::string &) const;
     
-    struct {
-        float x,y,z,w;
-    } align_16;
-
+#if defined(__GNUC__)
+	struct {
+		float x, y, z, w;
+	} align_16;
+#elif defined(_WIN32)
+	align_16 struct {
+		float x, y, z, w;
+	};
+#endif
 };
 
 #include "Vector4.inl"

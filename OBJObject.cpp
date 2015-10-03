@@ -31,8 +31,14 @@ OBJObject::OBJObject(std::string filename) : Drawable() {
 
 OBJObject::~OBJObject() {
     //Delete any dynamically allocated memory/objects here
-    
+#ifdef __GNUC__
     deleteVector(Vector3*, vertices);
+#elif _WIN32
+	for (auto it = vertices->begin(); it != vertices->end(); ++it) {
+		(*it)->~Vector3();
+		free(static_cast<void*>(*it));
+	}
+#endif
     deleteVector(Vector3*, normals);
     deleteVector(Face*, faces);
 }
@@ -98,7 +104,14 @@ void OBJObject::parse(std::string& filename) {
             float y = std::stof(tokens.at(2));
             float z = std::stof(tokens.at(3));
             
+#ifdef __GNUC__
             vertices->push_back(new Vector3(x, y, z));
+#elif _WIN32
+			void* ptr = _aligned_malloc(sizeof(Vector3), 16);
+			Vector3* vec = new(ptr) Vector3(x, y, z);
+			vertices->push_back(vec);
+#endif
+
         } else if(tokens.at(0).compare("vn") == 0) {
             //Parse the normal line
         } else if(tokens.at(0).compare("f") == 0) {

@@ -16,7 +16,8 @@
 
 #else
 
-// Room for MSVC++ / GNU C++ & other variants
+#define force_inline inline __forceinline
+#define align_16 __declspec(align(16))
 
 #endif
 

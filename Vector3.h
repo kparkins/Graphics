@@ -62,10 +62,16 @@ public:
     
     void print(const std::string &)  const;
 
+#ifdef __GNUC__
     struct {
         float x,y,z,w;
     } align_16;
-    
+#elif _WIN32
+	align_16 struct {
+		float x,y,z,w;
+	};
+#endif
+
 };
 
 #include "Vector3.inl"

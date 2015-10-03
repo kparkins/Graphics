@@ -1,3 +1,7 @@
 *.o
 cube
 *.DS_Store
+*.suo
+*.sdf
+*.opensdf
+Debug

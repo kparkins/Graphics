@@ -53,11 +53,11 @@ float& Color::operator [] (int i) {
 }
 
 Color Color::interpolate(Color& c1, float t) {
-    t = clampf(0.0, 1.0, t);
-    return Color((1.0 - t) * c[0] + t * c1[0],
-                 (1.0 - t) * c[1] + t * c1[1],
-                 (1.0 - t) * c[2] + t * c1[2],
-                 (1.0 - t) * c[3] + t * c1[3]);
+    t = static_cast<float>(clampf(0.0, 1.0, t));
+    return Color((1.f - t) * c[0] + t * c1[0],
+                 (1.f - t) * c[1] + t * c1[1],
+                 (1.f - t) * c[2] + t * c1[2],
+                 (1.f - t) * c[3] + t * c1[3]);
 }
 
 Color Color::red(void) {
