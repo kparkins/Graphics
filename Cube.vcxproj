@@ -126,6 +126,7 @@
     <ClCompile Include="OBJObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Matrix4.inl" />
     <None Include="Vector3.inl" />
     <None Include="Vector4.inl" />
   </ItemGroup>

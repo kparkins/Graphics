@@ -17,33 +17,25 @@ float& Vector4::operator[](int loc) {
 
 Vector4 Vector4::add(const Vector4 & a) const {
     Vector4 b;
-    __m128 a0 = _mm_load_ps(&a.x);
-    __m128 m0 = _mm_load_ps(&x);
-    _mm_store_ps(&b.x, _mm_add_ps(m0, a0));
+	_mm_store_ps(&b.x, _mm_add_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
 Vector4 Vector4::operator+(const Vector4 & a) const {
     Vector4 b;
-    __m128 a0 = _mm_load_ps(&a.x);
-    __m128 m0 = _mm_load_ps(&x);
-    _mm_store_ps(&b.x, _mm_add_ps(m0, a0));
+	_mm_store_ps(&b.x, _mm_add_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
 Vector4 Vector4::subtract(const Vector4 & a) const {
     Vector4 b;
-    __m128 a0 = _mm_load_ps(&a.x);
-    __m128 m0 = _mm_load_ps(&x);
-    _mm_store_ps(&b.x, _mm_sub_ps(m0, a0));
+	_mm_store_ps(&b.x, _mm_sub_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
 Vector4 Vector4::operator-(const Vector4 & a) const {
     Vector4 b;
-    __m128 a0 = _mm_load_ps(&a.x);
-    __m128 m0 = _mm_load_ps(&x);
-    _mm_store_ps(&b.x, _mm_sub_ps(m0, a0));
+	_mm_store_ps(&b.x, _mm_sub_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
@@ -52,13 +44,17 @@ Vector4 Vector4::dehomogenize() const {
         return *this;
     }
     Vector4 b;
-    __m128 m0 = _mm_load_ps(&x);
-    __m128 w0 = _mm_set1_ps(w);
-    _mm_store_ps(b.ptr(), _mm_div_ps(m0, w0));
+	_mm_store_ps(b.ptr(), _mm_div_ps(_mm_load_ps(&x), _mm_set1_ps(w)));
     b.w = 1.f;
     return b;
 }
 
 float Vector4::dot(const Vector4 & a) const {
-    return (x * a.x) + (y * a.y) + (z * a.z) + (w * a.w);
+	float res;
+	__m128 r = _mm_mul_ps(_mm_load_ps(&x),
+		                  _mm_load_ps(&a.x));
+	r = _mm_hadd_ps(r, r);
+	r = _mm_hadd_ps(r, r);
+	_mm_store_ss(&res, r);
+	return res;
 }

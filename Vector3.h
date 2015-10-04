@@ -3,6 +3,7 @@
 
 #include <string>
 #include <math.h>
+#include <cassert>
 #include <iostream>
 #include <cstring>
 
@@ -49,10 +50,10 @@ public:
     force_inline Vector3 multiply(const Vector3 &) const;
     force_inline Vector3 operator*(const Vector3 &) const;
     
-    force_inline float dot(const Vector3 &) const;
-    force_inline Vector3 cross(const Vector3 &) const;
+    force_inline float dot(const Vector3 &);
+    force_inline Vector3 cross(const Vector3 &);
     
-    force_inline float angle(const Vector3 &) const;
+    force_inline float angle(const Vector3 &);
     
     force_inline float magnitude(void) const;
     

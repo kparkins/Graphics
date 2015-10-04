@@ -2,7 +2,7 @@
 #include "Vector4.h"
 
 Vector3::Vector3() {
-    memset(static_cast<void*>(&x), 0, sizeof(float) * 4);
+	_mm_store_ps(&x, _mm_set1_ps(0.f));
 }
 
 Vector3::Vector3(float m0, float m1, float m2) {

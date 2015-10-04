@@ -16,64 +16,48 @@ float* Vector3::ptr() {
 }
 
 Vector3& Vector3::operator*=(const Vector3 & a) {
-    __m128 m0 = _mm_load_ps(&x);
-    __m128 a0 = _mm_load_ps(&a.x);
-    _mm_store_ps(&x, _mm_mul_ps(m0, a0));
+	_mm_store_ps(&x, _mm_mul_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return *this;
 }
 
 Vector3& Vector3::operator+=(const Vector3 & a) {
-    __m128 m0 = _mm_load_ps(&x);
-    __m128 a0 = _mm_load_ps(&a.x);
-    _mm_store_ps(&x, _mm_add_ps(m0, a0));
+	_mm_store_ps(&x, _mm_add_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return *this;
 }
 
 Vector3& Vector3::operator-=(const Vector3 & a) {
-    __m128 m0 = _mm_load_ps(&x);
-    __m128 a0 = _mm_load_ps(&a.x);
-    _mm_store_ps(&x, _mm_sub_ps(m0, a0));
+    _mm_store_ps(&x, _mm_sub_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return *this;
 }
 
 Vector3& Vector3::operator=(const Vector3 & a) {
-    __m128 a0 = _mm_load_ps(&a.x);
-    _mm_store_ps(&x, a0);
+    _mm_store_ps(&x, _mm_load_ps(&a.x));
     return *this;
 }
 
 Vector3& Vector3::operator*=(float s) {
-    __m128 s0 = _mm_set1_ps(s);
-    __m128 m0 = _mm_load_ps(&x);
-    _mm_store_ps(&x, _mm_mul_ps(m0, s0));
+    _mm_store_ps(&x, _mm_mul_ps(_mm_load_ps(&x), _mm_set1_ps(s)));
     return *this;
 }
 
 Vector3& Vector3::operator+=(float s) {
-    __m128 s0 = _mm_set1_ps(s);
-    __m128 m0 = _mm_load_ps(&x);
-    _mm_store_ps(&x, _mm_add_ps(m0, s0));
+    _mm_store_ps(&x, _mm_add_ps(_mm_load_ps(&x), _mm_set1_ps(s)));
     return *this;
 }
 
 Vector3& Vector3::operator-=(float s) {
-    __m128 s0 = _mm_set1_ps(s);
-    __m128 m0 = _mm_load_ps(&x);
-    _mm_store_ps(&x, _mm_sub_ps(m0, s0));
+	_mm_store_ps(&x, _mm_sub_ps(_mm_load_ps(&x), _mm_set1_ps(s)));
     return *this;
 }
 
 Vector3& Vector3::operator=(float s) {
-    __m128 s0 = _mm_set1_ps(s);
-    _mm_store_ps(&x, s0);
+	_mm_store_ps(&x, _mm_set1_ps(s));
     return *this;
 }
 
 Vector3 Vector3::operator+(const Vector3& a) const {
     Vector3 b;
-    __m128 a0 = _mm_load_ps(&a.x);
-    __m128 m0 = _mm_load_ps(&x);
-    _mm_store_ps(&b.x, _mm_add_ps(m0, a0));
+	_mm_store_ps(&b.x, _mm_add_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
@@ -83,74 +67,146 @@ Vector3 Vector3::add(const Vector3 & a) const {
 
 Vector3 Vector3::operator-(const Vector3 & a) const {
     Vector3 b;
-    __m128 a0 = _mm_load_ps(&a.x);
-    __m128 m0 = _mm_load_ps(&x);
-    _mm_store_ps(&b.x, _mm_sub_ps(m0, a0));
+	_mm_store_ps(&b.x, _mm_sub_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
 Vector3 Vector3::subtract(const Vector3 & a) const {
-    return (*this) - a;
+	Vector3 b;
+	_mm_store_ps(&b.x, _mm_sub_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
+	return b;
 }
 
 Vector3 Vector3::operator*(float a) const {
     Vector3 b;
-    __m128 m0 = _mm_load_ps(&x);
-    __m128 a0 = _mm_set1_ps(a);
-    _mm_store_ps(&b.x, _mm_mul_ps(m0, a0));
+	_mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_set1_ps(a)));
     return b;
 }
 
 Vector3 Vector3::negate(void) const {
-    return (*this) * -1.f;
+	Vector3 b;
+	_mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_set1_ps(-1.f)));
+	return b;
 }
 
 Vector3 Vector3::scale(float s) const {
-    return (*this) * s;
+	Vector3 b;
+	_mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_set1_ps(s)));
+	return b;
 }
 
 Vector3 Vector3::multiply(float a) const {
-    return (*this) * a;
+	Vector3 b;
+	_mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_set1_ps(a)));
+	return b;
 }
 
 Vector3 Vector3::operator*(const Vector3 & a) const {
     Vector3 b;
-    __m128 m0 = _mm_load_ps(&x);
-    __m128 a0 = _mm_load_ps(&a.x);
-    _mm_store_ps(&b.x, _mm_mul_ps(m0, a0));
+	_mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
 Vector3 Vector3::multiply(const Vector3 & a) const {
-    return (*this) * a;
+	Vector3 b;
+	_mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
+	return b;
 }
 
-float Vector3::dot(const Vector3 & a) const {
-    return x * a.x + y * a.y + z * a.z;
+float Vector3::dot(const Vector3 & a) {
+	float res;
+	__m128 r = _mm_mul_ps(_mm_setr_ps(x, y, z, 0.f), 
+		                  _mm_setr_ps(a.x, a.y, a.z, 0.f));
+	r = _mm_hadd_ps(r, r);
+	r = _mm_hadd_ps(r, r);
+	_mm_store_ss(&res, r);
+	return res;
 }
 
-Vector3 Vector3::cross(const Vector3 & a) const {
-    return Vector3(y * a.z - z * a.y,
-                  (z * a.x - x * a.z),
-                   x * a.y - y * a.x);
+/*  xr = y * a.z - z * a.y
+ *  yr = z * a.x - x * a.z 
+ *  zr = x * a.y - y * a.x
+ */
+Vector3 Vector3::cross(const Vector3 & a) {
+	Vector3 r;
+	__m128 m0 = _mm_load_ps(&x);
+	__m128 a0 = _mm_load_ps(&a.x);
+	_mm_store_ps(&r.x, 
+		_mm_sub_ps(
+		    _mm_mul_ps(_mm_shuffle_ps(m0, m0, _MM_SHUFFLE(3, 0, 2, 1)),
+		               _mm_shuffle_ps(a0, a0, _MM_SHUFFLE(3, 1, 0, 2))),
+		    _mm_mul_ps(_mm_shuffle_ps(m0, m0, _MM_SHUFFLE(3, 1, 0, 2)),
+			   	       _mm_shuffle_ps(a0, a0, _MM_SHUFFLE(3, 0, 2, 1)))));
+	r.w = 0.f;
+	return r;
 }
 
-float Vector3::angle(const Vector3 & a) const {
-    float m1 = this->magnitude();
-    float m2 = a.magnitude();
-    if (m1 > 0.f && m2 > 0.f) {
-        return acosf(this->dot(a) / (m1 * m2));
-    }
-    return 0.f;
+float Vector3::angle(const Vector3 & a) {
+	float m, n, r;
+	__m128 m0, n0, d0;
+
+	// compute magnitude of this
+	m0 = _mm_setr_ps(x, y, z, 0.f);
+	m0 = _mm_mul_ps(m0, m0);
+	m0 = _mm_hadd_ps(m0, m0);
+	m0 = _mm_hadd_ps(m0, m0);
+	m0 = _mm_sqrt_ps(m0);
+
+	_mm_store_ss(&m, m0);
+	
+	// compute magnitude of a
+	n0 = _mm_setr_ps(a.x, a.y, a.z, 0.f);
+	n0 = _mm_mul_ps(n0, n0);
+	n0 = _mm_hadd_ps(n0, n0);
+	n0 = _mm_hadd_ps(n0, n0);
+	n0 = _mm_sqrt_ps(n0);
+
+	_mm_store_ss(&n, n0);
+
+	// ensure no divide by 0
+	if (!n || !m) {
+		return 0.f;
+	}
+	
+	// compute dot product of this and a
+	d0 = _mm_mul_ps(_mm_setr_ps(x, y, z, 0.f),
+		            _mm_setr_ps(a.x, a.y, a.z, 0.f));
+	d0 = _mm_hadd_ps(d0, d0);
+	d0 = _mm_hadd_ps(d0, d0);
+	_mm_store_ss(&r, d0);
+
+	return acosf(r / (m * n));
 }
 
 float Vector3::magnitude(void) const {
-    return sqrt(x * x + y * y + z * z);
+	float r;
+	__m128 m0 = _mm_setr_ps(x, y, z, 0.f);
+
+	m0 = _mm_mul_ps(m0, m0);
+	m0 = _mm_hadd_ps(m0, m0);
+	m0 = _mm_hadd_ps(m0, m0);
+	m0 = _mm_sqrt_ps(m0);
+
+	_mm_store_ss(&r, m0);
+	return r;
 }
 
 Vector3 Vector3::normalize(void) const {
-    float magnitude = this->magnitude();
-    return (magnitude)
-    ? Vector3(x / magnitude, y / magnitude, z / magnitude)
-    : Vector3(0.f, 0.f, 0.f);
+	float r;
+	Vector3 vr(0.f, 0.f, 0.f);
+	__m128 m0 = _mm_setr_ps(x, y, z, 0.f);
+
+	m0 = _mm_mul_ps(m0, m0);
+	m0 = _mm_hadd_ps(m0, m0);
+	m0 = _mm_hadd_ps(m0, m0);
+	m0 = _mm_sqrt_ps(m0);
+
+	_mm_store_ss(&r, m0);
+
+	if (!r) {
+		return vr;
+	}
+
+	_mm_store_ps(&vr.x, _mm_div_ps(_mm_setr_ps(x, y, z, 0.f), _mm_set1_ps(r)));
+	return vr;
 }

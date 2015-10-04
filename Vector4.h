@@ -47,6 +47,7 @@ public:
 		float x, y, z, w;
 	};
 #endif
+
 };
 
 #include "Vector4.inl"
