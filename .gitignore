@@ -5,3 +5,4 @@ cube
 *.sdf
 *.opensdf
 Debug
+*.xcuserstate
