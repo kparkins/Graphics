@@ -14,7 +14,7 @@
 #define force_inline inline __attribute__ ((always_inline))
 #define align_16 __attribute__ ((aligned(16)))
 
-#else
+#elif defined(_WIN32)
 
 #define force_inline inline __forceinline
 #define align_16 __declspec(align(16))

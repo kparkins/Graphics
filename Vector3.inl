@@ -62,7 +62,9 @@ Vector3 Vector3::operator+(const Vector3& a) const {
 }
 
 Vector3 Vector3::add(const Vector3 & a) const {
-    return (*this) + a;
+    Vector3 b;
+    _mm_store_ps(&b.x, _mm_add_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
+    return b;
 }
 
 Vector3 Vector3::operator-(const Vector3 & a) const {

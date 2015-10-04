@@ -126,7 +126,7 @@ void Cube::scale(float value) {
     toWorld = toWorld * mat;
 }
 
-void Cube::translate(Vector3& translate) {
+void Cube::translate(Vector3 translate) {
     Matrix4 trans;
     trans.makeTranslate(translate);
     toWorld = trans * toWorld;

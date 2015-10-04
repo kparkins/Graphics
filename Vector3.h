@@ -69,8 +69,8 @@ public:
     } align_16;
 #elif _WIN32
 	align_16 struct {
-		float x,y,z,w;
-	};
+        float x,y,z,w;
+    };
 #endif
 
 };
