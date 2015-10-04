@@ -207,6 +207,6 @@ Vector3 Vector3::normalize(void) const {
 		return vr;
 	}
 
-	_mm_store_ps(&vr.x, _mm_div_ps(_mm_setr_ps(x, y, z, 0.f), _mm_set1_ps(r)));
+	_mm_store_ps(&vr.x, _mm_div_ps(_mm_setr_ps(x, y, z, 0.f), m0));
 	return vr;
 }
