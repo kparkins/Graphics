@@ -2,7 +2,7 @@
 #include "Vector3.h"
 
 Vector4::Vector4() {
-  memset(static_cast<void*>(&x), 0, sizeof(float) * 4);
+    memset(static_cast<void*>(&x), 0, sizeof(float) * 4);
 }
 
 Vector4::Vector4(float m0, float m1, float m2) {
@@ -25,5 +25,5 @@ Vector3 Vector4::toVector3() {
 
 void Vector4::print(const std::string & comment) const {
     std::cout << comment << std::endl;
-    std::cout << "<x:" << x <<  ", y:" << y << ", z:" << z << ", w:" << z << ">" << std::endl;
+    std::cout << "<x:" << x << ", y:" << y << ", z:" << z << ", w:" << z << ">" << std::endl;
 }
