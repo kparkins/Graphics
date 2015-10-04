@@ -16,7 +16,6 @@ InputHandler::InputHandler() {
     m_keyMap['O'] = std::bind(&InputHandler::orbitClockwiseZ, this, _1);
 }
 
-
 InputHandler::~InputHandler() {
 
 }
@@ -28,54 +27,54 @@ void InputHandler::handle(char key, InputData data) {
     }
 }
 
-void InputHandler::toggleSpin(InputData & input) {
+void InputHandler::toggleSpin(InputData input) {
     Globals::spinValue *= input.data[0];
 }
 
-void InputHandler::toggleShowSphere(InputData & input) {
+void InputHandler::toggleShowSphere(InputData input) {
     Globals::useSphere = !Globals::useSphere;
 }
 
-void InputHandler::translatePositiveX(InputData & input) {
+void InputHandler::translatePositiveX(InputData input) {
     Globals::cube.translate(Vector3(1.f, 0.f, 0.f));
 }
 
-void InputHandler::translateNegativeX(InputData & input) {
+void InputHandler::translateNegativeX(InputData input) {
     Globals::cube.translate(Vector3(-1.f, 0.f, 0.f));
 }
 
-void InputHandler::translatePositiveY(InputData & input) {
+void InputHandler::translatePositiveY(InputData input) {
     Globals::cube.translate(Vector3(0.f, 1.f, 0.f));
 }
 
-void InputHandler::translateNegativeY(InputData & input) {
+void InputHandler::translateNegativeY(InputData input) {
     Globals::cube.translate(Vector3(0.f, -1.f, 0.f));
 }
 
-void InputHandler::translatePositiveZ(InputData & input) {
+void InputHandler::translatePositiveZ(InputData input) {
     Globals::cube.translate(Vector3(0.f, 0.f, 1.f));
 }
 
-void InputHandler::translateNegativeZ(InputData & input) {
+void InputHandler::translateNegativeZ(InputData input) {
     Globals::cube.translate(Vector3(0.f, 0.f, -1.f));
 }
 
-void InputHandler::reset(InputData & input) {
+void InputHandler::reset(InputData input) {
     Globals::cube.toWorld.identity();
 }
 
-void InputHandler::scaleUp(InputData & input) {
+void InputHandler::scaleUp(InputData input) {
     Globals::cube.scale(1.2f);
 }
 
-void InputHandler::scaleDown(InputData & input) {
+void InputHandler::scaleDown(InputData input) {
     Globals::cube.scale(.9f);
 }
 
-void InputHandler::orbitCounterZ(InputData & input) {
+void InputHandler::orbitCounterZ(InputData input) {
     Globals::cube.orbitZ(.1745f);
 }
 
-void InputHandler::orbitClockwiseZ(InputData & input) {
+void InputHandler::orbitClockwiseZ(InputData input) {
     Globals::cube.orbitZ(-.1745f);
 }
