@@ -51,52 +51,65 @@ void Matrix4::identity() {
 
 Matrix4 Matrix4::operator*(const Matrix4 & a) {
     Matrix4 b;
-
     __m128 m0c = _mm_load_ps(m[0]);
     __m128 m1c = _mm_load_ps(m[1]);
     __m128 m2c = _mm_load_ps(m[2]);
     __m128 m3c = _mm_load_ps(m[3]);
-    
-    
     __m128 a0v = _mm_set1_ps(a.m[0][0]);
     __m128 a1v = _mm_set1_ps(a.m[0][1]);
     __m128 a2v = _mm_set1_ps(a.m[0][2]);
     __m128 a3v = _mm_set1_ps(a.m[0][3]);
-    
-    __m128 r0 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
-                           _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
-    
-    _mm_store_ps(&b[0][0], r0);
+   
+    _mm_store_ps(&b[0][0], 
+        _mm_add_ps(
+            _mm_add_ps(
+                _mm_mul_ps(m0c, a0v), 
+                _mm_mul_ps(m1c, a1v)),
+            _mm_add_ps(
+                _mm_mul_ps(m2c, a2v), 
+                _mm_mul_ps(m3c, a3v))));
     
     a0v = _mm_set1_ps(a.m[1][0]);
     a1v = _mm_set1_ps(a.m[1][1]);
     a2v = _mm_set1_ps(a.m[1][2]);
     a3v = _mm_set1_ps(a.m[1][3]);
     
-    __m128 r1 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
-                           _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
-    
-    _mm_store_ps(&b[1][0], r1);
+    _mm_store_ps(&b[1][0], 
+        _mm_add_ps(
+            _mm_add_ps(
+                _mm_mul_ps(m0c, a0v), 
+                _mm_mul_ps(m1c, a1v)),
+            _mm_add_ps(
+                _mm_mul_ps(m2c, a2v), 
+                _mm_mul_ps(m3c, a3v))));
     
     a0v = _mm_set1_ps(a.m[2][0]);
     a1v = _mm_set1_ps(a.m[2][1]);
     a2v = _mm_set1_ps(a.m[2][2]);
     a3v = _mm_set1_ps(a.m[2][3]);
-    
-    __m128 r2 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
-                           _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
-    
-    _mm_store_ps(&b[2][0], r2);
+
+    _mm_store_ps(&b[2][0], 
+        _mm_add_ps(
+            _mm_add_ps(
+                _mm_mul_ps(m0c, a0v), 
+                _mm_mul_ps(m1c, a1v)),
+            _mm_add_ps(
+                _mm_mul_ps(m2c, a2v), 
+                _mm_mul_ps(m3c, a3v))));
     
     a0v = _mm_set1_ps(a.m[3][0]);
     a1v = _mm_set1_ps(a.m[3][1]);
     a2v = _mm_set1_ps(a.m[3][2]);
     a3v = _mm_set1_ps(a.m[3][3]);
     
-    __m128 r3 = _mm_add_ps(_mm_add_ps(_mm_mul_ps(m0c, a0v), _mm_mul_ps(m1c, a1v)),
-                           _mm_add_ps(_mm_mul_ps(m2c, a2v), _mm_mul_ps(m3c, a3v)));
-    
-    _mm_store_ps(&b[3][0], r3);
+    _mm_store_ps(&b[3][0], 
+        _mm_add_ps(
+            _mm_add_ps(
+                _mm_mul_ps(m0c, a0v), 
+                _mm_mul_ps(m1c, a1v)),
+            _mm_add_ps(
+                _mm_mul_ps(m2c, a2v),
+                _mm_mul_ps(m3c, a3v))));
     return b;
 }
 

@@ -109,10 +109,10 @@ void Window::keyCallback(unsigned char key, int x, int y) {
     input.data[0] = x;
     input.data[1] = y;
     m_inputHandler.handle(key, input);
-    Vector3 position(Globals::cube.toWorld.get(3, 0),
-                     Globals::cube.toWorld.get(3, 1),
-                     Globals::cube.toWorld.get(3, 2));
-    position.print("Key Press # -- " + std::to_string(keyPressCounter++));
+    Vector3 position(Globals::cube.toWorld[3][0],
+                     Globals::cube.toWorld[3][1],
+                     Globals::cube.toWorld[3][2]);
+    position.print("Key Press -- " + std::to_string(keyPressCounter++));
 }
 
 
