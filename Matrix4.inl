@@ -51,15 +51,7 @@ void Matrix4::identity() {
 
 Matrix4 Matrix4::operator*(const Matrix4 & a) {
     Matrix4 b;
-    
-    /*for (int row = 0; row < 4; ++row) {
-     for (int col = 0; col < 4; ++col) {
-     b[col][row] = m[0][row] * a[col][0] +
-     m[1][row] * a[col][1] +
-     m[2][row] * a[col][2] +
-     m[3][row] * a[col][3];
-     }
-     } */
+
     __m128 m0c = _mm_load_ps(m[0]);
     __m128 m1c = _mm_load_ps(m[1]);
     __m128 m2c = _mm_load_ps(m[2]);
@@ -137,8 +129,7 @@ Matrix4& Matrix4::makeRotateY(float angle) {
 
 Matrix4& Matrix4::makeRotateZ(float angle) {
     this->identity();
-    
-    //Configure this matrix to be a rotation about the Z-Axis by 'angle' radians
+
     m[0][0] = cos(angle);
     m[0][1] = sin(angle);
     m[1][0] = -sin(angle);
@@ -149,8 +140,7 @@ Matrix4& Matrix4::makeRotateZ(float angle) {
 
 Matrix4& Matrix4::makeScale(float sx, float sy, float sz) {
     this->identity();
-    
-    //Configure this matrix to be a sclaing by sx, sy, sz
+
     m[0][0] *= sx;
     m[1][1] *= sy;
     m[2][2] *= sz;
@@ -165,8 +155,7 @@ Matrix4& Matrix4::makeScale(float s) {
 
 Matrix4& Matrix4::makeTranslate(float x, float y, float z) {
     this->identity();
-    
-    //Configure this matrix to be a translation by vector 'a'
+
     m[3][0] = x;
     m[3][1] = y;
     m[3][2] = z;

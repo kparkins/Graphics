@@ -184,8 +184,17 @@ void Matrix4::print(const std::string & comment) {
     //Determine the necessary width to the left of the decimal point
     float* elementPtr = (float*)m;
     float maxValue = fabsf(*(elementPtr++));
-    while(elementPtr++ < ((float*)m+16)) if(fabsf(*elementPtr) > maxValue) maxValue = fabsf(*elementPtr);
-    while(maxValue >= 10.0) { ++integerWidth; maxValue /= 10.0; }
+
+    while (elementPtr++ < this->ptr() + 16) {
+        if (fabsf(*elementPtr) > maxValue) {
+            maxValue = fabsf(*elementPtr);
+        }
+    }
+
+    while(maxValue >= 10.0) {
+        ++integerWidth;
+        maxValue /= 10.0; 
+    }
     
     //Sum up the widths to determine the cell width needed
     int cellWidth = integerWidth + pointWidth + precisionWidth;

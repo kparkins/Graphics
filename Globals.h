@@ -20,6 +20,10 @@ public:
     static DrawData drawData;
     static UpdateData updateData;
     static Sphere sphere;
+
+    static float spinValue;
+    static bool useSphere;
+
     //Feel free to add more member variables as needed
     
 };

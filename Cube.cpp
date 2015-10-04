@@ -126,8 +126,16 @@ void Cube::scale(float value) {
     toWorld = toWorld * mat;
 }
 
+#if defined(__GNUC__) | defined(__APPLE__)
 void Cube::translate(Vector3 translate) {
     Matrix4 trans;
     trans.makeTranslate(translate);
     toWorld = trans * toWorld;
 }
+#elif _WIN32
+void Cube::translate(Vector3 & translate) {
+    Matrix4 trans;
+    trans.makeTranslate(translate);
+    toWorld = trans * toWorld;
+}
+#endif

@@ -21,8 +21,13 @@ public:
     void orbitY(float);
     void orbitZ(float);
     void scale(float);
+
+#if defined(__GNUC__) | defined(__APPLE__)
     void translate(Vector3 translate);
-    
+#elif _WIN32
+    void translate(Vector3 & translate);
+#endif
+
 };
 
 #endif

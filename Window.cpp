@@ -13,8 +13,7 @@
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
-float Window::spinValue = .005;
-bool Window::useSphere = false;
+InputHandler Window::m_inputHandler;
 
 
 void Window::initialize(void) {
@@ -22,7 +21,6 @@ void Window::initialize(void) {
     Vector4 lightPos(0.0, 10.0, 15.0, 1.0);
     Globals::light.position = lightPos;
     Globals::light.quadraticAttenuation = 0.02;
-    Window::spinValue = .005;
     
     //Initialize cube matrix:
     Globals::cube.toWorld.identity();
@@ -40,8 +38,8 @@ void Window::idleCallback() {
     Globals::updateData.dt = 1.0/60.0;// 60 fps
     
     //Rotate cube; if it spins too fast try smaller values and vice versa
-    if(!useSphere) {
-        Globals::cube.spin(spinValue);
+    if(!Globals::useSphere) {
+        Globals::cube.spin(Globals::spinValue);
         Globals::cube.update(Globals::updateData);
     } else {
         Globals::sphere.update(Globals::updateData);
@@ -85,7 +83,7 @@ void Window::displayCallback() {
     //(if we didn't the light would move with the camera, why is that?)
     Globals::light.bind(0);
     
-    if (!useSphere) {
+    if (!Globals::useSphere) {
         Globals::cube.draw(Globals::drawData);
     } else {
         Globals::sphere.draw(Globals::drawData);
@@ -107,56 +105,16 @@ void Window::displayCallback() {
 
 void Window::keyCallback(unsigned char key, int x, int y) {
     static int keyPressCounter;
-    switch (key) {
-        case 'b':
-            useSphere = !useSphere;
-            break;
-        case 'x':
-            Globals::cube.translate(Vector3(-1.f, 0.f, 0.f));
-            break;
-        case 'X':
-            Globals::cube.translate(Vector3(1.f, 0.f, 0.f));
-            break;
-        case 'y':
-            Globals::cube.translate(Vector3(0.f, -1.f, 0.f));
-            break;
-        case 'Y':
-            Globals::cube.translate(Vector3(0.f, 1.f, 0.f));
-            break;
-        case 'z':
-            Globals::cube.translate(Vector3(0.f, 0.f, 1.f));
-            break;
-        case 'Z':
-            Globals::cube.translate(Vector3(0.f, 0.f, -1.f));
-            break;
-        case 'c':
-            Window::spinValue *= -1.f;
-            break;
-        case 'r':
-            Globals::cube.toWorld.identity();
-            break;
-        case 's':
-            Globals::cube.scale(.9);
-            break;
-        case 'S':
-            Globals::cube.scale(1.1);
-            break;
-        case 'o':
-            Globals::cube.orbitZ(.1745);
-            break;
-        case 'O':
-            Globals::cube.orbitZ(-.1745);
-            break;
-        default:
-            break;
-    }
+    InputData input;
+    input.data[0] = x;
+    input.data[1] = y;
+    m_inputHandler.handle(key, input);
     Vector3 position(Globals::cube.toWorld.get(3, 0),
                      Globals::cube.toWorld.get(3, 1),
                      Globals::cube.toWorld.get(3, 2));
     position.print("Key Press # -- " + std::to_string(keyPressCounter++));
 }
 
-//TODO: Keyboard callbacks!
 
 //TODO: Function Key callbacks!
 
