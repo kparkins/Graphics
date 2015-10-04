@@ -39,7 +39,7 @@ public:
     void print(const std::string &) const;
     
 #if defined(__GNUC__)
-	struct {
+    struct {
 		float x, y, z, w;
     } align_16;
 #elif defined(_WIN32)
