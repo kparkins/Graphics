@@ -2,7 +2,7 @@
 #include "Window.h"
 
 Drawable::Drawable() {
-    this->toWorld.identity();
+    this->m_toWorld.identity();
 }
 
 Drawable::~Drawable() {

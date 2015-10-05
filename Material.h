@@ -13,16 +13,16 @@ public:
     
     virtual void apply(void);
     
-    Color ambientColor;
-    Color diffuseColor;
-    Color specularColor;
-    Color emissionColor;
+    Color m_ambientColor;
+    Color m_diffuseColor;
+    Color m_specularColor;
+    Color m_emissionColor;
     
-    float shininess;
+    float m_shininess;
     
-    //A color variable used in Projects 1, 2, and 3
+    //A m_color variable used in Projects 1, 2, and 3
     //This can be removed once materials are implemented
-    Color color;
+    Color m_color;
     
 };
 

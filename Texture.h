@@ -16,12 +16,12 @@ public:
     void bind(void);
     void unbind(void);
     
-    unsigned int id;
-    static Texture* emptyTexture;
+    unsigned int m_id;
+    static Texture* m_emptyTexture;
     
 protected:
     
-    const char* filename;
+    const char*m_filename;
     
     static unsigned char* loadPPM(const char*, int&, int&);
     

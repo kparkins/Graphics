@@ -60,7 +60,7 @@ void InputHandler::translateNegativeZ(InputData input) {
 }
 
 void InputHandler::reset(InputData input) {
-    Globals::cube.toWorld.identity();
+    Globals::cube.m_toWorld.identity();
 }
 
 void InputHandler::scaleUp(InputData input) {

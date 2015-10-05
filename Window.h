@@ -7,7 +7,7 @@ class Window {
     
 public:
     
-    static int width, height; 	            // window size
+    static int width, height; 	            // window m_size
 
     static void initialize(void);
     static void idleCallback(void);

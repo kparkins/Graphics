@@ -67,9 +67,7 @@ public:
     
     void print(const std::string &);
     
-protected:
-    
-    align_16 float m[4][4];
+    align_16 float m_matrix[4][4];
     
 };
 

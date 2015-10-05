@@ -15,8 +15,8 @@ class Drawable {
     
 public:
     
-    Matrix4 toWorld;
-    Material material;
+    Matrix4 m_toWorld;
+    Material m_material;
     
     Drawable(void);
     ~Drawable(void);

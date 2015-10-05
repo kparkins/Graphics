@@ -8,15 +8,15 @@
 
 Material::Material() {
     //Material setup goes hurr
-    ambientColor = Color::ambientMaterialDefault();
-    diffuseColor = Color::diffuseMaterialDefault();
-    specularColor = Color::specularMaterialDefault();
-    emissionColor = Color::emissionMaterialDefault();
-    shininess = 10.0;
+    m_ambientColor = Color::ambientMaterialDefault();
+    m_diffuseColor = Color::diffuseMaterialDefault();
+    m_specularColor = Color::specularMaterialDefault();
+    m_emissionColor = Color::emissionMaterialDefault();
+    m_shininess = 10.0;
     
-    //Set the initial color to a random pastel color
+    //Set the initial m_color to a random pastel m_color
     //Can be removed once materials are implemented
-    color = Color::randomPastel();
+    m_color = Color::randomPastel();
 }
 
 Material::~Material() {
@@ -24,12 +24,12 @@ Material::~Material() {
 }
 
 void Material::apply(void) {
-    //Set the material properties for ambient, diffuse, specular, emission, and shininess
+    //Set the m_material properties for ambient, diffuse, specular, emission, and m_shininess
     //Hint: Lookup how glMaterialfv works
     
-    //Set the color property (can be removed once materials are implemented)
+    //Set the m_color property (can be removed once materials are implemented)
     //Used for projects 1, 2, and 3
-    glColor3fv(color.ptr());
+    glColor3fv(m_color.ptr());
 }
 
 

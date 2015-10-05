@@ -43,7 +43,7 @@ Color::~Color() {
 
 
 float* Color::ptr(void) {
-    //Returns a pointer to the color array
+    //Returns a pointer to the m_color array
     return &c[0];
 }
 
@@ -98,9 +98,9 @@ Color Color::lightBrown(void) {
 
 Color Color::randomPastel(void) {
     unsigned int color =
-        ((0x50 + (rand() % 128)) << 0x18) +
-        ((0x50 + (rand() % 128)) << 0x10) +
-        ((0x50 + (rand() % 128)) << 0x08) +
+        ((0x50 + (static_cast<unsigned int>(rand()) % 128)) << 0x18) +
+        ((0x50 + (static_cast<unsigned int>(rand()) % 128)) << 0x10) +
+        ((0x50 + (static_cast<unsigned int>(rand()) % 128)) << 0x08) +
         0xFF;
     
     return Color(color);
@@ -108,9 +108,9 @@ Color Color::randomPastel(void) {
 
 Color Color::randomDarkPastel(void) {
     unsigned int color =
-        ((0x10 + (rand() % 128)) << 0x18) +
-        ((0x10 + (rand() % 128)) << 0x10) +
-        ((0x10 + (rand() % 128)) << 0x08) +
+        ((0x10 + (static_cast<unsigned int>(rand()) % 128)) << 0x18) +
+        ((0x10 + (static_cast<unsigned int>(rand()) % 128)) << 0x10) +
+        ((0x10 + (static_cast<unsigned int>(rand()) % 128)) << 0x08) +
         0xFF;
     
     return Color(color);
@@ -118,16 +118,16 @@ Color Color::randomDarkPastel(void) {
 
 Color Color::randomBrightPastel(void) {
     unsigned int color =
-        ((0x10 + (rand() % 200)) << 0x18) +
-        ((0x10 + (rand() % 200)) << 0x10) +
-        ((0x10 + (rand() % 200)) << 0x08) +
+        ((0x10 + (static_cast<unsigned int>(rand()) % 200)) << 0x18) +
+        ((0x10 + (static_cast<unsigned int>(rand()) % 200)) << 0x10) +
+        ((0x10 + (static_cast<unsigned int>(rand()) % 200)) << 0x08) +
         0xFF;
     
     return Color(color);
 }
 
 Color Color::randomDarkShade(void) {
-    int shade = 0x0 + (rand() % 80);
+    unsigned int shade = 0x0 + (rand() % 80);
     
     unsigned int color =
         (shade << 0x18) +

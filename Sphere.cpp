@@ -8,48 +8,48 @@
 
 
 Sphere::Sphere(double radius, int slices, int stacks) : Drawable() {
-    this->radius = radius;
-    this->slices = slices;
-    this->stacks = stacks;
-    this->velocity = Vector3(30.f, 40.f, 50.f);
+    this->m_radius = radius;
+    this->m_slices = slices;
+    this->m_stacks = stacks;
+    this->m_velocity = Vector3(30.f, 40.f, 50.f);
 }
 
 void Sphere::draw(DrawData& data) {
-    material.apply();
+    m_material.apply();
     
     glMatrixMode(GL_MODELVIEW);
     
     glPushMatrix();
-    glMultMatrixf(toWorld.ptr());
+    glMultMatrixf(m_toWorld.ptr());
     
-    glutSolidSphere(radius, slices, stacks);
+    glutSolidSphere(m_radius, m_slices, m_stacks);
     
     glPopMatrix();
 }
 
 
 void Sphere::update(UpdateData& data) {
-    toWorld = Matrix4().makeTranslate(velocity * data.dt) * toWorld;
+    m_toWorld = Matrix4().makeTranslate(m_velocity * data.m_dt) * m_toWorld;
     
-    Vector3 position(toWorld[3][0], toWorld[3][1], toWorld[3][2]);
+    Vector3 position(m_toWorld[3][0], m_toWorld[3][1], m_toWorld[3][2]);
 
     if(position.x < -6 || position.x > 6) {
-        velocity.x *= -1.f;
+        m_velocity.x *= -1.f;
     }
     
     if(position.y < -6 || position.y > 6) {
-        velocity.y *= -1.f;
+        m_velocity.y *= -1.f;
     }
     
     if(position.z < -5.1 || position.z > 5.1) {
-        velocity.z *= -1.f;
+        m_velocity.z *= -1.f;
     }
     
-    velocity.y += -.25f;
-    velocity = velocity * .992;
+    m_velocity.y += -.25f;
+    m_velocity = m_velocity * .992;
     
-    if (velocity.magnitude() < .1) {
-        velocity.multiply(0.f);
+    if (m_velocity.magnitude() < .1) {
+        m_velocity.multiply(0.f);
     }
 }
 

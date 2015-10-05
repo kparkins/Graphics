@@ -7,21 +7,21 @@
 #endif
 
 
-Texture* Texture::emptyTexture = new Texture();
+Texture* Texture::m_emptyTexture = new Texture();
 
 Texture::Texture() {
-    id = 0;
+    m_id = 0;
 }
 
 Texture::Texture(const char* fname) {
-    filename = fname;
+    m_filename = fname;
     
     GLuint texture[1];     // storage for one texture
     int twidth, theight;   // texture width/height [pixels]
     unsigned char* tdata;  // texture pixel data
     
     //Load image file
-    tdata = loadPPM(filename, twidth, theight);
+    tdata = loadPPM(m_filename, twidth, theight);
     
     //If the image wasn't loaded, can't continue
     if(tdata == NULL) {
@@ -30,7 +30,7 @@ Texture::Texture(const char* fname) {
     
     //Create ID for texture
     glGenTextures(1, &texture[0]);
-    id=texture[0];
+    m_id =texture[0];
     
     //Set this texture to be the one we are working with
     glBindTexture(GL_TEXTURE_2D, texture[0]);
@@ -41,7 +41,7 @@ Texture::Texture(const char* fname) {
     //Make sure no bytes are padded:
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     
-    //Select GL_MODULATE to mix texture with quad color for shading:
+    //Select GL_MODULATE to mix texture with quad m_color for shading:
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     
     //Use bilinear interpolation:
@@ -57,7 +57,7 @@ Texture::~Texture() {
 }
 
 void Texture::bind(void) {
-    glBindTexture(GL_TEXTURE_2D, id);
+    glBindTexture(GL_TEXTURE_2D, m_id);
 }
 
 void Texture::unbind(void) {
@@ -65,7 +65,7 @@ void Texture::unbind(void) {
 }
 
 /** Load a ppm file from disk.
- @input filename The location of the PPM file.  If the file is not found, an error message
+ @input m_filename The location of the PPM file.  If the file is not found, an error message
  will be printed and this function will return 0
  @input width This will be modified to contain the width of the loaded image, or 0 if file not found
  @input height This will be modified to contain the height of the loaded image, or 0 if file not found

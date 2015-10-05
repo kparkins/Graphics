@@ -21,7 +21,7 @@
 
 #include "Shader.h"
 
-GLhandleARB Shader::currentlyBoundShaderID = 0x0;
+GLhandleARB Shader::m_currentlyBoundShaderID = 0x0;
 
 Shader::Shader(const char *vert, const char *frag, bool isFile) {
 	if(isFile) {
@@ -43,19 +43,19 @@ Shader::Shader(const char *vert, const char *frag, bool isFile) {
 }
 
 Shader::~Shader() {
-	glDeleteObjectARB(pid);
+	glDeleteObjectARB(m_pid);
 }
 
 void Shader::bind() {
-    if(currentlyBoundShaderID != pid) {
-        currentlyBoundShaderID = pid;
-        glUseProgramObjectARB(pid);
+    if(m_currentlyBoundShaderID != m_pid) {
+        m_currentlyBoundShaderID = m_pid;
+        glUseProgramObjectARB(m_pid);
     }
 }
 
 void Shader::unbind() {
-    if(currentlyBoundShaderID != (void*)(0x0)) {
-        currentlyBoundShaderID = (void*)(0x0);
+    if(m_currentlyBoundShaderID != (void*)(0x0)) {
+        m_currentlyBoundShaderID = (void*)(0x0);
         glUseProgramObjectARB(0);
     }
 }
@@ -64,14 +64,14 @@ void Shader::printLog(const char* tag) {
 	char glslLog[1024];
 	GLsizei glslLogSize;
     
-    //Extract the error log for this shader's pid
-	glGetInfoLogARB(pid, 1024, &glslLogSize, glslLog);
+    //Extract the error log for this shader's m_pid
+	glGetInfoLogARB(m_pid, 1024, &glslLogSize, glslLog);
     
     //If the log isn't empty, print the contents
     if(glslLogSize > 0) {
-        std::cerr << tag << "(" << pid << ") -  Shader error log:" << std::endl << glslLog << std::endl;
+        std::cerr << tag << "(" << m_pid << ") -  Shader error log:" << std::endl << glslLog << std::endl;
     } else {
-        std::cerr << tag << "(" << pid << ") -  Shaders compiled successfully!" << std::endl;
+        std::cerr << tag << "(" << m_pid << ") -  Shaders compiled successfully!" << std::endl;
     }
 }
 
@@ -85,7 +85,7 @@ char* Shader::read(const char *filename) {
         std::exit(-1);
     }
     
-	//Obtain the file size
+	//Obtain the file m_size
 	fseek(fp, 0, SEEK_END);
 	long size = ftell(fp);
 	rewind(fp);
@@ -128,17 +128,17 @@ void Shader::setup(const char *vs, const char *fs) {
 		std::cerr << "Fragment program log: " << glslLog << std::endl;
     }
     //Create a new Shader Program
-	pid = glCreateProgramObjectARB();
+	m_pid = glCreateProgramObjectARB();
     
     //Attach the Vertex and Fragment shaders to the Shader Program
-	glAttachObjectARB(pid, vid);
-	glAttachObjectARB(pid, fid);
+	glAttachObjectARB(m_pid, vid);
+	glAttachObjectARB(m_pid, fid);
     
 	//Delete shader objects since they have been attached to a program
 	glDeleteObjectARB(vid);
 	glDeleteObjectARB(fid);
 	
 	//Link it!
-	glLinkProgramARB(pid);
+	glLinkProgramARB(m_pid);
 }
 

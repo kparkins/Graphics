@@ -19,15 +19,15 @@ InputHandler Window::m_inputHandler;
 void Window::initialize(void) {
     //Setup the light
     Vector4 lightPos(0.0, 10.0, 15.0, 1.0);
-    Globals::light.position = lightPos;
-    Globals::light.quadraticAttenuation = 0.02;
+    Globals::light.m_position = lightPos;
+    Globals::light.m_quadraticAttenuation = 0.02;
     
     //Initialize cube matrix:
-    Globals::cube.toWorld.identity();
+    Globals::cube.m_toWorld.identity();
 
-    //Setup the cube's material properties
+    //Setup the cube's m_material properties
     Color color(0x23ff27ff);
-    Globals::cube.material.color = color;
+    Globals::cube.m_material.m_color = color;
 }
 
 //----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ void Window::initialize(void) {
 // This is called at the start of every new "frame" (qualitatively)
 void Window::idleCallback() {
     //Set up a static time delta for update calls
-    Globals::updateData.dt = 1.0/60.0;// 60 fps
+    Globals::updateData.m_dt = 1.0/60.0;// 60 fps
     
     //Rotate cube; if it spins too fast try smaller values and vice versa
     if(!Globals::useSphere) {
@@ -54,7 +54,7 @@ void Window::idleCallback() {
 void Window::reshapeCallback(int w, int h) {
     width = w;                                                       //Set the window width
     height = h;                                                      //Set the window height
-    glViewport(0, 0, w, h);                                          //Set new viewport size
+    glViewport(0, 0, w, h);                                          //Set new viewport m_size
     glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
     gluPerspective(60.0, double(width)/(double)height, 1.0, 1000.0); //Set perspective projection viewing frustum
@@ -63,7 +63,7 @@ void Window::reshapeCallback(int w, int h) {
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
 void Window::displayCallback() {
-    //Clear color and depth buffers
+    //Clear m_color and depth buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     //Set the OpenGL matrix mode to ModelView
@@ -79,7 +79,7 @@ void Window::displayCallback() {
     glLoadMatrixf(Globals::camera.getInverseMatrix().ptr());
     
     //Bind the light to slot 0.  We do this after the camera matrix is loaded so that
-    //the light position will be treated as world coordiantes
+    //the light m_position will be treated as world coordiantes
     //(if we didn't the light would move with the camera, why is that?)
     Globals::light.bind(0);
     
@@ -109,9 +109,9 @@ void Window::keyCallback(unsigned char key, int x, int y) {
     input.data[0] = x;
     input.data[1] = y;
     m_inputHandler.handle(key, input);
-    Vector3 position(Globals::cube.toWorld[3][0],
-                     Globals::cube.toWorld[3][1],
-                     Globals::cube.toWorld[3][2]);
+    Vector3 position(Globals::cube.m_toWorld[3][0],
+                     Globals::cube.m_toWorld[3][1],
+                     Globals::cube.m_toWorld[3][2]);
     position.print("Key Press -- " + std::to_string(keyPressCounter++));
 }
 

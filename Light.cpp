@@ -9,14 +9,14 @@
 #endif
 
 
-Light::Light() : bindID(-1) { 
-    ambientColor = Color::ambientDefault();
-    diffuseColor = Color::diffuseDefault();
-    specularColor = Color::specularDefault();
+Light::Light() : m_bindID(-1) {
+    m_ambientColor = Color::ambientDefault();
+    m_diffuseColor = Color::diffuseDefault();
+    m_specularColor = Color::specularDefault();
     
-    constantAttenuation = 1.0;
-    linearAttenuation = 0.0;
-    quadraticAttenuation = 0.05;
+    m_constantAttenuation = 1.0;
+    m_linearAttenuation = 0.0;
+    m_quadraticAttenuation = 0.05;
 }
 
 Light::~Light() {
@@ -29,29 +29,29 @@ void Light::bind(int id) {
         return;
     }
     
-    //Set the bindID
-    bindID = id;
+    //Set the m_bindID
+    m_bindID = id;
     
-    //Configure the light at the bindID
-    glEnable(GL_LIGHT0 + bindID);
+    //Configure the light at the m_bindID
+    glEnable(GL_LIGHT0 + m_bindID);
     
-    //Configure the color of the light
-    glLightfv(GL_LIGHT0 + bindID, GL_AMBIENT, ambientColor.ptr());
-    glLightfv(GL_LIGHT0 + bindID, GL_DIFFUSE, diffuseColor.ptr());
-    glLightfv(GL_LIGHT0 + bindID, GL_SPECULAR, specularColor.ptr());
+    //Configure the m_color of the light
+    glLightfv(GL_LIGHT0 + m_bindID, GL_AMBIENT, m_ambientColor.ptr());
+    glLightfv(GL_LIGHT0 + m_bindID, GL_DIFFUSE, m_diffuseColor.ptr());
+    glLightfv(GL_LIGHT0 + m_bindID, GL_SPECULAR, m_specularColor.ptr());
     
     //Configure the attenuation properties of the light
     //Add support for Constant Attenuation
     //Add support for Linear Attenuation
-    glLightf(GL_LIGHT0 + bindID, GL_QUADRATIC_ATTENUATION, quadraticAttenuation);
+    glLightf(GL_LIGHT0 + m_bindID, GL_QUADRATIC_ATTENUATION, m_quadraticAttenuation);
     
     //Position the light
-    glLightfv(GL_LIGHT0 + bindID, GL_POSITION, position.ptr());
+    glLightfv(GL_LIGHT0 + m_bindID, GL_POSITION, m_position.ptr());
     
     //Setup spotlight direction, angle, and exponent here
 }
 
 void Light::unbind(void) {
-    glDisable(GL_LIGHT0 + bindID);
-    bindID = -1;
+    glDisable(GL_LIGHT0 + m_bindID);
+    m_bindID = -1;
 }

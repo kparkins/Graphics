@@ -6,11 +6,8 @@
     #include <GL/glut.h>
 #endif
 
-#include "Window.h"
-#include "math.h"
-
 Cube::Cube(float size) : Drawable() {
-    this->size = size;
+    this->m_size = size;
 }
 
 Cube::~Cube() {
@@ -19,18 +16,18 @@ Cube::~Cube() {
 
 
 void Cube::draw(DrawData & data) {
-    float halfSize = size / 2.0;
+    float halfSize = m_size / 2.0;
     
-    //Apply the material properties
-    //From here forward anything drawn will be drawn with this material
-    material.apply();
+    //Apply the m_material properties
+    //From here forward anything drawn will be drawn with this m_material
+    m_material.apply();
     
     //Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
     glMatrixMode(GL_MODELVIEW);
     
-    //Push a save state onto the matrix stack, and multiply in the toWorld matrix
+    //Push a save state onto the matrix stack, and multiply in the m_toWorld matrix
     glPushMatrix();
-    glMultMatrixf(toWorld.ptr());
+    glMultMatrixf(m_toWorld.ptr());
     
     //Make cube!
     //Note: The glBegin, and glEnd should always be as close to the glNormal/glVertex calls as possible
@@ -84,7 +81,7 @@ void Cube::draw(DrawData & data) {
     glEnd();
     
     //The above glBegin, glEnd, glNormal and glVertex calls can be replaced with a glut convenience function
-    //glutSolidCube(size);
+    //glutSolidCube(m_size);
     
     //Pop the save state off the matrix stack
     //This will undo the multiply we did earlier
@@ -99,43 +96,43 @@ void Cube::update(UpdateData& data) {
 void Cube::spin(float radians) {
     Matrix4 rotation;
     rotation.makeRotateY(radians);
-    toWorld = toWorld * rotation;
+    m_toWorld = m_toWorld * rotation;
 }
 
 
 void Cube::orbitY(float radians) {
     Matrix4 rot;
     rot.makeRotateY(radians);
-    toWorld = rot * toWorld;
+    m_toWorld = rot * m_toWorld;
 }
 void Cube::orbitX(float radians) {
     Matrix4 rot;
     rot.makeRotateX(radians);
-    toWorld = rot * toWorld;
+    m_toWorld = rot * m_toWorld;
 }
 
 void Cube::orbitZ(float radians) {
     Matrix4 rot;
     rot.makeRotateZ(radians);
-    toWorld = rot * toWorld;
+    m_toWorld = rot * m_toWorld;
 }
 
 void Cube::scale(float value) {
     Matrix4 mat;
     mat.makeScale(value);
-    toWorld = toWorld * mat;
+    m_toWorld = m_toWorld * mat;
 }
 
 #if defined(__GNUC__) | defined(__APPLE__)
 void Cube::translate(Vector3 translate) {
     Matrix4 trans;
     trans.makeTranslate(translate);
-    toWorld = trans * toWorld;
+    m_toWorld = trans * m_toWorld;
 }
 #elif _WIN32
 void Cube::translate(Vector3 & translate) {
     Matrix4 trans;
     trans.makeTranslate(translate);
-    toWorld = trans * toWorld;
+    m_toWorld = trans * m_toWorld;
 }
 #endif

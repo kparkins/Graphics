@@ -7,7 +7,7 @@ Camera::Camera() {
     up.set(0.0, 1.0, 0.0);
     
     //Pre-define a camera matrix (and its inverse) that are shifted 'e' from the origin
-    //This is used as a default camera position for Project 1
+    //This is used as a default camera m_position for Project 1
     c.set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, e[0], e[1], e[2], 1);
     ci.set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -e[0], -e[1], -e[2], 1);
 }

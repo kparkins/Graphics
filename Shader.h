@@ -43,8 +43,8 @@ public:
     
 protected:
     
-    GLhandleARB pid;
-    static GLhandleARB currentlyBoundShaderID;
+    GLhandleARB m_pid;
+    static GLhandleARB m_currentlyBoundShaderID;
     
 private:
     

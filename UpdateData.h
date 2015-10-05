@@ -10,7 +10,7 @@ public:
     UpdateData(void);
     virtual ~UpdateData(void);
     
-    double dt;
+    double m_dt;
     //Place any objects here that you want to pass to an update() call
 };
 

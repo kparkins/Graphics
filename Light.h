@@ -16,19 +16,19 @@ public:
     void bind(int);
     void unbind(void);
 
-    Vector4 position;
+    Vector4 m_position;
     
-    Color ambientColor;
-    Color diffuseColor;
-    Color specularColor;
+    Color m_ambientColor;
+    Color m_diffuseColor;
+    Color m_specularColor;
     
-    float constantAttenuation;
-    float linearAttenuation;
-    float quadraticAttenuation;
+    float m_constantAttenuation;
+    float m_linearAttenuation;
+    float m_quadraticAttenuation;
     
 protected:
     
-    int bindID;
+    int m_bindID;
     
 };
 

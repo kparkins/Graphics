@@ -34,9 +34,9 @@ protected:
     void parse(std::string&);
     
     //Storage vectors
-    std::vector<Vector3*>* vertices;
-    std::vector<Vector3*>* normals;
-    std::vector<Face*>* faces;
+    std::vector<Vector3*>* m_vertices;
+    std::vector<Vector3*>* m_normals;
+    std::vector<Face*>* m_faces;
     
 };
 

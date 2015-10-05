@@ -22,9 +22,9 @@
 
 
 OBJObject::OBJObject(std::string filename) : Drawable() {
-    this->vertices = new std::vector<Vector3*>();
-    this->normals = new std::vector<Vector3*>();
-    this->faces = new std::vector<Face*>();
+    this->m_vertices = new std::vector<Vector3*>();
+    this->m_normals = new std::vector<Vector3*>();
+    this->m_faces = new std::vector<Face*>();
     
     parse(filename);
 }
@@ -32,35 +32,35 @@ OBJObject::OBJObject(std::string filename) : Drawable() {
 OBJObject::~OBJObject() {
     //Delete any dynamically allocated memory/objects here
 #ifdef __GNUC__
-    deleteVector(Vector3*, vertices);
+    deleteVector(Vector3*, m_vertices);
 #elif _WIN32
-	for (auto it = vertices->begin(); it != vertices->end(); ++it) {
+	for (auto it = m_vertices->begin(); it != m_vertices->end(); ++it) {
 		(*it)->~Vector3();
 		free(static_cast<void*>(*it));
 	}
 #endif
-    deleteVector(Vector3*, normals);
-    deleteVector(Face*, faces);
+    deleteVector(Vector3*, m_normals);
+    deleteVector(Face*, m_faces);
 }
 
 void OBJObject::draw(DrawData& data) {
-    material.apply();
+    m_material.apply();
     
     glMatrixMode(GL_MODELVIEW);
     
     glPushMatrix();
-    glMultMatrixf(toWorld.ptr());
+    glMultMatrixf(m_toWorld.ptr());
     
     glBegin(GL_TRIANGLES);
     
     
-    //Loop through the faces
+    //Loop through the m_faces
     //For each face:
-    //  Look up the vertices, normals (if they exist), and texcoords (if they exist)
+    //  Look up the m_vertices, normals (if they exist), and texcoords (if they exist)
     //  Draw them as triplets:
     
     //      glNorm(normals->at(face.normalIndices[0]))
-    //      glVert(vertices->at(face.vertexIndices[0]))
+    //      glVert(m_vertices->at(face.vertexIndices[0]))
     //      Etc.
     //
     
@@ -105,11 +105,11 @@ void OBJObject::parse(std::string& filename) {
             float z = std::stof(tokens.at(3));
             
 #ifdef __GNUC__
-            vertices->push_back(new Vector3(x, y, z));
+            m_vertices->push_back(new Vector3(x, y, z));
 #elif _WIN32
 			void* ptr = _aligned_malloc(sizeof(Vector3), 16);
 			Vector3* vec = new(ptr) Vector3(x, y, z);
-			vertices->push_back(vec);
+			m_vertices->push_back(vec);
 #endif
 
         } else if(tokens.at(0).compare("vn") == 0) {
@@ -119,7 +119,7 @@ void OBJObject::parse(std::string& filename) {
             
             //Parse the face line
             
-            faces->push_back(face);
+            m_faces->push_back(face);
         } else if(tokens.at(0).compare("How does I are C++?!?!!") == 0) {
             //Parse as appropriate
             //There are more line types than just the above listed

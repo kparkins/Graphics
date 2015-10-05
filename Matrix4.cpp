@@ -3,7 +3,7 @@
 #include "Vector3.h"
 
 Matrix4::Matrix4() {
-    std::memset(static_cast<void*>(&m), 0, sizeof(float) * 16);
+    std::memset(static_cast<void*>(&m_matrix), 0, sizeof(float) * 16);
 }
 
 Matrix4::Matrix4(float m00, float m01, float m02, float m03,
@@ -26,11 +26,11 @@ Vector4 Matrix4::operator*(Vector4 & a) {
     _mm_store_ps(b.ptr(),
         _mm_add_ps(
             _mm_add_ps(
-                _mm_mul_ps(_mm_load_ps(m[0]), _mm_set1_ps(a.x)),
-                _mm_mul_ps(_mm_load_ps(m[1]), _mm_set1_ps(a.y))),
+                _mm_mul_ps(_mm_load_ps(m_matrix[0]), _mm_set1_ps(a.x)),
+                _mm_mul_ps(_mm_load_ps(m_matrix[1]), _mm_set1_ps(a.y))),
             _mm_add_ps(
-                _mm_mul_ps(_mm_load_ps(m[2]), _mm_set1_ps(a.z)),
-                _mm_mul_ps(_mm_load_ps(m[3]), _mm_set1_ps(a.w)))));
+                _mm_mul_ps(_mm_load_ps(m_matrix[2]), _mm_set1_ps(a.z)),
+                _mm_mul_ps(_mm_load_ps(m_matrix[3]), _mm_set1_ps(a.w)))));
     
     return b;
 }
@@ -41,11 +41,11 @@ Vector4 Matrix4::multiply(Vector4 & a) {
     _mm_store_ps(b.ptr(),
         _mm_add_ps(
             _mm_add_ps(
-                _mm_mul_ps(_mm_load_ps(m[0]), _mm_set1_ps(a.x)),
-                _mm_mul_ps(_mm_load_ps(m[1]), _mm_set1_ps(a.y))),
+                _mm_mul_ps(_mm_load_ps(m_matrix[0]), _mm_set1_ps(a.x)),
+                _mm_mul_ps(_mm_load_ps(m_matrix[1]), _mm_set1_ps(a.y))),
             _mm_add_ps(
-                _mm_mul_ps(_mm_load_ps(m[2]), _mm_set1_ps(a.z)),
-                _mm_mul_ps(_mm_load_ps(m[3]), _mm_set1_ps(a.w)))));
+                _mm_mul_ps(_mm_load_ps(m_matrix[2]), _mm_set1_ps(a.z)),
+                _mm_mul_ps(_mm_load_ps(m_matrix[3]), _mm_set1_ps(a.w)))));
 
 	return b;
 }
@@ -61,9 +61,9 @@ Vector3 Matrix4::operator*(Vector3 & a) {
     _mm_store_ps(&b.x,
         _mm_add_ps(
             _mm_add_ps(
-                _mm_mul_ps(_mm_load_ps(m[0]), _mm_set1_ps(a.x)),
-                _mm_mul_ps(_mm_load_ps(m[1]), _mm_set1_ps(a.y))),
-            _mm_mul_ps(_mm_load_ps(m[2]), _mm_set1_ps(a.z))));
+                _mm_mul_ps(_mm_load_ps(m_matrix[0]), _mm_set1_ps(a.x)),
+                _mm_mul_ps(_mm_load_ps(m_matrix[1]), _mm_set1_ps(a.y))),
+            _mm_mul_ps(_mm_load_ps(m_matrix[2]), _mm_set1_ps(a.z))));
     
     return b;
 }
@@ -74,9 +74,9 @@ Vector3 Matrix4::multiply(Vector3 & a) {
     _mm_store_ps(&b.x,
         _mm_add_ps(
             _mm_add_ps(
-                _mm_mul_ps(_mm_load_ps(m[0]), _mm_set1_ps(a.x)),
-                _mm_mul_ps(_mm_load_ps(m[1]), _mm_set1_ps(a.y))),
-            _mm_mul_ps(_mm_load_ps(m[2]), _mm_set1_ps(a.z))));
+                _mm_mul_ps(_mm_load_ps(m_matrix[0]), _mm_set1_ps(a.x)),
+                _mm_mul_ps(_mm_load_ps(m_matrix[1]), _mm_set1_ps(a.y))),
+            _mm_mul_ps(_mm_load_ps(m_matrix[2]), _mm_set1_ps(a.z))));
     
 	return b;
 }
@@ -95,17 +95,17 @@ Matrix4& Matrix4::makeRotateArbitrary(const Vector3 & a, float angle) {
     float uxsin0 = ux * sin0;
     float uysin0 = uy * sin0;
     
-    m[0][0] = cos0 + ux * ux * omcos0;
-    m[0][1] = uy * ux * omcos0 + uzsin0;
-    m[0][2] = uz * ux * omcos0 - uysin0;
+    m_matrix[0][0] = cos0 + ux * ux * omcos0;
+    m_matrix[0][1] = uy * ux * omcos0 + uzsin0;
+    m_matrix[0][2] = uz * ux * omcos0 - uysin0;
     
-    m[1][0] = ux * uy * omcos0 - uzsin0;
-    m[1][1] = cos0 + uy * uy * omcos0;
-    m[1][2] = uz * uy * omcos0 + uxsin0;
+    m_matrix[1][0] = ux * uy * omcos0 - uzsin0;
+    m_matrix[1][1] = cos0 + uy * uy * omcos0;
+    m_matrix[1][2] = uz * uy * omcos0 + uxsin0;
     
-    m[2][0] = ux * uz * omcos0 + uysin0;
-    m[2][1] = uy * uz * omcos0 - uxsin0;
-    m[2][2] = cos0 + uz * uz * omcos0;
+    m_matrix[2][0] = ux * uz * omcos0 + uysin0;
+    m_matrix[2][1] = uy * uz * omcos0 - uxsin0;
+    m_matrix[2][2] = cos0 + uz * uz * omcos0;
     
     return *this;
 }
@@ -114,9 +114,9 @@ Matrix4& Matrix4::makeTranslate(const Vector3 & a) {
 	this->identity();
 
 	//Configure this matrix to be a translation by vector 'a'
-	m[3][0] = a.x;
-	m[3][1] = a.y;
-	m[3][2] = a.z;
+	m_matrix[3][0] = a.x;
+	m_matrix[3][1] = a.y;
+	m_matrix[3][2] = a.z;
 
 	return *this;
 }
@@ -125,7 +125,7 @@ Matrix4 Matrix4::transpose(void) {
     Matrix4 b;
     for(int x = 0; x < 4; ++x) {
         for(int y = 0; y < 4; ++y) {
-            b.m[y][x] = m[x][y];
+            b.m_matrix[y][x] = m_matrix[x][y];
         }
     }
     return b;
@@ -182,7 +182,7 @@ void Matrix4::print(const std::string & comment) {
     int integerWidth = 1;
     
     //Determine the necessary width to the left of the decimal point
-    float* elementPtr = (float*)m;
+    float* elementPtr = (float*) m_matrix;
     float maxValue = fabsf(*(elementPtr++));
 
     while (elementPtr++ < this->ptr() + 16) {
@@ -212,7 +212,7 @@ void Matrix4::print(const std::string & comment) {
     for(int element = 0; element < 4; element++) {
         std::cout << std::setw(1) << (element == 0 ? "[" : " ");
         for(int vector = 0; vector < 4; vector++) {
-            cellValue =  m[vector][element];
+            cellValue =  m_matrix[vector][element];
             std::cout << std::setw(cellWidth + (cellValue >= 0.0 ? 1 : 0)) << cellValue;
             std::cout << std::setw(0) << (vector < 3 ? " " : "");
         }

@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.1.0)
 project (cube)
 
-include_directories(.)
-
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
 
