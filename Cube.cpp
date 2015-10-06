@@ -37,42 +37,42 @@ void Cube::draw(DrawData & data) {
     glBegin(GL_QUADS);
     
     // Draw front face:
-    glNormal3f(0.0, 0.0, 1.0);
+    glNormal3f(0.f, 0.f, 1.f);
     glVertex3f(-halfSize,  halfSize,  halfSize);
     glVertex3f( halfSize,  halfSize,  halfSize);
     glVertex3f( halfSize, -halfSize,  halfSize);
     glVertex3f(-halfSize, -halfSize,  halfSize);
     
     // Draw left side:
-    glNormal3f(-1.0, 0.0, 0.0);
+    glNormal3f(-1.f, 0.f, 0.f);
     glVertex3f(-halfSize,  halfSize,  halfSize);
     glVertex3f(-halfSize,  halfSize, -halfSize);
     glVertex3f(-halfSize, -halfSize, -halfSize);
     glVertex3f(-halfSize, -halfSize,  halfSize);
     
     // Draw right side:
-    glNormal3f(1.0, 0.0, 0.0);
+    glNormal3f(1.f, 0.f, 0.f);
     glVertex3f( halfSize,  halfSize,  halfSize);
     glVertex3f( halfSize,  halfSize, -halfSize);
     glVertex3f( halfSize, -halfSize, -halfSize);
     glVertex3f( halfSize, -halfSize,  halfSize);
     
     // Draw back face:
-    glNormal3f(0.0, 0.0, -1.0);
+    glNormal3f(0.f, 0.f, -1.f);
     glVertex3f(-halfSize,  halfSize, -halfSize);
     glVertex3f( halfSize,  halfSize, -halfSize);
     glVertex3f( halfSize, -halfSize, -halfSize);
     glVertex3f(-halfSize, -halfSize, -halfSize);
     
     // Draw top side:
-    glNormal3f(0.0, 1.0, 0.0);
+    glNormal3f(0.f, 1.f, 0.f);
     glVertex3f(-halfSize,  halfSize,  halfSize);
     glVertex3f( halfSize,  halfSize,  halfSize);
     glVertex3f( halfSize,  halfSize, -halfSize);
     glVertex3f(-halfSize,  halfSize, -halfSize);
     
     // Draw bottom side:
-    glNormal3f(0.0, -1.0, 0.0);
+    glNormal3f(0.f, -1.f, 0.f);
     glVertex3f(-halfSize, -halfSize, -halfSize);
     glVertex3f( halfSize, -halfSize, -halfSize);
     glVertex3f( halfSize, -halfSize,  halfSize);
@@ -123,13 +123,13 @@ void Cube::scale(float value) {
     m_toWorld = m_toWorld * mat;
 }
 
-#if defined(__GNUC__) | defined(__APPLE__)
+#if defined(__GNUC__) | defined(_clang_)
 void Cube::translate(Vector3 translate) {
     Matrix4 trans;
     trans.makeTranslate(translate);
     m_toWorld = trans * m_toWorld;
 }
-#elif _WIN32
+#elif defined(_MSC_VER)
 void Cube::translate(Vector3 & translate) {
     Matrix4 trans;
     trans.makeTranslate(translate);

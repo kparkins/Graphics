@@ -35,5 +35,5 @@ void Camera::set(Vector3& e, Vector3& d, Vector3& up) {
     this->e = e;
     this->d = d;
     this->up = up;
-    update();
+    this->update();
 }

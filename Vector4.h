@@ -38,11 +38,11 @@ public:
 
     void print(const std::string &) const;
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) | defined(__clang__)
     struct {
         float x, y, z, w;
     } align_16;
-#elif defined(_WIN32)
+#elif defined(_MSC_VER)
     align_16 struct {
         float x, y, z, w;
     };

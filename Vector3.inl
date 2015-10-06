@@ -173,8 +173,7 @@ float Vector3::angle(const Vector3 & a) {
     }
 
     // compute dot product of this and a
-    d0 = _mm_mul_ps(_mm_setr_ps(x, y, z, 0.f),
-        _mm_setr_ps(a.x, a.y, a.z, 0.f));
+    d0 = _mm_mul_ps(_mm_setr_ps(x, y, z, 0.f), _mm_setr_ps(a.x, a.y, a.z, 0.f));
     d0 = _mm_hadd_ps(d0, d0);
     d0 = _mm_hadd_ps(d0, d0);
     _mm_store_ss(&r, d0);

@@ -11,7 +11,7 @@ file(GLOB SOURCES "*.cpp")
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 set_source_files_properties(${SOURCES} PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations")
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+ENDIF()
 
 add_executable (cube ${SOURCES})
 target_compile_features(cube PRIVATE cxx_range_for)

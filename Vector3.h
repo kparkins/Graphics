@@ -24,7 +24,6 @@ public:
     force_inline void set(float, float, float);
 
     force_inline float* ptr();
-    force_inline const float* const_ptr();
     force_inline float& operator[](int);
 
     force_inline Vector3& operator*=(const Vector3&);
@@ -63,11 +62,11 @@ public:
 
     void print(const std::string &)  const;
 
-#ifdef __GNUC__
+#if defined(__GNUC__) | defined(clang)
     struct {
         float x, y, z, w;
     } align_16;
-#elif _WIN32
+#elif defined(_MSC_VER)
     align_16 struct {
         float x, y, z, w;
     };

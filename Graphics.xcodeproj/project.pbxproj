@@ -10,6 +10,7 @@
 		2702E73B1BBEFEBF00E880A3 /* Matrix4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2702E7381BBEFEBF00E880A3 /* Matrix4.cpp */; settings = {ASSET_TAGS = (); }; };
 		2702E73C1BBEFEBF00E880A3 /* Vector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2702E7391BBEFEBF00E880A3 /* Vector3.cpp */; settings = {ASSET_TAGS = (); }; };
 		2702E73D1BBEFEBF00E880A3 /* Vector4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2702E73A1BBEFEBF00E880A3 /* Vector4.cpp */; settings = {ASSET_TAGS = (); }; };
+		2779EF931BC231FB00CB2C0D /* InputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2779EF911BC231FB00CB2C0D /* InputHandler.cpp */; settings = {ASSET_TAGS = (); }; };
 		D40AFA801AD1E2E7008D61CC /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D40AFA7E1AD1E2E7008D61CC /* Shader.cpp */; };
 		D42FFC321AAFCC9C006F8E9C /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC2C1AAFCC9C006F8E9C /* Window.cpp */; };
 		D42FFC331AAFCC9C006F8E9C /* Cube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC2D1AAFCC9C006F8E9C /* Cube.cpp */; };
@@ -50,6 +51,8 @@
 		2702E73F1BBF071F00E880A3 /* Vector3.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector3.inl; sourceTree = SOURCE_ROOT; };
 		2702E7401BBF071F00E880A3 /* Vector4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector4.inl; sourceTree = SOURCE_ROOT; };
 		2711520D1BBFA8A2007ECFCE /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Macros.h; path = ../Macros.h; sourceTree = "<group>"; };
+		2779EF911BC231FB00CB2C0D /* InputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputHandler.cpp; sourceTree = SOURCE_ROOT; };
+		2779EF921BC231FB00CB2C0D /* InputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputHandler.h; sourceTree = SOURCE_ROOT; };
 		D40AFA7E1AD1E2E7008D61CC /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = SOURCE_ROOT; };
 		D40AFA7F1AD1E2E7008D61CC /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = SOURCE_ROOT; };
 		D42FFC1E1AAFC90E006F8E9C /* Graphics */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graphics; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +126,8 @@
 		D42FFC201AAFC90E006F8E9C /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				2779EF911BC231FB00CB2C0D /* InputHandler.cpp */,
+				2779EF921BC231FB00CB2C0D /* InputHandler.h */,
 				2711520D1BBFA8A2007ECFCE /* Macros.h */,
 				D42FFC631AB67F52006F8E9C /* main.cpp */,
 				D42FFC2C1AAFCC9C006F8E9C /* Window.cpp */,
@@ -223,6 +228,7 @@
 				D42FFC661AB68012006F8E9C /* Globals.cpp in Sources */,
 				D42FFC5C1AAFCF71006F8E9C /* Texture.cpp in Sources */,
 				D42FFC5A1AAFCF71006F8E9C /* UpdateData.cpp in Sources */,
+				2779EF931BC231FB00CB2C0D /* InputHandler.cpp in Sources */,
 				D42FFC5B1AAFCF71006F8E9C /* DrawData.cpp in Sources */,
 				2702E73C1BBEFEBF00E880A3 /* Vector3.cpp in Sources */,
 				D42FFC581AAFCF71006F8E9C /* Light.cpp in Sources */,
