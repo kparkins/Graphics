@@ -123,11 +123,20 @@ Matrix4& Matrix4::makeTranslate(const Vector3 & a) {
 
 Matrix4 Matrix4::transpose(void) {
     Matrix4 b;
-    for(int x = 0; x < 4; ++x) {
+   /* for(int x = 0; x < 4; ++x) {
         for(int y = 0; y < 4; ++y) {
             b.m[y][x] = m[x][y];
         }
-    }
+    }*/
+    __m128 row0 = _mm_load_ps(m[0]);
+    __m128 row1 = _mm_load_ps(m[1]);
+    __m128 row2 = _mm_load_ps(m[2]);
+    __m128 row3 = _mm_load_ps(m[3]);
+    _MM_TRANSPOSE4_PS(row0, row1, row2, row3);
+    _mm_store_ps(b.m[0], row0);
+    _mm_store_ps(b.m[1], row1);
+    _mm_store_ps(b.m[2], row2);
+    _mm_store_ps(b.m[3], row3);
     return b;
 }
 
@@ -137,21 +146,32 @@ Matrix4 Matrix4::transpose(void) {
 //http://stackoverflow.com/questions/2624422/efficient-4x4-matrix-inverse-affine-transform
 Matrix4 Matrix4::inverse(void) {
     Matrix4 b;
-    
-    //Not required
-    //Calculate the inverse of this matrix
-    
+
     return b;
 }
 
 Matrix4 Matrix4::rigidInverse(void) {
     Matrix4 b;
-    
-    //Project 2
-    //Calculate the inverse of this matrix with the assumption that it is a rigid transformation
-    //This will be useful when implementing cameras!
-    
-    return b;
+    Matrix4 c;
+
+    c.identity();
+    __m128 row0 = _mm_setr_ps(m[0][0], m[0][1], m[0][2], 0.f);
+    __m128 row1 = _mm_setr_ps(m[1][0], m[1][1], m[1][2], 0.f);
+    __m128 row2 = _mm_setr_ps(m[2][0], m[2][1], m[2][2], 0.f);
+    __m128 row3 = _mm_setr_ps(0.f, 0.f, 0.f, 1.f);
+
+    _MM_TRANSPOSE4_PS(row0, row1, row2, row3);
+
+    _mm_store_ps(b.m[0], row0);
+    _mm_store_ps(b.m[1], row1);
+    _mm_store_ps(b.m[2], row2);
+    _mm_store_ps(b.m[3], row3);
+
+    c[3][0] = -m[3][0];
+    c[3][1] = -m[3][1];
+    c[3][2] = -m[3][2];
+
+    return b * c;
 }
 
 

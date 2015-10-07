@@ -51,8 +51,7 @@ Vector4 Vector4::dehomogenize() const {
 
 float Vector4::dot(const Vector4 & a) const {
     float res;
-    __m128 r = _mm_mul_ps(_mm_load_ps(&x),
-        _mm_load_ps(&a.x));
+    __m128 r = _mm_mul_ps(_mm_load_ps(&x), _mm_load_ps(&a.x));
     r = _mm_hadd_ps(r, r);
     r = _mm_hadd_ps(r, r);
     _mm_store_ss(&res, r);

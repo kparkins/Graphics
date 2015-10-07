@@ -13,7 +13,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 set_source_files_properties(${SOURCES} PROPERTIES COMPILE_FLAGS "-Wno-deprecated-declarations")
 ENDIF()
 
-add_executable (cube ${SOURCES})
+add_executable (cube ${SOURCES} House.cpp House.h)
 target_compile_features(cube PRIVATE cxx_range_for)
 
 target_link_libraries(cube ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})

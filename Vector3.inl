@@ -199,17 +199,17 @@ Vector3 Vector3::normalize(void) const {
     Vector3 vr(0.f, 0.f, 0.f);
     __m128 m0 = _mm_setr_ps(x, y, z, 0.f);
 
-    m0 = _mm_mul_ps(m0, m0);
-    m0 = _mm_hadd_ps(m0, m0);
-    m0 = _mm_hadd_ps(m0, m0);
-    m0 = _mm_sqrt_ps(m0);
+    __m128 m1 = _mm_mul_ps(m0, m0);
+    m1 = _mm_hadd_ps(m1, m1);
+    m1 = _mm_hadd_ps(m1, m1);
+    m1 = _mm_sqrt_ps(m1);
 
-    _mm_store_ss(&r, m0);
+    _mm_store_ss(&r, m1);
 
     if (!r) {
         return vr;
     }
 
-    _mm_store_ps(&vr.x, _mm_div_ps(_mm_setr_ps(x, y, z, 0.f), m0));
+    _mm_store_ps(&vr.x, _mm_div_ps(m0, m1));
     return vr;
 }

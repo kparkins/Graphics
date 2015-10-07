@@ -44,7 +44,7 @@ void Window::idleCallback() {
     } else {
         Globals::sphere.update(Globals::updateData);
     }
-    
+
     //Call the display routine to draw the cube
     displayCallback();
 }
@@ -73,23 +73,29 @@ void Window::displayCallback() {
     //This will save a copy of the current matrix so that we can
     //make changes to it and 'pop' those changes off later.
     glPushMatrix();
-    
+/*
+    Vector3 e(0.f, 24.14f, 24.14f);
+    Vector3 d(0.f, 0.f, 0.f);
+    Vector3 up(0.f, 1.f, 0.0f);
+    Globals::camera.set(e, d, up);*/
     //Replace the current top of the matrix stack with the inverse camera matrix
     //This will convert all world coordiantes into camera coordiantes
     glLoadMatrixf(Globals::camera.getInverseMatrix().ptr());
-    
+
     //Bind the light to slot 0.  We do this after the camera matrix is loaded so that
     //the light m_position will be treated as world coordiantes
     //(if we didn't the light would move with the camera, why is that?)
     Globals::light.bind(0);
-    
+
+    //glDisable(GL_LIGHTING);
+
     if (!Globals::useSphere) {
         Globals::cube.draw(Globals::drawData);
     } else {
         Globals::sphere.draw(Globals::drawData);
     }
     //Draw the cube!
-    
+    //Globals::house.draw(Globals::drawData);
     
     //Pop off the changes we made to the matrix stack this frame
     glPopMatrix();

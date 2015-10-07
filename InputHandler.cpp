@@ -28,7 +28,7 @@ void InputHandler::handle(char key, InputData data) {
 }
 
 void InputHandler::toggleSpin(InputData input) {
-    Globals::spinValue *= input.data[0];
+    Globals::spinValue *= -1.f;
 }
 
 void InputHandler::toggleShowSphere(InputData input) {
