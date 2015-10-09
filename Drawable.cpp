@@ -3,6 +3,7 @@
 
 Drawable::Drawable() {
     this->m_toWorld.identity();
+    this->m_rotationY = 0.f;
 }
 
 Drawable::~Drawable() {

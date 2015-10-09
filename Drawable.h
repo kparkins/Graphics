@@ -9,6 +9,7 @@
 #include <float.h>
 #include <math.h>
 #include <vector>
+#include <memory>
 
 
 class Drawable {
@@ -17,7 +18,8 @@ public:
     
     Matrix4 m_toWorld;
     Material m_material;
-    
+    float m_rotationY;
+
     Drawable(void);
     ~Drawable(void);
     
@@ -25,5 +27,7 @@ public:
     virtual void update(UpdateData&);
     
 };
+
+typedef std::shared_ptr<Drawable> DrawablePtr;
 
 #endif

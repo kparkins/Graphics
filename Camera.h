@@ -16,6 +16,7 @@ public:
     ~Camera(void);
     
     void update(void);
+    void reset();
     
     Matrix4& getMatrix(void);
     Matrix4& getInverseMatrix(void);

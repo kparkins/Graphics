@@ -43,6 +43,7 @@ int main(int argc, char *argv[]) {
     glutReshapeFunc(Window::reshapeCallback);
     glutIdleFunc(Window::idleCallback);
     glutKeyboardFunc(Window::keyCallback);
+    glutSpecialFunc(Window::specialKeyCallback);
     
     //Register the callback for the keyboard
     //Register the callback for the keyboard function keys

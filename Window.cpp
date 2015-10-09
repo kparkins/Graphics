@@ -13,21 +13,26 @@
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
-InputHandler Window::m_inputHandler;
 
+DrawablePtr Window::m_cube = make_shared<Cube>(10.f);
+DrawablePtr Window::m_sphere = make_shared<Sphere>(4.f, 100, 10);
+DrawablePtr Window::m_house = make_shared<House>();
+DrawablePtr Window::m_model = m_cube;
 
 void Window::initialize(void) {
     //Setup the light
     Vector4 lightPos(0.0, 10.0, 15.0, 1.0);
     Globals::light.m_position = lightPos;
     Globals::light.m_quadraticAttenuation = 0.02;
-    
+
+    m_cube->m_rotationY = .005;
+
     //Initialize cube matrix:
-    Globals::cube.m_toWorld.identity();
+    m_cube->m_toWorld.identity();
 
     //Setup the cube's m_material properties
     Color color(0x23ff27ff);
-    Globals::cube.m_material.m_color = color;
+    m_cube->m_material.m_color = color;
 }
 
 //----------------------------------------------------------------------------
@@ -37,13 +42,10 @@ void Window::idleCallback() {
     //Set up a static time delta for update calls
     Globals::updateData.m_dt = 1.0/60.0;// 60 fps
     
-    //Rotate cube; if it spins too fast try smaller values and vice versa
-    if(!Globals::useSphere) {
-        Globals::cube.spin(Globals::spinValue);
-        Globals::cube.update(Globals::updateData);
-    } else {
-        Globals::sphere.update(Globals::updateData);
-    }
+    Matrix4 rotation;
+    rotation.makeRotateY(m_model->m_rotationY);
+    m_model->m_toWorld = m_model->m_toWorld * rotation;
+    m_model->update(Globals::updateData);
 
     //Call the display routine to draw the cube
     displayCallback();
@@ -73,11 +75,7 @@ void Window::displayCallback() {
     //This will save a copy of the current matrix so that we can
     //make changes to it and 'pop' those changes off later.
     glPushMatrix();
-/*
-    Vector3 e(0.f, 24.14f, 24.14f);
-    Vector3 d(0.f, 0.f, 0.f);
-    Vector3 up(0.f, 1.f, 0.0f);
-    Globals::camera.set(e, d, up);*/
+
     //Replace the current top of the matrix stack with the inverse camera matrix
     //This will convert all world coordiantes into camera coordiantes
     glLoadMatrixf(Globals::camera.getInverseMatrix().ptr());
@@ -87,16 +85,14 @@ void Window::displayCallback() {
     //(if we didn't the light would move with the camera, why is that?)
     Globals::light.bind(0);
 
-    //glDisable(GL_LIGHTING);
-
+/*
     if (!Globals::useSphere) {
         Globals::cube.draw(Globals::drawData);
     } else {
         Globals::sphere.draw(Globals::drawData);
-    }
-    //Draw the cube!
-    //Globals::house.draw(Globals::drawData);
-    
+    }*/
+    m_model->draw(Globals::drawData);
+
     //Pop off the changes we made to the matrix stack this frame
     glPopMatrix();
     
@@ -110,20 +106,104 @@ void Window::displayCallback() {
 }
 
 void Window::keyCallback(unsigned char key, int x, int y) {
+    Matrix4 matrix;
     static int keyPressCounter;
-    InputData input;
-    input.data[0] = x;
-    input.data[1] = y;
-    m_inputHandler.handle(key, input);
-    Vector3 position(Globals::cube.m_toWorld[3][0],
-                     Globals::cube.m_toWorld[3][1],
-                     Globals::cube.m_toWorld[3][2]);
+    switch (key) {
+        case 'b':
+            if(m_model == m_sphere || m_model == m_cube) {
+                m_model = (m_model != m_sphere) ? m_sphere : m_cube;
+            }
+            break;
+        case 'x':
+            matrix.makeTranslate(Vector3(-1.f, 0.f, 0.f));
+            m_model->m_toWorld = matrix * m_model->m_toWorld;
+            break;
+        case 'X':
+            matrix.makeTranslate(Vector3(1.f, 0.f, 0.f));
+            m_model->m_toWorld = matrix * m_model->m_toWorld;
+            break;
+        case 'y':
+            matrix.makeTranslate(Vector3(0.f, -1.f, 0.f));
+            m_model->m_toWorld = matrix * m_model->m_toWorld;
+            break;
+        case 'Y':
+            matrix.makeTranslate(Vector3(0.f, 1.f, 0.f));
+            m_model->m_toWorld = matrix * m_model->m_toWorld;
+            break;
+        case 'z':
+            matrix.makeTranslate(Vector3(0.f, 0.f, 1.f));
+            m_model->m_toWorld = matrix * m_model->m_toWorld;
+            break;
+        case 'Z':
+            matrix.makeTranslate(Vector3(0.f, 0.f, -1.f));
+            m_model->m_toWorld = matrix * m_model->m_toWorld;
+            break;
+        case 'c':
+            m_model->m_rotationY *= -1.f;
+            break;
+        case 'r':
+            m_model->m_toWorld.identity();
+            break;
+        case 's':
+            matrix.makeScale(.9f);
+            m_model->m_toWorld = m_model->m_toWorld * matrix;
+            break;
+        case 'S':
+            matrix.makeScale(1.1f);
+            m_model->m_toWorld = m_model->m_toWorld * matrix;
+            break;
+        case 'o':
+            matrix.makeRotateZ(.1745);
+            m_model->m_toWorld = matrix * m_model->m_toWorld;
+            break;
+        case 'O':
+            matrix.makeRotateZ(-.1745);
+            m_model->m_toWorld = matrix * m_model->m_toWorld;
+            break;
+        default:
+            break;
+    }
+    Vector3 position(m_model->m_toWorld[3][0],
+                     m_model->m_toWorld[3][1],
+                     m_model->m_toWorld[3][2]);
     position.print("Key Press -- " + std::to_string(keyPressCounter++));
 }
 
 
-//TODO: Function Key callbacks!
-
-//TODO: Mouse callbacks!
-
-//TODO: Mouse Motion callbacks!
+void Window::specialKeyCallback(int key, int x, int y) {
+    switch(key) {
+        case GLUT_KEY_F1:
+            glEnable(GL_LIGHTING);
+            Globals::camera.reset();
+            m_model = m_cube;
+            break;
+        case GLUT_KEY_F2: {
+            glDisable(GL_LIGHTING);
+            Vector3 e(0.f, 24.14f, 24.14f);
+            Vector3 d(0.f, 0.f, 0.f);
+            Vector3 up(0.f, 1.f, 0.0f);
+            Globals::camera.set(e, d, up);
+            m_model = m_house;
+            break;
+        }
+        case GLUT_KEY_F3: {
+            glDisable(GL_LIGHTING);
+            Vector3 e(-28.33f, 11.66f, 23.33f);
+            Vector3 d(-5.f, 0.f, 0.f);
+            Vector3 up(0.f, 1.f, -.5f);
+            Globals::camera.set(e, d, up);
+            m_model = m_house;
+            break;
+        }
+        case GLUT_KEY_F4:
+            break;
+        case GLUT_KEY_F5:
+            break;
+        case GLUT_KEY_F6:
+            break;
+        case GLUT_KEY_F7:
+            break;
+        default:
+            break;
+    }
+}
