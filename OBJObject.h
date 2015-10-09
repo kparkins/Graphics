@@ -45,10 +45,10 @@ protected:
     std::vector<float> m_vertices;
     std::vector<float> m_colors;
     std::vector<float> m_normals;
-    std::vector<float> m_faces;
+    std::vector<int> m_faces;
 
     GLuint m_vbo;
-    GLuint m_ibo;
+
 };
 
 #endif

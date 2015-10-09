@@ -16,19 +16,27 @@ int Window::frame = 0;
 int Window::timebase = 0;
 int Window::time = 0;
 
-DrawablePtr Window::m_cube = make_shared<Cube>(10.f);
-DrawablePtr Window::m_sphere = make_shared<Sphere>(4.f, 100, 10);
-DrawablePtr Window::m_house = make_shared<House>();
-DrawablePtr Window::m_model = m_cube;
-DrawablePtr Window::m_bear = make_shared<OBJObject>("bear.obj");
-DrawablePtr Window::m_bunny = make_shared<OBJObject>("bunny.obj");
-DrawablePtr Window::m_dragon = make_shared<OBJObject>("dragon.obj");
+DrawablePtr Window::m_cube;
+DrawablePtr Window::m_sphere;
+DrawablePtr Window::m_house;
+DrawablePtr Window::m_model;
+DrawablePtr Window::m_bear;
+DrawablePtr Window::m_bunny;
+DrawablePtr Window::m_dragon;
 
 void Window::initialize(void) {
     //Setup the light
     Vector4 lightPos(0.0, 10.0, 15.0, 1.0);
     Globals::light.m_position = lightPos;
     Globals::light.m_quadraticAttenuation = 0.02;
+
+    m_cube = make_shared<Cube>(10.f);
+    m_sphere = make_shared<Sphere>(4.f, 100, 10);
+    m_house = make_shared<House>();
+    m_model = m_cube;
+    m_bear = make_shared<OBJObject>("bear.obj");
+    m_bunny = make_shared<OBJObject>("bunny.obj");
+    m_dragon = make_shared<OBJObject>("dragon.obj");
 
     m_cube->m_rotationY = .005;
 

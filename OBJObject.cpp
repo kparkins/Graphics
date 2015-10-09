@@ -45,7 +45,6 @@ OBJObject::~OBJObject() {
     deleteVector(Color*, m_colors);
     */
     glDeleteBuffers(1, &m_vbo);
-    glDeleteBuffers(1, &m_ibo);
 }
 
 void OBJObject::draw(DrawData& data) {
@@ -56,11 +55,10 @@ void OBJObject::draw(DrawData& data) {
     glPushMatrix();
     glMultMatrixf(m_toWorld.ptr());
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
-    glDrawElements(GL_TRIANGLES, m_faces.size(), )
-
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glDrawArrays(GL_TRIANGLES, m_vbo, m_faces.size() / 2);
 //    glBegin(GL_TRIANGLES);
    /*
     Color* c;
@@ -148,14 +146,20 @@ void OBJObject::parse(std::string& filename) {
 }
 
 void OBJObject::generateVBO() {
-
-//    size_t  bufferSize = sizeof(float) * ((m_faces.size() / 3) * (18));
     size_t bufferSize = sizeof(float) * (m_normals.size() + m_colors.size() + m_vertices.size());
-    std::vector interleaved;
-    for(int i = 0; i < m_vertices.size(); ++i) {
-        interleaved.push_back(m_vertices[i]);
-        interleaved.push_back(m_normals[i]);
-        interleaved.push_back(m_colors[i]);
+    std::vector<float> interleaved;
+    for(int i = 0; i < m_faces.size(); i += 2) {
+        int vindex = m_faces[i];
+        int vnindex = m_faces[i + 1];
+        interleaved.push_back(m_vertices[vindex]);
+        interleaved.push_back(m_vertices[vindex + 1]);
+        interleaved.push_back(m_vertices[vindex + 2]);
+        interleaved.push_back(m_normals[vnindex]);
+        interleaved.push_back(m_normals[vnindex + 1]);
+        interleaved.push_back(m_normals[vnindex + 2]);
+        interleaved.push_back(m_colors[vindex]);
+        interleaved.push_back(m_colors[vindex + 1]);
+        interleaved.push_back(m_colors[vindex + 2]);
     }
     glGenBuffers(1, &m_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
@@ -166,9 +170,6 @@ void OBJObject::generateVBO() {
     glVertexPointer(3, GL_FLOAT, sizeof(float) * 6, 0);
     glNormalPointer(GL_FLOAT, sizeof(float) * 6, (void*) (sizeof(float) * 3));
     glColorPointer(3, GL_FLOAT, sizeof(float)* 6, (void*) (sizeof(float) * 6));
-    glGenBuffers(1, &m_ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * m_faces.size(), m_faces.data(), GL_STATIC_DRAW);
 }
 
 //Split functions from the interwebs
