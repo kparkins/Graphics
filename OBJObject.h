@@ -36,18 +36,19 @@ protected:
     void generateVBO();
     
     //Storage vectors
-    /*
     std::vector<Vector3*>* m_vertices;
     std::vector<Vector3*>* m_normals;
     std::vector<Face*>* m_faces;
     std::vector<Color*>* m_colors;
-     */
-    std::vector<float> m_vertices;
-    std::vector<float> m_colors;
-    std::vector<float> m_normals;
-    std::vector<int> m_faces;
+    size_t m_vboSize;
 
     GLuint m_vbo;
+
+    /*std::vector<float> m_vertices;
+    std::vector<float> m_colors;
+    std::vector<float> m_normals;
+    std::vector<int> m_faces; */
+
 
 };
 

@@ -22,16 +22,16 @@
 
 
 OBJObject::OBJObject(std::string filename) : Drawable() {
-   /* this->m_vertices = new std::vector<Vector3*>();
+    this->m_vertices = new std::vector<Vector3*>();
     this->m_normals = new std::vector<Vector3*>();
     this->m_faces = new std::vector<Face*>();
     this->m_colors = new std::vector<Color*>();
-    */
+
     parse(filename);
 }
 
 OBJObject::~OBJObject() {
-   /* //Delete any dynamically allocated memory/objects here
+    //Delete any dynamically allocated memory/objects here
 #ifdef __GNUC__
     deleteVector(Vector3*, m_vertices);
 #elif _WIN32
@@ -43,7 +43,6 @@ OBJObject::~OBJObject() {
     deleteVector(Vector3*, m_normals);
     deleteVector(Face*, m_faces);
     deleteVector(Color*, m_colors);
-    */
     glDeleteBuffers(1, &m_vbo);
 }
 
@@ -58,7 +57,7 @@ void OBJObject::draw(DrawData& data) {
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
-    glDrawArrays(GL_TRIANGLES, m_vbo, m_faces.size() / 2);
+    glDrawArrays(GL_TRIANGLES, m_vbo, m_vboSize);
 //    glBegin(GL_TRIANGLES);
    /*
     Color* c;
@@ -98,74 +97,93 @@ void OBJObject::update(UpdateData& data) {
 }
 
 void OBJObject::parse(std::string& filename) {
-    FILE* fp;     // file pointer
-    Vector3 temp;
-    float* nptr;
-    float x,y,z;  // vertex coordinates
-    float r = 0.f;
-    int f[6];
-    float g = 0.5f;
-    float b = 0.5f;  // vertex color
-    char c1,c2;    // characters read from file
-    memset(static_cast<void*>(&f), 0, sizeof(int) * 6);
 
-    fp = fopen(filename.c_str(),"rb");
-    if (!fp) {
-        std::cerr << "error loading file" << std::endl;
-        exit(-1);
-    }
+    std::ifstream infile(filename);
+    std::string line;
+    std::vector<std::string> tokens;
 
-    while (c1 != EOF && c2 != EOF) {
-        c1 = fgetc(fp);
-        c2 = fgetc(fp);
-        if (c1 == 'v' && c2 == ' ') {
-            fscanf(fp, "%f %f %f %f %f %f", &x, &y, &z, &r, &g, &b);
-            m_vertices.push_back(x);
-            m_vertices.push_back(y);
-            m_vertices.push_back(z);
-            m_colors.push_back(r);
-            m_colors.push_back(g);
-            m_colors.push_back(b);
-        } else if (c1 == 'v' && c2 == 'n') {
-            fscanf(fp, "%f %f %f", &temp.x, &temp.y, &temp.z);
-            temp.normalize();
-            nptr = temp.ptr();
-            for(int i = 0; i < 3; ++i) {
-               m_normals.push_back(*nptr++);
+//While all your lines are belong to us
+    while (std::getline(infile, line)) {
+        tokens.clear();
+        tokens = split(line, ' ', tokens);
+
+//Parse the vertex line
+        if(tokens.at(0).compare("v") == 0) {
+            float x = std::stof(tokens.at(1));
+            float y = std::stof(tokens.at(2));
+            float z = std::stof(tokens.at(3));
+
+#ifdef __GNUC__
+            m_vertices->push_back(new Vector3(x, y, z));
+#elif _WIN32
+            void* ptr = _aligned_malloc(sizeof(Vector3), 16);
+			Vector3* vec = new(ptr) Vector3(x, y, z);
+			m_vertices->push_back(vec);
+#endif
+            if(tokens.size() >= 6) {
+                float r = std::stof(tokens.at(4));
+                float g = std::stof(tokens.at(5));
+                float b = std::stof(tokens.at(6));
+                m_colors->push_back(new Color(r, g, b));
+            } else {
+                float r = 0.f;
+                float g = .5f;
+                float b = .5f;
+                m_colors->push_back(new Color(r, g, b));
             }
-        } else if (c1 == 'f' && c2 == ' ') {
-            fscanf(fp, "%i//%i %i//%i %i//%i", &f[0], &f[1], &f[2], &f[3], &f[4], &f[5]);
-            for(int i = 0; i < 6; ++i) {
-                m_faces.push_back(f[i]);
+
+        } else if(tokens.at(0).compare("vn") == 0) {
+            Vector3* normal = new Vector3();
+            normal->x = std::stof(tokens.at(1));
+            normal->y = std::stof(tokens.at(2));
+            normal->z = std::stof(tokens.at(3));
+            normal->normalize();
+            m_normals->push_back(normal);
+        } else if(tokens.at(0).compare("f") == 0) {
+            Face *face = new Face();
+            for (size_t i = 0; i < 3; ++i) {
+                std::string &tok = tokens[i + 1];
+                size_t pos = tok.find("//");
+                int vi = std::stoi(tok.substr(0, pos));
+                int vni = std::stoi(tok.substr(pos + 2));
+                face->vertexIndices[i] = vi - 1;
+                face->normalIndices[i] = vni - 1;
+                face->colorIndices[i] = vi - 1;
             }
+            m_faces->push_back(face);
         }
     }
-    fclose(fp);   // make sure you don't forget to close the file when done
-    std::cout << "Done parsing...Generating vbo..." << std::endl;
+    std::cout << "generating vbo.." << std::endl;
     this->generateVBO();
 }
 
 void OBJObject::generateVBO() {
-    size_t bufferSize = sizeof(float) * (m_normals.size() + m_colors.size() + m_vertices.size());
     std::vector<float> interleaved;
-    for(int i = 0; i < m_faces.size(); i += 2) {
-        int vindex = m_faces[i];
-        int vnindex = m_faces[i + 1];
-        interleaved.push_back(m_vertices[vindex]);
-        interleaved.push_back(m_vertices[vindex + 1]);
-        interleaved.push_back(m_vertices[vindex + 2]);
-        interleaved.push_back(m_normals[vnindex]);
-        interleaved.push_back(m_normals[vnindex + 1]);
-        interleaved.push_back(m_normals[vnindex + 2]);
-        interleaved.push_back(m_colors[vindex]);
-        interleaved.push_back(m_colors[vindex + 1]);
-        interleaved.push_back(m_colors[vindex + 2]);
+    static int num = 0;
+    for(auto it = m_faces->begin(); it != m_faces->end(); ++it) {
+        Face* face = *it;
+        for(int i = 0; i < 3; ++i) {
+            Vector3 *v = m_vertices->at(face->vertexIndices[i]);
+            Vector3 *vn = m_normals->at(face->normalIndices[i]);
+            Color *c = m_colors->at(face->colorIndices[i]);
+            interleaved.push_back(v->x);
+            interleaved.push_back(v->y);
+            interleaved.push_back(v->z);
+            interleaved.push_back(vn->x);
+            interleaved.push_back(vn->y);
+            interleaved.push_back(vn->z);
+            interleaved.push_back((*c)[0]);
+            interleaved.push_back((*c)[1]);
+            interleaved.push_back((*c)[2]);
+        }
     }
+    std::cout << "done generating interleaved array .." << std::endl;
+    m_vboSize = sizeof(float) * interleaved.size();
     glGenBuffers(1, &m_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, bufferSize, 0, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, m_vboSize, 0, GL_STATIC_DRAW);
     GLvoid* vbo = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-    memcpy(vbo, static_cast<const void*>(interleaved.data()), sizeof(float) * interleaved.size());
+    memcpy(vbo, static_cast<const void*>(&interleaved[0]), sizeof(float) * interleaved.size());
     glUnmapBuffer(GL_ARRAY_BUFFER);
     glVertexPointer(3, GL_FLOAT, sizeof(float) * 6, 0);
     glNormalPointer(GL_FLOAT, sizeof(float) * 6, (void*) (sizeof(float) * 3));
