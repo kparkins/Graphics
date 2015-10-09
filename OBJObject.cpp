@@ -53,19 +53,8 @@ void OBJObject::draw(DrawData& data) {
     glPushMatrix();
     glMultMatrixf(m_toWorld.ptr());
 
-    glEnable(GL_LIGHTING);
     glBegin(GL_TRIANGLES);
     
-    //Loop through the m_faces
-    //For each face:
-    //  Look up the m_vertices, normals (if they exist), and texcoords (if they exist)
-    //  Draw them as triplets:
-    
-    //      glNorm(normals->at(face.normalIndices[0]))
-    //      glVert(m_vertices->at(face.vertexIndices[0]))
-    //      Etc.
-    //
-
     Color* c;
     Vector3* v;
     Vector3* vn;
@@ -73,6 +62,7 @@ void OBJObject::draw(DrawData& data) {
     int* vertices;
     int* normals;
     int* colors;
+
 
     for(auto it = m_faces->begin(); it != m_faces->end(); ++it) {
         face = *it;
@@ -105,10 +95,6 @@ void OBJObject::parse(std::string& filename) {
     std::ifstream infile(filename);
     std::string line;
     std::vector<std::string> tokens;
-    std::string token;
-    
-    int lineNum = 0;
-    
 
     //While all your lines are belong to us
     while (std::getline(infile, line)) {

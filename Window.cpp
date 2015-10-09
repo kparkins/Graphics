@@ -52,7 +52,7 @@ void Window::idleCallback() {
     m_model->m_toWorld = m_model->m_toWorld * rotation;
     m_model->update(Globals::updateData);
     frame++;
-    time=glutGet(GLUT_ELAPSED_TIME);
+    time = glutGet(GLUT_ELAPSED_TIME);
     int fps;
     if (time - timebase > 1000) {
         fps = frame*1000.0/(time-timebase);
@@ -204,12 +204,15 @@ void Window::specialKeyCallback(int key, int x, int y) {
             break;
         }
         case GLUT_KEY_F4:
+            glEnable(GL_LIGHTING);
             m_model = m_bunny;
             break;
         case GLUT_KEY_F5:
+            glEnable(GL_LIGHTING);
             m_model = m_dragon;
             break;
         case GLUT_KEY_F6:
+            glEnable(GL_LIGHTING);
             m_model = m_bear;
             break;
         case GLUT_KEY_F7:
