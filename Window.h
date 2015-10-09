@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "OBJObject.h"
 #include "Drawable.h"
 
 using std::make_pair;
@@ -26,6 +27,13 @@ public:
     static DrawablePtr m_cube;
     static DrawablePtr m_house;
     static DrawablePtr m_sphere;
+    static DrawablePtr m_bunny;
+    static DrawablePtr m_bear;
+    static DrawablePtr m_dragon;
+    static int frame;
+    static int timebase;
+    static int time;
+
 
 };
 

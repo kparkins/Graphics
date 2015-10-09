@@ -194,7 +194,26 @@ float Vector3::magnitude(void) const {
     return r;
 }
 
-Vector3 Vector3::normalize(void) const {
+Vector3& Vector3::normalize() {
+    float r;
+    __m128 m0 = _mm_setr_ps(x, y, z, 0.f);
+
+    __m128 m1 = _mm_mul_ps(m0, m0);
+    m1 = _mm_hadd_ps(m1, m1);
+    m1 = _mm_hadd_ps(m1, m1);
+    m1 = _mm_sqrt_ps(m1);
+
+    _mm_store_ss(&r, m1);
+
+    if (!r) {
+        return *this;
+    }
+
+    _mm_store_ps(&x, _mm_div_ps(m0, m1));
+    return *this;
+}
+
+Vector3 Vector3::asNormalized(void) const {
     float r;
     Vector3 vr(0.f, 0.f, 0.f);
     __m128 m0 = _mm_setr_ps(x, y, z, 0.f);
@@ -213,3 +232,5 @@ Vector3 Vector3::normalize(void) const {
     _mm_store_ps(&vr.x, _mm_div_ps(m0, m1));
     return vr;
 }
+
+

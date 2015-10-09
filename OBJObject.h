@@ -10,7 +10,7 @@
 struct Face {
     int vertexIndices[3];
     int normalIndices[3];
-    //Add more members as necessary
+    int colorIndices[3];
 };
 
 
@@ -37,7 +37,7 @@ protected:
     std::vector<Vector3*>* m_vertices;
     std::vector<Vector3*>* m_normals;
     std::vector<Face*>* m_faces;
-    
+    std::vector<Color*>* m_colors;
 };
 
 #endif

@@ -8,16 +8,21 @@
 
 #include "Window.h"
 #include "Cube.h"
-#include "Matrix4.h"
 #include "Globals.h"
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
+int Window::frame = 0;
+int Window::timebase = 0;
+int Window::time = 0;
 
 DrawablePtr Window::m_cube = make_shared<Cube>(10.f);
 DrawablePtr Window::m_sphere = make_shared<Sphere>(4.f, 100, 10);
 DrawablePtr Window::m_house = make_shared<House>();
 DrawablePtr Window::m_model = m_cube;
+DrawablePtr Window::m_bear = make_shared<OBJObject>("bear.obj");
+DrawablePtr Window::m_bunny = make_shared<OBJObject>("bunny.obj");
+DrawablePtr Window::m_dragon = make_shared<OBJObject>("dragon.obj");
 
 void Window::initialize(void) {
     //Setup the light
@@ -46,7 +51,15 @@ void Window::idleCallback() {
     rotation.makeRotateY(m_model->m_rotationY);
     m_model->m_toWorld = m_model->m_toWorld * rotation;
     m_model->update(Globals::updateData);
-
+    frame++;
+    time=glutGet(GLUT_ELAPSED_TIME);
+    int fps;
+    if (time - timebase > 1000) {
+        fps = frame*1000.0/(time-timebase);
+        timebase = time;
+        frame = 0;
+        std::cout << "fps " << fps << std::endl;
+    }
     //Call the display routine to draw the cube
     displayCallback();
 }
@@ -157,10 +170,11 @@ void Window::keyCallback(unsigned char key, int x, int y) {
         default:
             break;
     }
+    /*
     Vector3 position(m_model->m_toWorld[3][0],
                      m_model->m_toWorld[3][1],
                      m_model->m_toWorld[3][2]);
-    position.print("Key Press -- " + std::to_string(keyPressCounter++));
+    position.print("Key Press -- " + std::to_string(keyPressCounter++));*/
 }
 
 
@@ -190,10 +204,13 @@ void Window::specialKeyCallback(int key, int x, int y) {
             break;
         }
         case GLUT_KEY_F4:
+            m_model = m_bunny;
             break;
         case GLUT_KEY_F5:
+            m_model = m_dragon;
             break;
         case GLUT_KEY_F6:
+            m_model = m_bear;
             break;
         case GLUT_KEY_F7:
             break;

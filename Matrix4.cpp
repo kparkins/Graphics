@@ -83,7 +83,7 @@ Vector3 Matrix4::multiply(Vector3 & a) {
 
 Matrix4& Matrix4::makeRotateArbitrary(const Vector3 & a, float angle) {
     this->identity();
-    Vector3 b = a.normalize();
+    Vector3 b = a.asNormalized();
     
     float cos0 = cos(angle);
     float sin0 = sin(angle);

@@ -56,7 +56,8 @@ public:
 
     force_inline float magnitude(void) const;
 
-    force_inline Vector3 normalize(void) const;
+    force_inline Vector3& normalize(void);
+    force_inline Vector3 asNormalized() const;
 
     Vector4 toVector4(float) const;
 

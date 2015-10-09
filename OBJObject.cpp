@@ -25,6 +25,7 @@ OBJObject::OBJObject(std::string filename) : Drawable() {
     this->m_vertices = new std::vector<Vector3*>();
     this->m_normals = new std::vector<Vector3*>();
     this->m_faces = new std::vector<Face*>();
+    this->m_colors = new std::vector<Color*>();
     
     parse(filename);
 }
@@ -41,6 +42,7 @@ OBJObject::~OBJObject() {
 #endif
     deleteVector(Vector3*, m_normals);
     deleteVector(Face*, m_faces);
+    deleteVector(Color*, m_colors);
 }
 
 void OBJObject::draw(DrawData& data) {
@@ -50,9 +52,9 @@ void OBJObject::draw(DrawData& data) {
     
     glPushMatrix();
     glMultMatrixf(m_toWorld.ptr());
-    
+
+    glEnable(GL_LIGHTING);
     glBegin(GL_TRIANGLES);
-    
     
     //Loop through the m_faces
     //For each face:
@@ -63,7 +65,32 @@ void OBJObject::draw(DrawData& data) {
     //      glVert(m_vertices->at(face.vertexIndices[0]))
     //      Etc.
     //
-    
+
+    Color* c;
+    Vector3* v;
+    Vector3* vn;
+    Face* face;
+    int* vertices;
+    int* normals;
+    int* colors;
+
+    for(auto it = m_faces->begin(); it != m_faces->end(); ++it) {
+        face = *it;
+        vertices = &face->vertexIndices[0];
+        normals = &face->normalIndices[0];
+        colors = &face->colorIndices[0];
+
+        for(int i = 0; i < 3; ++i) {
+            if(m_colors->size() > 0) {
+                c = m_colors->at(colors[i]);
+                glColor3fv(c->ptr());
+            }
+            v = m_vertices->at(vertices[i]);
+            vn = m_normals->at(normals[i]);
+            glNormal3fv(vn->ptr());
+            glVertex3fv(v->ptr());
+        }
+    }
     
     glEnd();
     
@@ -82,50 +109,52 @@ void OBJObject::parse(std::string& filename) {
     
     int lineNum = 0;
     
-    
-    std::cout << "Starting parse..." << std::endl;
-    
+
     //While all your lines are belong to us
     while (std::getline(infile, line)) {
-        //Progress
-        if(++lineNum % 10000 == 0) {
-            std::cout << "At line " << lineNum << std::endl;
-        }
-        
-        //Split a line into tokens by delimiting it on spaces
-        //"Er Mah Gerd" becomes ["Er", "Mah", "Gerd"]
         tokens.clear();
         tokens = split(line, ' ', tokens);
-        
-        //If first token is a v then it gots to be a vertex
+
+        //Parse the vertex line
         if(tokens.at(0).compare("v") == 0) {
-            //Parse the vertex line
             float x = std::stof(tokens.at(1));
             float y = std::stof(tokens.at(2));
             float z = std::stof(tokens.at(3));
-            
+
 #ifdef __GNUC__
             m_vertices->push_back(new Vector3(x, y, z));
 #elif _WIN32
-			void* ptr = _aligned_malloc(sizeof(Vector3), 16);
+            void* ptr = _aligned_malloc(sizeof(Vector3), 16);
 			Vector3* vec = new(ptr) Vector3(x, y, z);
 			m_vertices->push_back(vec);
 #endif
+            if(tokens.size() >= 6) {
+                float r = std::stof(tokens.at(4));
+                float g = std::stof(tokens.at(5));
+                float b = std::stof(tokens.at(6));
+                m_colors->push_back(new Color(r, g, b));
+            }
 
         } else if(tokens.at(0).compare("vn") == 0) {
-            //Parse the normal line
+            Vector3* normal = new Vector3();
+            normal->x = std::stof(tokens.at(1));
+            normal->y = std::stof(tokens.at(2));
+            normal->z = std::stof(tokens.at(3));
+            normal->normalize();
+            m_normals->push_back(normal);
         } else if(tokens.at(0).compare("f") == 0) {
-            Face* face = new Face;
-            
-            //Parse the face line
-            
+            Face *face = new Face();
+            for (size_t i = 0; i < 3; ++i) {
+                std::string &tok = tokens[i + 1];
+                size_t pos = tok.find("//");
+                int vi = std::stoi(tok.substr(0, pos));
+                int vni = std::stoi(tok.substr(pos + 2));
+                face->vertexIndices[i] = vi - 1;
+                face->normalIndices[i] = vni - 1;
+                face->colorIndices[i] = vi - 1;
+            }
             m_faces->push_back(face);
-        } else if(tokens.at(0).compare("How does I are C++?!?!!") == 0) {
-            //Parse as appropriate
-            //There are more line types than just the above listed
-            //See the Wavefront Object format specification for details
         }
-        
     }
     
     std::cout << "Done parsing." << std::endl;
@@ -137,8 +166,7 @@ std::vector<std::string>& OBJObject::split(const std::string &s, char delim,
                                            std::vector<std::string> &elems) {
     std::stringstream ss(s);
     std::string item;
-    while (std::getline(ss, item, delim))
-    {
+    while (std::getline(ss, item, delim)) {
         elems.push_back(item);
     }
     return elems;
