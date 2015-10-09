@@ -7,3 +7,5 @@ cube
 Debug
 *.xcuserstate
 .idea
+*.obj
+objects

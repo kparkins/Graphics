@@ -85,12 +85,6 @@ void Window::displayCallback() {
     //(if we didn't the light would move with the camera, why is that?)
     Globals::light.bind(0);
 
-/*
-    if (!Globals::useSphere) {
-        Globals::cube.draw(Globals::drawData);
-    } else {
-        Globals::sphere.draw(Globals::drawData);
-    }*/
     m_model->draw(Globals::drawData);
 
     //Pop off the changes we made to the matrix stack this frame
