@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <OpenGL/OpenGL.h>
 #include "Vector3.h"
 #include "Drawable.h"
 
@@ -32,12 +33,22 @@ protected:
     
     //Parse
     void parse(std::string&);
+    void generateVBO();
     
     //Storage vectors
+    /*
     std::vector<Vector3*>* m_vertices;
     std::vector<Vector3*>* m_normals;
     std::vector<Face*>* m_faces;
     std::vector<Color*>* m_colors;
+     */
+    std::vector<float> m_vertices;
+    std::vector<float> m_colors;
+    std::vector<float> m_normals;
+    std::vector<float> m_faces;
+
+    GLuint m_vbo;
+    GLuint m_ibo;
 };
 
 #endif
