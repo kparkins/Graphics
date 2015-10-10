@@ -12,12 +12,12 @@
 #if defined (__APPLE__) || defined(__MACH__) || defined(__GNUC__)
 
 #define FORCE_INLINE inline __attribute__ ((always_inline))
-#define align_16 __attribute__ ((aligned(16)))
+#define ALIGN_16 __attribute__ ((aligned(16)))
 
 #elif defined(_WIN32)
 
 #define FORCE_INLINE inline __forceinline
-#define align_16 __declspec(align(16))
+#define ALIGN_16 __declspec(align(16))
 
 #endif
 

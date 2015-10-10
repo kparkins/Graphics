@@ -38,12 +38,12 @@ public:
 
     void print(const std::string &) const;
 
-#if defined(__GNUC__) | defined(__clang__)
+#if defined(__GNUC__) || defined(__clang__)
     struct {
         float x, y, z, w;
-    } align_16;
+    } ALIGN_16;
 #elif defined(_MSC_VER)
-    align_16 struct {
+    ALIGN_16 struct {
         float x, y, z, w;
     };
 #endif

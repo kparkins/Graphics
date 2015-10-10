@@ -52,9 +52,9 @@ public:
 #if defined(__GNUC__) | defined(__clang__)
     struct {
         float r, g, b, a;
-    }align_16;
+    }ALIGN_16;
 #elif defined(_MSC_VER)
-    align_16 struct {
+    ALIGN_16 struct {
         float r, g, b, a;
     };
 #endif
