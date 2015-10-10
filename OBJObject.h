@@ -5,23 +5,21 @@
 #include <vector>
 #include <string>
 #include <OpenGL/OpenGL.h>
+#include <memory>
+
 #include "Vector3.h"
 #include "Drawable.h"
 
-struct Face {
-    int vertexIndices[3];
-    int normalIndices[3];
-    int colorIndices[3];
-};
-
+using std::shared_ptr;
 
 class OBJObject : public Drawable {
     
 public:
     
-    OBJObject(std::string);
+    OBJObject();
     virtual ~OBJObject(void);
-    
+
+    void load(std::string);
     virtual void draw(DrawData&);
     virtual void update(UpdateData&);
     
@@ -32,24 +30,21 @@ protected:
     std::vector<std::string> split(const std::string&, char);
     
     //Parse
-    void parse(std::string&);
-    void generateVBO();
+    void generateMesh();
     
     //Storage vectors
-    std::vector<Vector3*>* m_vertices;
-    std::vector<Vector3*>* m_normals;
-    std::vector<Face*>* m_faces;
-    std::vector<Color*>* m_colors;
-    size_t m_vboSize;
+    std::vector<float> m_vertices;
+    std::vector<float> m_normals;
+    std::vector<float> m_colors;
+    std::vector<int> m_faces;
 
     GLuint m_vbo;
+    GLuint m_vao;
 
-    /*std::vector<float> m_vertices;
-    std::vector<float> m_colors;
-    std::vector<float> m_normals;
-    std::vector<int> m_faces; */
-
+    size_t m_numVertices;
 
 };
+
+typedef shared_ptr<OBJObject> OBJObjectPtr;
 
 #endif

@@ -20,9 +20,9 @@ DrawablePtr Window::m_cube;
 DrawablePtr Window::m_sphere;
 DrawablePtr Window::m_house;
 DrawablePtr Window::m_model;
-DrawablePtr Window::m_bear;
-DrawablePtr Window::m_bunny;
-DrawablePtr Window::m_dragon;
+OBJObjectPtr Window::m_bear;
+OBJObjectPtr Window::m_bunny;
+OBJObjectPtr Window::m_dragon;
 
 void Window::initialize(void) {
     //Setup the light
@@ -34,9 +34,20 @@ void Window::initialize(void) {
     m_sphere = make_shared<Sphere>(4.f, 100, 10);
     m_house = make_shared<House>();
     m_model = m_cube;
-    m_bear = make_shared<OBJObject>("bear.obj");
-    m_bunny = make_shared<OBJObject>("bunny.obj");
-    m_dragon = make_shared<OBJObject>("dragon.obj");
+    m_bear = make_shared<OBJObject>();
+    m_bunny = make_shared<OBJObject>();
+    m_dragon = make_shared<OBJObject>();
+    m_bear->load("bear.obj");
+    m_bunny->load("bunny.obj");
+    m_dragon->load("dragon.obj");
+/*
+    thread bear(&OBJObject::load, m_bear.get(), "bear.obj");
+    thread bunny(&OBJObject::load, m_bunny.get(), "bunny.obj");
+    thread dragon(&OBJObject::load, m_dragon.get(), "dragon.obj");
+
+    bear.join();
+    bunny.join();
+    dragon.join();*/
 
     m_cube->m_rotationY = .005;
 

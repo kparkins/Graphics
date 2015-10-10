@@ -1,7 +1,9 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include <thread>
 #include <memory>
+#include <functional>
 
 #include "OBJObject.h"
 #include "Drawable.h"
@@ -9,6 +11,8 @@
 using std::make_pair;
 using std::shared_ptr;
 using std::make_shared;
+using std::placeholders::_1;
+using std::thread;
 
 class Window {
     
@@ -27,9 +31,9 @@ public:
     static DrawablePtr m_cube;
     static DrawablePtr m_house;
     static DrawablePtr m_sphere;
-    static DrawablePtr m_bunny;
-    static DrawablePtr m_bear;
-    static DrawablePtr m_dragon;
+    static OBJObjectPtr m_bunny;
+    static OBJObjectPtr m_bear;
+    static OBJObjectPtr m_dragon;
     static int frame;
     static int timebase;
     static int time;

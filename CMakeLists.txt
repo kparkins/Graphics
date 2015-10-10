@@ -17,5 +17,7 @@ add_executable (cube ${SOURCES} House.cpp House.h)
 target_compile_features(cube PRIVATE cxx_range_for)
 set_property(TARGET cube PROPERTY INTERPROCEDURAL_OPTIMIZATION True)
 
+SET(CMAKE_CXX_FLAGS -O3)
+SET(CMAKE_C_FLAGS -O3)
 
 target_link_libraries(cube ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
