@@ -3,7 +3,9 @@
 
 #include <thread>
 #include <memory>
+#include <mutex>
 #include <functional>
+#include <unistd.h>
 
 #include "OBJObject.h"
 #include "Drawable.h"
@@ -37,7 +39,6 @@ public:
     static int frame;
     static int timebase;
     static int time;
-
 
 };
 

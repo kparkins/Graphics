@@ -37,17 +37,18 @@ void Window::initialize(void) {
     m_bear = make_shared<OBJObject>();
     m_bunny = make_shared<OBJObject>();
     m_dragon = make_shared<OBJObject>();
-    m_bear->load("bear.obj");
-    m_bunny->load("bunny.obj");
-    m_dragon->load("dragon.obj");
-/*
-    thread bear(&OBJObject::load, m_bear.get(), "bear.obj");
-    thread bunny(&OBJObject::load, m_bunny.get(), "bunny.obj");
-    thread dragon(&OBJObject::load, m_dragon.get(), "dragon.obj");
 
+    thread bear(&OBJObject::generateMesh, m_bear, "bear.obj");
+    thread bunny(&OBJObject::generateMesh, m_bunny, "bunny.obj");
+    thread dragon(&OBJObject::generateMesh, m_dragon, "dragon.obj");
+    std::this_thread::yield();
     bear.join();
     bunny.join();
-    dragon.join();*/
+    dragon.join();
+
+    m_bear->loadVao();
+    m_bunny->loadVao();
+    m_dragon->loadVao();
 
     m_cube->m_rotationY = .005;
 
