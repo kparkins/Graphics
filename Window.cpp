@@ -20,6 +20,7 @@ DrawablePtr Window::m_cube;
 DrawablePtr Window::m_sphere;
 DrawablePtr Window::m_house;
 DrawablePtr Window::m_model;
+
 OBJObjectPtr Window::m_bear;
 OBJObjectPtr Window::m_bunny;
 OBJObjectPtr Window::m_dragon;
@@ -46,9 +47,9 @@ void Window::initialize(void) {
     bunny.join();
     dragon.join();
 
-    m_bear->loadVao();
-    m_bunny->loadVao();
-    m_dragon->loadVao();
+    m_bear->loadVabo();
+    m_bunny->loadVabo();
+    m_dragon->loadVabo();
 
     m_cube->m_rotationY = .005;
 

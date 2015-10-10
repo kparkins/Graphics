@@ -9,9 +9,6 @@
 #endif
 
 #include "Window.h"
-#include "Cube.h"
-#include "Matrix4.h"
-#include "Globals.h"
 #include "MathTestBench.h"
 
 
@@ -44,12 +41,6 @@ int main(int argc, char *argv[]) {
     glutIdleFunc(Window::idleCallback);
     glutKeyboardFunc(Window::keyCallback);
     glutSpecialFunc(Window::specialKeyCallback);
-    
-    //Register the callback for the keyboard
-    //Register the callback for the keyboard function keys
-    //Register the callback for the mouse
-    //Register the callback for the mouse motion
-    //Register the callback for the mouse passive motion
     
     //Print Shader Debug Information:
     printf("%s\n%s\n",

@@ -13,16 +13,13 @@ void OBJObject::draw(DrawData& data) {
     m_material.apply();
     
     glMatrixMode(GL_MODELVIEW);
-    
     glPushMatrix();
     glMultMatrixf(m_toWorld.ptr());
-
     glBindVertexArray(m_vao);
 
     glDrawArrays(GL_TRIANGLES, 0, m_numVertices);
 
     glBindVertexArray(0);
-
     glPopMatrix();
 }
 
@@ -95,7 +92,7 @@ void OBJObject::generateMesh(std::string filename) {
     std::cout << filename + "\tDone." << std::endl;
 }
 
-void OBJObject::loadVao() {
+void OBJObject::loadVabo() {
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
 

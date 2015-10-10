@@ -1,6 +1,8 @@
 #ifndef COLOR_H
 #define COLOR_H
 
+#include "Macros.h"
+
 class Color {
 
     
@@ -18,13 +20,7 @@ public:
     
     //Mathematical operations on colors
     Color interpolate(Color&, float);
-    //Add
-    //Subtract
-    //Scalar Multiplication
-    //Component-wise Multiplication
-    //Clamping
-    //Etc.
-    
+
     //Pre-Defined Colors
     static Color red(void);
     static Color blue(void);
@@ -52,10 +48,19 @@ public:
     static Color diffuseMaterialDefault(void);
     static Color specularMaterialDefault(void);
     static Color emissionMaterialDefault(void);
-    
+
+#if defined(__GNUC__) | defined(__clang__)
+    struct {
+        float r, g, b, a;
+    }align_16;
+#elif defined(_MSC_VER)
+    align_16 struct {
+        float r, g, b, a;
+    };
+#endif
+
 protected:
-    
-    float c[4];
+
     unsigned char u8bit;
     
 };

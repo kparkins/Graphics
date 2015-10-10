@@ -33,9 +33,11 @@ public:
     static DrawablePtr m_cube;
     static DrawablePtr m_house;
     static DrawablePtr m_sphere;
+
     static OBJObjectPtr m_bunny;
     static OBJObjectPtr m_bear;
     static OBJObjectPtr m_dragon;
+
     static int frame;
     static int timebase;
     static int time;

@@ -21,43 +21,43 @@ public:
     Vector3(float, float, float);
     virtual ~Vector3(void);
 
-    force_inline void set(float, float, float);
+    FORCE_INLINE void set(float, float, float);
 
-    force_inline float* ptr();
-    force_inline float& operator[](int);
+    FORCE_INLINE float* ptr();
+    FORCE_INLINE float& operator[](int);
 
-    force_inline Vector3& operator*=(const Vector3&);
-    force_inline Vector3& operator+=(const Vector3&);
-    force_inline Vector3& operator-=(const Vector3&);
-    force_inline Vector3& operator=(const Vector3&);
+    FORCE_INLINE Vector3& operator*=(const Vector3&);
+    FORCE_INLINE Vector3& operator+=(const Vector3&);
+    FORCE_INLINE Vector3& operator-=(const Vector3&);
+    FORCE_INLINE Vector3& operator=(const Vector3&);
 
-    force_inline Vector3& operator*=(float);
-    force_inline Vector3& operator+=(float);
-    force_inline Vector3& operator-=(float);
-    force_inline Vector3& operator=(float);
+    FORCE_INLINE Vector3& operator*=(float);
+    FORCE_INLINE Vector3& operator+=(float);
+    FORCE_INLINE Vector3& operator-=(float);
+    FORCE_INLINE Vector3& operator=(float);
 
-    force_inline Vector3 add(const Vector3 &) const;
-    force_inline Vector3 operator+(const Vector3 &) const;
+    FORCE_INLINE Vector3 add(const Vector3 &) const;
+    FORCE_INLINE Vector3 operator+(const Vector3 &) const;
 
-    force_inline Vector3 subtract(const Vector3 &) const;
-    force_inline Vector3 operator-(const Vector3 &) const;
+    FORCE_INLINE Vector3 subtract(const Vector3 &) const;
+    FORCE_INLINE Vector3 operator-(const Vector3 &) const;
 
-    force_inline Vector3 negate(void) const;
-    force_inline Vector3 scale(float) const;
-    force_inline Vector3 multiply(float) const;
-    force_inline Vector3 operator*(float) const;
-    force_inline Vector3 multiply(const Vector3 &) const;
-    force_inline Vector3 operator*(const Vector3 &) const;
+    FORCE_INLINE Vector3 negate(void) const;
+    FORCE_INLINE Vector3 scale(float) const;
+    FORCE_INLINE Vector3 multiply(float) const;
+    FORCE_INLINE Vector3 operator*(float) const;
+    FORCE_INLINE Vector3 multiply(const Vector3 &) const;
+    FORCE_INLINE Vector3 operator*(const Vector3 &) const;
 
-    force_inline float dot(const Vector3 &);
-    force_inline Vector3 cross(const Vector3 &);
+    FORCE_INLINE float dot(const Vector3 &);
+    FORCE_INLINE Vector3 cross(const Vector3 &);
 
-    force_inline float angle(const Vector3 &);
+    FORCE_INLINE float angle(const Vector3 &);
 
-    force_inline float magnitude(void) const;
+    FORCE_INLINE float magnitude(void) const;
 
-    force_inline Vector3& normalize(void);
-    force_inline Vector3 asNormalized() const;
+    FORCE_INLINE Vector3& normalize(void);
+    FORCE_INLINE Vector3 asNormalized() const;
 
     Vector4 toVector4(float) const;
 

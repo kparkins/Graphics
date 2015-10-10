@@ -29,11 +29,6 @@ Matrix4& Camera::getInverseMatrix() {
 }
 
 void Camera::update() {
-    //Update the Camera Matrix using d, e, and up
-    //Solve for the z, x, and y axes of the camera matrix
-    //Use these axes and the e vector to create a camera matrix c
-    //Use c to solve for an inverse camera matrix ci
-
     Vector3 z = (e - d).normalize();
     Vector3 x = up.cross(z).normalize();
     Vector3 y = z.cross(x).normalize();

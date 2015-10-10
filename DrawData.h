@@ -9,10 +9,7 @@ public:
     
     DrawData(void);
     ~DrawData(void);
-    
-    //Payload
-    //Place any objects here that you want to pass to a draw() call
-    
+
 };
 
 #endif

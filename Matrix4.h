@@ -24,38 +24,38 @@ public:
             float, float, float, float,
             float, float, float, float);
     
-    force_inline void set(float, float, float, float,
+    FORCE_INLINE void set(float, float, float, float,
                           float, float, float, float,
                           float, float, float, float,
                           float, float, float, float);
     
-    force_inline float get(int,int);
+    FORCE_INLINE float get(int,int);
     
-    force_inline Matrix4& operator=(const Matrix4 &);
+    FORCE_INLINE Matrix4& operator=(const Matrix4 &);
     
-    force_inline float* operator[](int);
+    FORCE_INLINE float* operator[](int);
     
-    force_inline float* ptr();
+    FORCE_INLINE float* ptr();
     
-    force_inline void identity();
+    FORCE_INLINE Matrix4& identity();
     
-    force_inline Matrix4 multiply(const Matrix4 &);
-    force_inline Matrix4 operator*(const Matrix4 &);
+    FORCE_INLINE Matrix4 multiply(const Matrix4 &);
+    FORCE_INLINE Matrix4 operator*(const Matrix4 &);
     
     Vector4 multiply(Vector4 &);
     Vector4 operator*(Vector4 &);
     Vector3 multiply(Vector3 &);
     Vector3 operator*(Vector3 &);
     
-    force_inline Matrix4& makeRotateX(float);
-    force_inline Matrix4& makeRotateY(float);
-    force_inline Matrix4& makeRotateZ(float);
+    FORCE_INLINE Matrix4& makeRotateX(float);
+    FORCE_INLINE Matrix4& makeRotateY(float);
+    FORCE_INLINE Matrix4& makeRotateZ(float);
     Matrix4& makeRotateArbitrary(const Vector3 &, float);
     
-    force_inline Matrix4& makeScale(float, float, float);
-    force_inline Matrix4& makeScale(float);
+    FORCE_INLINE Matrix4& makeScale(float, float, float);
+    FORCE_INLINE Matrix4& makeScale(float);
     
-    force_inline Matrix4& makeTranslate(float, float, float);
+    FORCE_INLINE Matrix4& makeTranslate(float, float, float);
     Matrix4& makeTranslate(const Vector3 &);
     
     Matrix4 transpose(void);

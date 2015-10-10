@@ -19,22 +19,22 @@ public:
     Vector4(float, float, float);
     Vector4(float, float, float, float);
 
-    force_inline void set(float, float, float, float);
+    FORCE_INLINE void set(float, float, float, float);
 
-    force_inline float* ptr();
-    force_inline float& operator[](int);
+    FORCE_INLINE float* ptr();
+    FORCE_INLINE float& operator[](int);
 
-    force_inline Vector4 add(const Vector4 &) const;
-    force_inline Vector4 operator+(const Vector4 &) const;
+    FORCE_INLINE Vector4 add(const Vector4 &) const;
+    FORCE_INLINE Vector4 operator+(const Vector4 &) const;
 
-    force_inline Vector4 subtract(const Vector4 &) const;
-    force_inline Vector4 operator-(const Vector4 &) const;
+    FORCE_INLINE Vector4 subtract(const Vector4 &) const;
+    FORCE_INLINE Vector4 operator-(const Vector4 &) const;
 
-    force_inline Vector4 dehomogenize() const;
+    FORCE_INLINE Vector4 dehomogenize() const;
 
     Vector3 toVector3();
 
-    force_inline float dot(const Vector4 &) const;
+    FORCE_INLINE float dot(const Vector4 &) const;
 
     void print(const std::string &) const;
 

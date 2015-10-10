@@ -125,10 +125,6 @@ float Vector3::dot(const Vector3 & a) {
     return res;
 }
 
-/*  xr = y * a.z - z * a.y
- *  yr = z * a.x - x * a.z
- *  zr = x * a.y - y * a.x
- */
 Vector3 Vector3::cross(const Vector3 & a) {
     Vector3 r;
     __m128 m0 = _mm_load_ps(&x);

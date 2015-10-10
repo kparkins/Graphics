@@ -39,7 +39,7 @@ float* Matrix4::ptr() {
     return &m[0][0];
 }
 
-void Matrix4::identity() {
+Matrix4& Matrix4::identity() {
     static const float ident[4][4] = {
         {1,0,0,0},
         {0,1,0,0},
@@ -47,6 +47,7 @@ void Matrix4::identity() {
         {0,0,0,1}
     };
     memcpy(static_cast<void*>(&m), ident, sizeof(m));
+    return *this;
 }
 
 Matrix4 Matrix4::operator*(const Matrix4 & a) {

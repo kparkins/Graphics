@@ -31,7 +31,7 @@ public:
     virtual ~OBJObject(void);
 
     void generateMesh(std::string);
-    void loadVao();
+    void loadVabo();
     virtual void draw(DrawData&);
     virtual void update(UpdateData&);
     

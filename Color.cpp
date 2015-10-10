@@ -1,30 +1,28 @@
 #include "Color.h"
 #include <iostream>
 #include <cstdlib>
+#include <string.h>
 
 #define clampf(min,max,num) (num < min ? min : num > max ? max : num)
 
 
 Color::Color(void) {
     u8bit = 0xFF;
-    for(int i = 0; i < 4; ++i)
-        c[i] = 1.0;
+    memset(static_cast<void*>(&r), 1.f, sizeof(float) * 4);
 }
 
 Color::Color(float r, float g, float b) {
     u8bit = 0xFF;
-    c[0] = r;
-    c[1] = g;
-    c[2] = b;
-    c[3] = 1.0;
+    memset(static_cast<void*>(&r), 1.f, sizeof(float) * 4);
+    a = 1.f;
 }
 
 Color::Color(float r, float g, float b, float a) {
     u8bit = 0xFF;
-    c[0] = r;
-    c[1] = g;
-    c[2] = b;
-    c[3] = a;
+    this->r = r;
+    this->g = g;
+    this->b = b;
+    this->a = a;
 }
 
 Color::Color(unsigned int hex) {
@@ -33,8 +31,9 @@ Color::Color(unsigned int hex) {
     unsigned int mask = 0xff << 0x18;
     
     //Unpack each 8bit segment into a float, and normalize such that 255 ~= 1.0
-    for(int i = 0; mask; ++i, mask >>= 0x8)
-        c[i] = ((float) ((hex & mask) >> ((3-i)*0x8) ) ) / u8bit;
+    for(int i = 0; mask; ++i, mask >>= 0x8) {
+        (&r)[i] = ((float) ((hex & mask) >> ((3 - i) * 0x8))) / u8bit;
+    }
 }
 
 Color::~Color() {
@@ -44,20 +43,20 @@ Color::~Color() {
 
 float* Color::ptr(void) {
     //Returns a pointer to the m_color array
-    return &c[0];
+    return &r;
 }
 
 float& Color::operator [] (int i) {
     //Returns a reference to the specified element
-    return c[i];
+    return (&r)[i];
 }
 
 Color Color::interpolate(Color& c1, float t) {
     t = static_cast<float>(clampf(0.0, 1.0, t));
-    return Color((1.f - t) * c[0] + t * c1[0],
-                 (1.f - t) * c[1] + t * c1[1],
-                 (1.f - t) * c[2] + t * c1[2],
-                 (1.f - t) * c[3] + t * c1[3]);
+    return Color((1.f - t) * r + t * c1[0],
+                 (1.f - t) * g + t * c1[1],
+                 (1.f - t) * b + t * c1[2],
+                 (1.f - t) * a + t * c1[3]);
 }
 
 Color Color::red(void) {
