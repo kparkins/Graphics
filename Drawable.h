@@ -11,6 +11,7 @@
 #include <vector>
 #include <memory>
 
+using std::vector;
 
 class Drawable {
     
@@ -25,7 +26,12 @@ public:
     
     virtual void draw(DrawData&);
     virtual void update(UpdateData&);
-    
+
+    const vector<float>& getVertexArray();
+
+protected:
+
+    vector<float> m_vertexArray;
 };
 
 typedef std::shared_ptr<Drawable> DrawablePtr;

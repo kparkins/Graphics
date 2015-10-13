@@ -87,6 +87,9 @@ void OBJObject::generateMesh(std::string filename) {
         m_interleaved.push_back(vertices[vertexIndex]);
         m_interleaved.push_back(vertices[vertexIndex + 1]);
         m_interleaved.push_back(vertices[vertexIndex + 2]);
+        m_vertexArray.push_back(vertices[vertexIndex]);
+        m_vertexArray.push_back(vertices[vertexIndex + 1]);
+        m_vertexArray.push_back(vertices[vertexIndex + 2]);
     }
     m_numVertices = m_interleaved.size() / 9;
     std::cout << filename + "\tDone." << std::endl;

@@ -17,3 +17,7 @@ void Drawable::draw(DrawData& data) {
 void Drawable::update(UpdateData& data) {
     std::cout << "Warning: update() is not implemented" << std::endl;
 }
+
+const vector<float>& Drawable::getVertexArray() {
+    return this->m_vertexArray;
+}

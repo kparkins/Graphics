@@ -29,9 +29,9 @@ Matrix4& Camera::getInverseMatrix() {
 }
 
 void Camera::update() {
-    Vector3 z = (e - d).normalize();
-    Vector3 x = up.cross(z).normalize();
-    Vector3 y = z.cross(x).normalize();
+    Vector3 & z = (e - d).normalize();
+    Vector3 & x = up.cross(z).normalize();
+    Vector3 & y = z.cross(x).normalize();
 
     _mm_store_ps(c[0], _mm_load_ps(x.ptr()));
     _mm_store_ps(c[1], _mm_load_ps(y.ptr()));

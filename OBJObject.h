@@ -21,6 +21,8 @@
 #include "Vector3.h"
 #include "Drawable.h"
 
+using std::string;
+using std::vector;
 using std::shared_ptr;
 
 class OBJObject : public Drawable {
@@ -30,19 +32,22 @@ public:
     OBJObject();
     virtual ~OBJObject(void);
 
-    void generateMesh(std::string);
+    void generateMesh(string);
     void loadVabo();
+
+    const vector<float>& getVertices();
+
     virtual void draw(DrawData&);
     virtual void update(UpdateData&);
     
 protected:
     
     //Helper functions
-    std::vector<std::string>& split(const std::string&, char, std::vector<std::string>&);
-    std::vector<std::string> split(const std::string&, char);
-    
+    vector<string>& split(const string&, char, vector<string>&);
+    vector<string> split(const string&, char);
+
     //Storage vectors
-    std::vector<float> m_interleaved;
+    vector<float> m_interleaved;
 
     GLuint m_vbo;
     GLuint m_vao;

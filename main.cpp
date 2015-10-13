@@ -11,7 +11,6 @@
 #include "Window.h"
 #include "MathTestBench.h"
 
-
 int main(int argc, char *argv[]) {
     //Math Test Bench
     MathTestBench::runTests();
@@ -57,4 +56,3 @@ int main(int argc, char *argv[]) {
     
     return 0;
 }
-

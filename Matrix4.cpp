@@ -175,23 +175,30 @@ Matrix4 Matrix4::rigidInverse(void) {
 }
 
 
-Matrix4 Matrix4::makePerspectiveProjection(float fov, float width, float height, float near, float far) {
-    identity();
-    
-    //Project 3
-    //Make this matrix a perspectice project matrix using fov, width, height, near and far
-    //See the lecture slides for details
-    
+Matrix4& Matrix4::makePerspectiveProjection(float fov, float width, float height, float near, float far) {
+    this->identity();
+    float aspect = width / height;
+
+    m[0][0] = 1.f / (aspect * tanf(fov / 2.f));
+    m[1][1] =  1.f / tan(fov / 2.f);
+    m[2][2] = (near + far) / (near - far) ;
+    m[2][3] = -1.f;
+    m[3][2] = (2.f * near * far) / (near - far);
+
     return *this;
 }
 
-Matrix4 Matrix4::makeViewport(float xmin, float xmax, float ymin, float ymax) {
-    identity();
-    
-    //Project 3
-    //Make this matrix a viewport matrix using xmin, xmax, ymin, and ymax
-    //See the lecture slides for details
-    
+Matrix4& Matrix4::makeViewport(float xmin, float xmax, float ymin, float ymax) {
+    this->identity();
+
+    m[0][0] = (xmax - xmin) / 2.f;
+    m[1][1] = (ymax - ymin) / 2.f;
+    m[2][2] = .5f;
+    m[3][0] = (xmin + xmax) / 2.f;
+    m[3][1] = (ymin + ymax) / 2.f;
+    m[3][2] = .5f;
+    m[3][3] = 1.f;
+
     return *this;
 }
 

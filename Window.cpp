@@ -9,12 +9,14 @@
 #include "Window.h"
 #include "Cube.h"
 #include "Globals.h"
+#include "Rasterizer.h"
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 int Window::frame = 0;
 int Window::timebase = 0;
 int Window::time = 0;
+bool Window::m_useRasterizer = false;
 
 DrawablePtr Window::m_cube;
 DrawablePtr Window::m_sphere;
@@ -79,7 +81,7 @@ void Window::idleCallback() {
         fps = frame*1000.0/(time-timebase);
         timebase = time;
         frame = 0;
-        std::cout << "fps " << fps << std::endl;
+        std::cout << "fps\t" << fps << std::endl;
     }
     //Call the display routine to draw the cube
     displayCallback();
@@ -135,7 +137,6 @@ void Window::displayCallback() {
 
 void Window::keyCallback(unsigned char key, int x, int y) {
     Matrix4 matrix;
-    static int keyPressCounter;
     switch (key) {
         case 'b':
             if(m_model == m_sphere || m_model == m_cube) {
@@ -188,14 +189,16 @@ void Window::keyCallback(unsigned char key, int x, int y) {
             matrix.makeRotateZ(-.1745);
             m_model->m_toWorld = matrix * m_model->m_toWorld;
             break;
+        case 'e':
+            if(m_useRasterizer) {
+                Rasterizer::enable();
+            } else {
+                Rasterizer::disable();
+            }
+            m_useRasterizer = !m_useRasterizer;
         default:
             break;
     }
-    /*
-    Vector3 position(m_model->m_toWorld[3][0],
-                     m_model->m_toWorld[3][1],
-                     m_model->m_toWorld[3][2]);
-    position.print("Key Press -- " + std::to_string(keyPressCounter++));*/
 }
 
 
@@ -226,14 +229,17 @@ void Window::specialKeyCallback(int key, int x, int y) {
         }
         case GLUT_KEY_F4:
             glEnable(GL_LIGHTING);
+            Globals::camera.reset();
             m_model = m_bunny;
             break;
         case GLUT_KEY_F5:
             glEnable(GL_LIGHTING);
+            Globals::camera.reset();
             m_model = m_dragon;
             break;
         case GLUT_KEY_F6:
             glEnable(GL_LIGHTING);
+            Globals::camera.reset();
             m_model = m_bear;
             break;
         case GLUT_KEY_F7:
