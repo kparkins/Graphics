@@ -19,17 +19,27 @@ public:
 
 private:
 
+    static FORCE_INLINE bool inPixelArray(int x, int y);
     static void idleCallback();
     static void displayCallback();
     static void reshapeCallback(int newWidth, int newHeight);
     static void rasterize();
-    static void rasterizeTriangle();
+    static Vector4 rasterizeVertex(float x, float y, float z, float w);
+    static void rasterizeVertices();
+    static void rasterizeTriangle(Vector4* v);
+    static void rasterizeTriangles();
     static void drawPoint(int x, int , float r, float g, float b);
     static void clearBuffer();
 
+    static float* m_pixels;
     static int m_lastTime;
+    static int m_windowWidth;
+    static int m_windowHeight;
 
 };
 
+bool Rasterizer::inPixelArray(int x, int y) {
+    return !(x < 0 || x >= m_windowWidth || y < 0 || y >= m_windowHeight);
+}
 
 #endif //CUBE_RASTERIZER_H

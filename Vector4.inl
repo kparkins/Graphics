@@ -1,10 +1,11 @@
 #include "Vector4.h"
 
-void Vector4::set(float x, float y, float z, float w) {
+Vector4& Vector4::set(float x, float y, float z, float w) {
     this->x = x;
     this->y = y;
     this->z = z;
     this->w = w;
+    return *this;
 }
 
 float* Vector4::ptr() {
@@ -39,14 +40,13 @@ Vector4 Vector4::operator-(const Vector4 & a) const {
     return b;
 }
 
-Vector4 Vector4::dehomogenize() const {
+Vector4& Vector4::dehomogenize() {
     if (!w) {
         return *this;
     }
-    Vector4 b;
-    _mm_store_ps(b.ptr(), _mm_div_ps(_mm_load_ps(&x), _mm_set1_ps(w)));
-    b.w = 1.f;
-    return b;
+    _mm_store_ps(&x, _mm_div_ps(_mm_load_ps(&x), _mm_set1_ps(w)));
+    w = 1.f;
+    return *this;
 }
 
 float Vector4::dot(const Vector4 & a) const {

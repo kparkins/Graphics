@@ -19,7 +19,7 @@ public:
     Vector4(float, float, float);
     Vector4(float, float, float, float);
 
-    FORCE_INLINE void set(float, float, float, float);
+    FORCE_INLINE Vector4& set(float, float, float, float);
 
     FORCE_INLINE float* ptr();
     FORCE_INLINE float& operator[](int);
@@ -30,7 +30,7 @@ public:
     FORCE_INLINE Vector4 subtract(const Vector4 &) const;
     FORCE_INLINE Vector4 operator-(const Vector4 &) const;
 
-    FORCE_INLINE Vector4 dehomogenize() const;
+    FORCE_INLINE Vector4& dehomogenize();
 
     Vector3 toVector3();
 
