@@ -191,8 +191,10 @@ void Window::keyCallback(unsigned char key, int x, int y) {
             break;
         case 'e':
             if(m_useRasterizer) {
+                glDisable(GL_LIGHTING);
                 Rasterizer::enable();
             } else {
+                glEnable(GL_LIGHTING);
                 Rasterizer::disable();
             }
             m_useRasterizer = !m_useRasterizer;

@@ -4,8 +4,6 @@
 
 #include <math.h>
 #include "Rasterizer.h"
-#include "Window.h"
-#include "Globals.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -16,6 +14,7 @@
 int Rasterizer::m_windowWidth = 512;
 int Rasterizer::m_windowHeight = 512;
 float* Rasterizer::m_pixels = new float[m_windowWidth * m_windowHeight * 3];
+float* Rasterizer::m_zbuffer = new float[m_windowWidth * m_windowHeight];
 Matrix4 Rasterizer::m_viewport = Rasterizer::m_viewport.makeViewport(0.f, 512.f, 0.f, 512.f);
 Matrix4 Rasterizer::m_projection = Rasterizer::m_projection.makePerspectiveProjection(M_PI / 3.f, 512.f, 512.f, 1.f, 1000.f);
 int Rasterizer::m_lastTime = 0;
@@ -23,67 +22,79 @@ int Rasterizer::m_lastTime = 0;
 using namespace std;
 
 void Rasterizer::clearBuffer() {
-    for (int i=0; i<m_windowWidth*m_windowHeight; ++i) {
-        m_pixels[i*3]   = 0.f;
-        m_pixels[i*3+1] = 0.f;
-        m_pixels[i*3+2] = 0.f;
+    for (int i = 0; i < m_windowWidth * m_windowHeight; ++i) {
+        m_zbuffer[i] = 1.f;
+        m_pixels[i * 3]   = 0.f;
+        m_pixels[i * 3 + 1] = 0.f;
+        m_pixels[i * 3 + 2] = 0.f;
     }
 }
 
 void Rasterizer::drawPoint(int x, int y, float r, float g, float b) {
     int offset = y * m_windowWidth * 3 + x * 3;
-    if(!inPixelArray(x, y)) {
-        return;
-    }
     m_pixels[offset]   = r;
-    m_pixels[offset+1] = g;
-    m_pixels[offset+2] = b;
+    m_pixels[offset + 1] = g;
+    m_pixels[offset + 2] = b;
 }
 
-Vector4 Rasterizer::rasterizeVertex(float x, float y, float z, float w) {
+Vector3 Rasterizer::rasterizeVertex(float x, float y, float z, float w) {
     Vector4 vertex(x, y, z, w);
     vertex = m_projection * Globals::camera.getInverseMatrix() * Window::m_model->m_toWorld * vertex;
     vertex = m_viewport * vertex.dehomogenize();
-    return vertex;
+    return vertex.toVector3();
 }
 
 void Rasterizer::rasterizeVertices() {
-    Vector4 vertex;
+    Vector3 vertex;
     const vector<float> & vertices = Window::m_model->getVertexArray();
     for(int i = 0; i < vertices.size(); i += 3) {
         vertex = rasterizeVertex(vertices[i], vertices[i + 1], vertices[i + 2], 1.f);
-        drawPoint(vertex.x, vertex.y, 1.f, 1.f, 1.f);
+        if(inPixelArray(vertex.x, vertex.y)) {
+            drawPoint(vertex.x, vertex.y, 1.f, 1.f, 1.f);
+        }
     }
 }
 
-void Rasterizer::rasterizeTriangle(Vector4* v) {
-    Vector3 bBoxMin(std::min(std::min(v[0].x, v[1].x), v[2].x),
-                    std::min(std::min(v[0].y, v[1].y), v[2].y), 0.f);
-    Vector3 bBoxMax(std::max(std::max(v[0].x, v[1].x), v[2].x),
-                    std::max(std::max(v[0].y, v[1].y), v[2].y), 0.f);
+void Rasterizer::rasterizeTriangle(Vector3* v) {
+    float xmin = min(min(v[0].x, v[1].x), v[2].x);
+    float xmax = max(max(v[0].x, v[1].x), v[2].x);
+    float ymin = min(min(v[0].y, v[1].y), v[2].y);
+    float ymax = max(max(v[0].y, v[1].y), v[2].y);
+    Color c((rand() % 100) / 100.f, (rand() % 100) / 100.f, (rand() % 100) / 100.f, 1.f);
 
+    for(int y = (int) ymin; y <= ymax; ++y) {
+        for(int x = (int) xmin; x <= xmax; ++x) {
+            if(inPixelArray(x,y) && inTriangle(x, y, v)) {
+                drawPoint(x, y, c.r, c.g, c.b);
+            }
+        }
+    }
 }
 
 void Rasterizer::rasterizeTriangles() {
-    Vector4 v[3];
+    Vector3 v[3];
     const vector<float> & vertices = Window::m_model->getVertexArray();
     for(int j = 0; j < vertices.size(); j += 9) {
-        v[0] = rasterizeVertex(vertices[j]    , vertices[j + 1], vertices[j + 2], 1.f);
+        v[0] = rasterizeVertex(vertices[j], vertices[j + 1], vertices[j + 2], 1.f);
         v[1] = rasterizeVertex(vertices[j + 3], vertices[j + 4], vertices[j + 5], 1.f);
         v[2] = rasterizeVertex(vertices[j + 6], vertices[j + 7], vertices[j + 8], 1.f);
+        rasterizeTriangle(&v[0]);
     }
 }
 
 void Rasterizer::rasterize() {
     rasterizeVertices();
+    srand(2);
     rasterizeTriangles();
 }
 
 void Rasterizer::reshapeCallback(int new_width, int new_height) {
     m_windowWidth  = new_width;
     m_windowHeight = new_height;
+    delete[] m_zbuffer;
     delete[] m_pixels;
     m_pixels = new float[m_windowWidth * m_windowHeight * 3];
+    m_zbuffer = new float[m_windowWidth * m_windowHeight];
     m_viewport.makeViewport(0.f, m_windowWidth, 0.f, m_windowHeight);
     m_projection.makePerspectiveProjection(M_PI / 3.f, new_width, new_height, 1.f, 1000.f);
 }
@@ -123,6 +134,5 @@ void Rasterizer::enable() {
     glutIdleFunc(idleCallback);
 
     glEnable(GL_DEPTH_TEST);
-
     glClearColor(0.0, 0.0, 0.0, 1.0);
 }
