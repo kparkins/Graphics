@@ -83,7 +83,7 @@ void Rasterizer::rasterizeTriangles() {
 }
 
 void Rasterizer::rasterize() {
-    rasterizeVertices();
+    //rasterizeVertices();
     srand(2);
     rasterizeTriangles();
 }

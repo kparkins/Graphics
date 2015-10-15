@@ -52,6 +52,9 @@ bool Rasterizer::inTriangle(int x, int y, Vector3* v) {
     Vector3 v01 = v[1] - v[0];
     Vector3 v02 = v[2] - v[0];
     Vector3 v0p = Vector3(x, y, 1.f) - v[0];
+    v01.z = 0.f;
+    v02.z = 0.f;
+    v0p.z = 0.f;
     float totalArea = v02.cross(v01).magnitude() * .5f;
 
     float alpha = (v0p.cross(v01).magnitude() * .5f) / totalArea;
@@ -68,6 +71,7 @@ bool Rasterizer::inTriangle(int x, int y, Vector3* v) {
     if(gamma <= 0.f || gamma >= 1.f) {
         return false;
     }
+
 
     int index = y * m_windowWidth + x;
     float z = alpha * v[0].z + beta * v[1].z + gamma * v[2].z;
