@@ -1,5 +1,4 @@
 #include "Vector3.h"
-#include "Vector4.h"
 
 Vector3::Vector3() {
     _mm_store_ps(&x, _mm_set1_ps(0.f));

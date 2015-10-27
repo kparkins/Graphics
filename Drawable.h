@@ -13,6 +13,11 @@
 
 using std::vector;
 
+typedef struct BoundingBox {
+    float xmin, ymin, zmin;
+    float xmax, ymax, zmax;
+}BoundingBox;
+
 class Drawable {
     
 public:
@@ -26,11 +31,14 @@ public:
     
     virtual void draw(DrawData&);
     virtual void update(UpdateData&);
+    virtual void computeBoundingBox();
+    virtual void translateToOrigin();
 
     const vector<float>& getVertexArray();
 
 protected:
 
+    BoundingBox m_box;
     vector<float> m_vertexArray;
 };
 

@@ -13,6 +13,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <limits>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -35,11 +36,16 @@ public:
     void generateMesh(string);
     void loadVabo();
 
-    const vector<float>& getVertices();
+    const vector<float> & getVertices();
 
-    virtual void draw(DrawData&);
-    virtual void update(UpdateData&);
-    
+    virtual void draw(DrawData&) override;
+    virtual void update(UpdateData&) override;
+    virtual void computeBoundingBox();
+    virtual void translateToOrigin() override;
+
+    void scaleToScreenSize();
+    void generateInterleavedArray();
+
 protected:
     
     //Helper functions
@@ -48,6 +54,10 @@ protected:
 
     //Storage vectors
     vector<float> m_interleaved;
+    vector<float> m_vertices;
+    vector<float> m_normals;
+    vector<float> m_colors;
+    vector<int> m_faces;
 
     GLuint m_vbo;
     GLuint m_vao;

@@ -9,6 +9,7 @@ void Camera::reset() {
     e.set(0.0, 0.0, 20.0);
     d.set(0.0, 0.0, 0.0);
     up.set(0.0, 1.0, 0.0);
+    fov = static_cast<float>(60.f * M_PI / 180.f);
 
     //Pre-define a camera matrix (and its inverse) that are shifted 'e' from the origin
     //This is used as a default camera m_position for Project 1

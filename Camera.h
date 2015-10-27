@@ -11,6 +11,7 @@ public:
     Vector3 e;   //Center of Projection
     Vector3 d;   //Look At
     Vector3 up;  //Up Vector ^
+    float fov;
     
     Camera(void);
     ~Camera(void);

@@ -42,7 +42,6 @@ public:
     static int timebase;
     static int time;
 
-    static bool m_useRasterizer;
 };
 
 #endif
