@@ -25,6 +25,7 @@ public:
     static int width, height; 	            // window m_size
     static bool m_leftButton;
     static bool m_rightButton;
+    static bool m_shift;
     static void initialize(void);
     static LightPtr m_directionalLight;
     static LightPtr m_pointLight;

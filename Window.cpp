@@ -16,6 +16,7 @@ int Window::timebase = 0;
 int Window::time = 0;
 bool Window::m_leftButton = false;
 bool Window::m_rightButton = false;
+bool Window::m_shift = false;
 Vector3 Window::prev = Vector3(0.f, 0.f, 1.f);
 
 LightPtr Window::m_directionalLight;
@@ -185,11 +186,6 @@ void Window::keyCallback(unsigned char key, int x, int y) {
         case '2':
             m_light = m_pointLight;
             break;
-        case 'p':
-            if(m_light) {
-                m_light->setSpotExponent(m_light->getSpotExponent() + 5);
-            }
-            break;
         case '3':
             m_light = m_spotLight;
             break;
@@ -210,6 +206,13 @@ void Window::keyCallback(unsigned char key, int x, int y) {
             break;
         default:
             break;
+    }
+    if(glutGetModifiers() & GLUT_ACTIVE_SHIFT) {
+        m_shift = true;
+        std::cout << "shift" << std::endl;
+    } else {
+        std::cout << "no shift" << std::endl;
+        m_shift = false;
     }
 }
 
@@ -235,34 +238,6 @@ void Window::specialKeyCallback(int key, int x, int y) {
             Globals::camera.reset();
             m_model = m_bear;
             m_light = nullptr;
-            break;
-        case GLUT_KEY_DOWN: {
-                if(m_light) {
-                    if(m_light != m_directionalLight) {
-                        Vector3 loc = m_light->getPosition().toVector3();
-                        loc *= 1.1f;
-                        m_light->setPosition(loc.toVector4(1.f));
-                    }
-                } else {
-                    Matrix4 scale;
-                    scale.makeScale(.9f);
-                    m_model->m_toWorld = m_model->m_toWorld * scale;
-                }
-            }
-            break;
-        case GLUT_KEY_UP: {
-                if(m_light) {
-                    if(m_light != m_directionalLight) {
-                        Vector3 loc = m_light->getPosition().toVector3();
-                        loc *= .9f;
-                        m_light->setPosition(loc.toVector4(1.f));
-                    }
-                } else {
-                    Matrix4 scale;
-                    scale.makeScale(1.1f);
-                    m_model->m_toWorld = m_model->m_toWorld * scale;
-                }
-            }
             break;
         default:
             break;
@@ -302,7 +277,25 @@ Vector3 Window::convertCoordinates(int x, int y) {
 }
 
 void Window::mouseMotionCallback(int x, int y) {
-    if(m_leftButton) {
+    if(m_shift) {
+        Vector3 current = convertCoordinates(x, y);
+        Matrix4 scale;
+        if(current.y > prev.y) {
+            scale.makeScale(1.03f);
+        } else {
+            scale.makeScale(.97f);
+        }
+        if(m_light) {
+            if(m_light != m_directionalLight) {
+                Vector3 loc = m_light->getPosition().toVector3();
+                loc *= scale[0][0];
+                m_light->setPosition(loc.toVector4(1.f));
+            }
+        } else {
+            m_model->m_toWorld = m_model->m_toWorld * scale;
+        }
+        prev = current;
+    } else if(m_leftButton) {
         Vector3 current = convertCoordinates(x, y);
         Vector3 axis = prev.cross(current);
         float v = (current - prev).magnitude();
