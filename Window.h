@@ -41,6 +41,8 @@ public:
     static void mouseButtonCallback(int, int, int, int);
     static void mouseMotionCallback(int x, int y);
 
+    static void rescale();
+
     static DrawablePtr m_model;
     static DrawablePtr m_sphere;
 

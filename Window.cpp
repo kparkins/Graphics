@@ -38,7 +38,7 @@ void Window::initialize(void) {
     Globals::light.setPosition(lightPos);
     Globals::light.setQuadraticAttentuation(.02f);
 
-    m_sphere = make_shared<Sphere>(9.8f, 3000, 3000);
+    m_sphere = make_shared<Sphere>(10.f, 3000, 3000);
     m_bear = make_shared<OBJObject>();
     m_bunny = make_shared<OBJObject>();
     m_dragon = make_shared<OBJObject>();
@@ -52,7 +52,7 @@ void Window::initialize(void) {
 
     m_directionalLight->setPosition(Vector4(0.f, 0.f, 1.f, 0.f));
 
-    m_spotLight->setPosition(Vector4(0.f, 10.f, 0.f, 1.f));
+    m_spotLight->setPosition(Vector4(0.f, 11.f, 0.f, 1.f));
     m_spotLight->setSpotDirection(Vector3(0.f, 0.f, 0.f));
     m_spotLight->setSpotAngle(25.f);
     m_spotLight->setSpotExponent(20.f);
@@ -61,7 +61,7 @@ void Window::initialize(void) {
     m_spotLight->setConstantAttenuation(1.f);
     m_spotLight->setDirectional(true);
 
-    m_pointLight->setPosition(Vector4(10.f, 0.f, 0.f, 1.f));
+    m_pointLight->setPosition(Vector4(11.f, 0.f, 0.f, 1.f));
     m_pointLight->setSpotAngle(180.f);
     m_pointLight->setQuadraticAttentuation(.025f);
 
@@ -83,6 +83,18 @@ void Window::initialize(void) {
     m_bear->m_material = materialFactory.make("red rubber");
     m_bunny->m_material = materialFactory.make("some color");
     m_dragon->m_material = materialFactory.make("jade");
+
+    rescale();
+}
+
+void Window::rescale() {
+    Matrix4 scale;
+    scale.makeScale(.738f);
+    m_bunny->m_toWorld = m_bunny->m_toWorld * scale;
+    scale.makeScale(.912f);
+    m_dragon->m_toWorld = m_dragon->m_toWorld * scale;
+    scale.makeScale(.904f);
+    m_bear->m_toWorld = m_bear->m_toWorld * scale;
 }
 
 //----------------------------------------------------------------------------
@@ -186,6 +198,7 @@ void Window::keyCallback(unsigned char key, int x, int y) {
         case 'r':
             m_light = nullptr;
             m_model->m_toWorld.identity();
+            rescale();
             break;
         case 's':
             m_light = nullptr;

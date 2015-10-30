@@ -150,8 +150,6 @@ void OBJObject::translateToOrigin() {
     float zorigin = -((m_box.zmax - m_box.zmin) * .5f + m_box.zmin);
     translate.makeTranslate(xorigin, yorigin, zorigin);
 
-    // this->m_toWorld = this->m_toWorld * translate;
-
     for(int i = 0; i < m_vertices.size(); i += 3) {
         v.x = m_vertices[i];
         v.y = m_vertices[i + 1];
@@ -169,14 +167,18 @@ void OBJObject::translateToOrigin() {
 
 void OBJObject::scaleToScreenSize() {
     this->computeBoundingBox();
-    Matrix4 scale;
+
     Vector3 lookAt = Globals::camera.d - Globals::camera.e;
     float fov = Globals::camera.fov;
     float h =  lookAt.magnitude() * tanf(fov * .5f);
     float scaleFactor = std::max(m_box.ymax, std::max(m_box.xmax, m_box.zmax));
-    h /= scaleFactor;
-    scale.makeScale(h);
-    this->m_toWorld = this->m_toWorld * scale;
+    float scale = h / scaleFactor;
+
+    for(int i = 0; i < m_vertices.size(); i += 3) {
+        m_vertices[i] = m_vertices[i] * scale;
+        m_vertices[i + 1] = m_vertices[i + 1] * scale;
+        m_vertices[i + 2] = m_vertices[i + 2] * scale;
+    }
 }
 
 void OBJObject::loadVabo() {
