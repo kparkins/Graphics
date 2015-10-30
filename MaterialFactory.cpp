@@ -6,68 +6,59 @@
 
 MaterialFactory::MaterialFactory() {
 
-    m_materialMap["gold"] =
-            setAmbient(.24725f, .1995f, .0745f, 1.f)
-           .setDiffuse(.75164f, .60648f, .22648f, 1.f)
-           .setSpecular(.628281f, .555802f, .366065f, 1.f)
-           .setShinniness(51.2f)
-           .build();
+    setAmbient(.24725f, .1995f, .0745f, 1.f)
+   .setDiffuse(.75164f, .60648f, .22648f, 1.f)
+   .setSpecular(.628281f, .555802f, .366065f, 1.f)
+   .setShinniness(51.2f)
+   .save("gold");
 
-    m_materialMap["polished gold"] =
-            setAmbient(.24725f, 0.2245f, 0.0645f, 1.0f)
-           .setDiffuse(0.34615f, 0.3143f, 0.0903f, 1.0f)
-           .setSpecular(0.797357f, 0.723991f, 0.208006f, 1.0f)
-           .setShinniness(83.2f)
-           .build();
+    setAmbient(.24725f, 0.2245f, 0.0645f, 1.0f)
+   .setDiffuse(0.34615f, 0.3143f, 0.0903f, 1.0f)
+   .setSpecular(0.797357f, 0.723991f, 0.208006f, 1.0f)
+   .setShinniness(83.2f)
+   .save("polished gold");
 
-    m_materialMap["brass"] =
-            setAmbient(0.329412f, 0.223529f, 0.027451f,1.0f)
-           .setDiffuse(0.780392f, 0.568627f, 0.113725f, 1.0f)
-           .setSpecular(0.992157f, 0.941176f, 0.807843f, 1.0f)
-           .setShinniness(27.8974f)
-           .build();
+    setAmbient(0.329412f, 0.223529f, 0.027451f,1.0f)
+   .setDiffuse(0.780392f, 0.568627f, 0.113725f, 1.0f)
+   .setSpecular(0.992157f, 0.941176f, 0.807843f, 1.0f)
+   .setShinniness(27.8974f)
+   .save("brass");
 
-    m_materialMap["red rubber"] =
-            setAmbient(0.05f, 0.f, 0.f, 1.f)
-           .setDiffuse(0.5f, 0.4f, 0.4f, 1.f)
-           .setSpecular(0.7f, 0.04f, 0.04f, 1.f)
-           .setShinniness(10.f)
-           .build();
+    setAmbient(0.05f, 0.f, 0.f, 1.f)
+   .setDiffuse(0.5f, 0.4f, 0.4f, 1.f)
+   .setSpecular(0.7f, 0.04f, 0.04f, 1.f)
+   .setShinniness(10.f)
+   .save("red rubber");
 
-    m_materialMap["shiny tin"] =
-            setAmbient(0.105882f, 0.058824f, 0.113725f, 1.f)
-           .setDiffuse(.427451f, .470588f, 0.541176f, 1.f)
-           .setSpecular(.33333f, 0.33333f, .521569f, 1.f)
-           .setShinniness(127.f)
-           .build();
+    setAmbient(0.105882f, 0.058824f, 0.113725f, 1.f)
+   .setDiffuse(.427451f, .470588f, 0.541176f, 1.f)
+   .setSpecular(.33333f, 0.33333f, .521569f, 1.f)
+   .setShinniness(127.f)
+   .save("shiny tin");
 
-    m_materialMap["jade"] =
-            setAmbient(0.135f, 0.2225f, 0.1575f, 0.95f)
-           .setDiffuse(0.54f, 0.89f, 0.63f, 0.95f)
-           .setSpecular(0.316228f, 0.316228f, 0.316228f, 0.95f)
-           .setShinniness(76.8f)
-           .build();
+    setAmbient(0.135f, 0.2225f, 0.1575f, 0.95f)
+   .setDiffuse(0.54f, 0.89f, 0.63f, 0.95f)
+   .setSpecular(0.316228f, 0.316228f, 0.316228f, 0.95f)
+   .setShinniness(76.8f)
+   .save("jade");
 
-    m_materialMap["some color"] =
-            setAmbient(0.0f,0.1f,0.06f ,1.0f)
-           .setDiffuse(0.0f,0.3f,0.9f,1.0f)
-           .setSpecular(0.f,0.f,0.f,1.0f)
-           .setShinniness(32.f)
-           .build();
+    setAmbient(0.0f,0.1f,0.06f ,1.0f)
+   .setDiffuse(0.0f,0.3f,0.9f,1.0f)
+   .setSpecular(0.f,0.f,0.f,1.0f)
+   .setShinniness(32.f)
+   .save("some color");
 
-    m_materialMap["flat yellow"] =
-            setAmbient(1.f, 1.f, .5f, 1.f)
-           .setDiffuse(1.f, 1.f, .5f, 1.f)
-           .setSpecular(1.f, 1.f, .5f, 1.f)
-           .setShinniness(0.f)
-           .build();
+    setAmbient(1.f, 1.f, .5f, 1.f)
+   .setDiffuse(1.f, 1.f, .5f, 1.f)
+   .setSpecular(1.f, 1.f, .5f, 1.f)
+   .setShinniness(0.f)
+   .save("flat yellow");
 
-    m_materialMap["white"] =
-            setAmbient(Color::white())
-           .setDiffuse(Color::white())
-           .setSpecular(Color::white())
-           .setShinniness(0.f)
-           .build();
+    setAmbient(Color::white())
+   .setDiffuse(Color::white())
+   .setSpecular(Color::white())
+   .setShinniness(0.f)
+   .save("white");
 }
 
 MaterialFactory::~MaterialFactory() {

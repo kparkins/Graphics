@@ -7,7 +7,6 @@
 #endif
 
 #include "Window.h"
-#include "Cube.h"
 #include "Globals.h"
 
 int Window::width  = 512;   //Set window width in pixels here
@@ -42,7 +41,6 @@ void Window::initialize(void) {
     m_bear = make_shared<OBJObject>();
     m_bunny = make_shared<OBJObject>();
     m_dragon = make_shared<OBJObject>();
-
     m_model = m_sphere;
 
     m_directionalLight = make_shared<Light>();
