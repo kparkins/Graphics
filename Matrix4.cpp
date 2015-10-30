@@ -16,10 +16,6 @@ Matrix4::Matrix4(float m00, float m01, float m02, float m03,
               m30, m31, m32, m33);
 }
 
-/*float* bptr = b.ptr();
- for(int i = 0; i < 4; ++i) {
- *bptr++ = m[0][i] * a[0] + m[1][i] * a[1] + m[2][i] * a[2] + m[3][i] * a[3];
- }*/
 Vector4 Matrix4::operator*(Vector4 & a) {
     Vector4 b(0.f, 0.f, 0.f, 0.f);
     
@@ -49,11 +45,6 @@ Vector4 Matrix4::multiply(Vector4 & a) {
 
 	return b;
 }
-
-/* float* bptr = b.ptr();
- for(int i = 0; i < 3; ++i) {
- *bptr++ = m[0][i] * a[0] + m[1][i] * a[1] + m[2][i] * a[2];
- }*/
 
 Vector3 Matrix4::operator*(Vector3 & a) {
     Vector3 b(0.f, 0.f, 0.f);
@@ -123,11 +114,6 @@ Matrix4& Matrix4::makeTranslate(const Vector3 & a) {
 
 Matrix4 Matrix4::transpose(void) {
     Matrix4 b;
-   /* for(int x = 0; x < 4; ++x) {
-        for(int y = 0; y < 4; ++y) {
-            b.m[y][x] = m[x][y];
-        }
-    }*/
     __m128 row0 = _mm_load_ps(m[0]);
     __m128 row1 = _mm_load_ps(m[1]);
     __m128 row2 = _mm_load_ps(m[2]);

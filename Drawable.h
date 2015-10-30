@@ -40,6 +40,7 @@ protected:
 
     BoundingBox m_box;
     vector<float> m_vertexArray;
+
 };
 
 typedef std::shared_ptr<Drawable> DrawablePtr;

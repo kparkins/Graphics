@@ -116,18 +116,23 @@ void OBJObject::computeBoundingBox() {
     m_box.zmax = std::numeric_limits<float>::min();
 
     for(int i = 0; i < m_vertices.size(); i += 3) {
+        // x
         if (m_vertices[i] < m_box.xmin) {
             m_box.xmin = m_vertices[i];
         }
         if (m_vertices[i] > m_box.xmax) {
             m_box.xmax = m_vertices[i];
         }
+
+        // y
         if (m_vertices[i + 1] < m_box.ymin) {
             m_box.ymin = m_vertices[i + 1];
         }
         if (m_vertices[i + 1] > m_box.ymax) {
             m_box.ymax = m_vertices[i + 1];
         }
+
+        // z
         if (m_vertices[i + 2] < m_box.zmin) {
             m_box.zmin = m_vertices[i + 2];
         }
@@ -164,33 +169,14 @@ void OBJObject::translateToOrigin() {
 
 void OBJObject::scaleToScreenSize() {
     this->computeBoundingBox();
-
-    Vector4 v;
     Matrix4 scale;
     Vector3 lookAt = Globals::camera.d - Globals::camera.e;
     float fov = Globals::camera.fov;
-    float h = lookAt.magnitude() * tan(fov * .5f);
-    float scaleFactor = m_box.xmax;
-    std::cout << "xmax " << m_box.xmax << " xmin " << m_box.xmin
-            << " ymax " << m_box.ymax << " ymin " << m_box.ymin
-            << " zmax " << m_box.zmax << " zmin " << m_box.zmin << std::endl;
-
-    scale.makeScale(h / scaleFactor);
-
-    for(int i = 0; i < m_vertices.size(); i += 3) {
-        v.x = m_vertices[i];
-        v.y = m_vertices[i + 1];
-        v.z = m_vertices[i + 2];
-        v.w = 1.f;
-
-        v = scale * v;
-        v.dehomogenize();
-
-        m_vertices[i] = v.x;
-        m_vertices[i + 1] = v.y;
-        m_vertices[i + 2] = v.z;
-    }
-
+    float h =  lookAt.magnitude() * tanf(fov * .5f);
+    float scaleFactor = std::max(m_box.ymax, std::max(m_box.xmax, m_box.zmax));
+    h /= scaleFactor;
+    scale.makeScale(h);
+    this->m_toWorld = this->m_toWorld * scale;
 }
 
 void OBJObject::loadVabo() {
