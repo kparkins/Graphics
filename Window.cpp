@@ -153,6 +153,7 @@ void Window::displayCallback() {
     //the light m_position will be treated as world coordiantes
     //(if we didn't the light would move with the camera, why is that?)
    // Globals::light.bind(0);
+    Globals::light.unbind();
     m_directionalLight->bind(1);
     m_pointLight->bind(2);
     m_spotLight->bind(3);
@@ -209,9 +210,7 @@ void Window::keyCallback(unsigned char key, int x, int y) {
     }
     if(glutGetModifiers() & GLUT_ACTIVE_SHIFT) {
         m_shift = true;
-        std::cout << "shift" << std::endl;
     } else {
-        std::cout << "no shift" << std::endl;
         m_shift = false;
     }
 }
