@@ -44,6 +44,10 @@ void Window::initialize(void) {
     m_dragon = make_shared<OBJObject>();
     m_model = m_sphere;
 
+    thread bear(&OBJObject::generateMesh, m_bear, "objects/bear.obj");
+    thread bunny(&OBJObject::generateMesh, m_bunny, "objects/bunny.obj");
+    thread dragon(&OBJObject::generateMesh, m_dragon, "objects/dragon.obj");
+
     m_directionalLight = make_shared<Light>();
     m_pointLight = make_shared<Light>();
     m_spotLight = make_shared<Light>();
@@ -64,12 +68,6 @@ void Window::initialize(void) {
     m_pointLight->setSpotAngle(180.f);
     m_pointLight->setQuadraticAttentuation(.025f);
 
-    thread bear(&OBJObject::generateMesh, m_bear, "objects/bear.obj");
-    thread bunny(&OBJObject::generateMesh, m_bunny, "objects/bunny.obj");
-    thread dragon(&OBJObject::generateMesh, m_dragon, "objects/dragon.obj");
-
-    std::this_thread::yield();
-
     bear.join();
     bunny.join();
     dragon.join();
@@ -83,10 +81,6 @@ void Window::initialize(void) {
     m_bunny->m_material = materialFactory.make("some color");
     m_dragon->m_material = materialFactory.make("jade");
 
-    rescale();
-}
-
-void Window::rescale() {
     Matrix4 scale;
     scale.makeScale(.738f);
     m_bunny->m_toWorld = m_bunny->m_toWorld * scale;
@@ -94,6 +88,24 @@ void Window::rescale() {
     m_dragon->m_toWorld = m_dragon->m_toWorld * scale;
     scale.makeScale(.904f);
     m_bear->m_toWorld = m_bear->m_toWorld * scale;
+}
+
+void Window::rescale() {
+    Matrix4 scale;
+    if(m_light) {
+        return;
+    }
+    m_model->m_toWorld.identity();
+    if(m_model == m_bunny) {
+        scale.makeScale(.738f);
+        m_bunny->m_toWorld = m_bunny->m_toWorld * scale;
+    } else if(m_model == m_dragon) {
+        scale.makeScale(.912f);
+        m_dragon->m_toWorld = m_dragon->m_toWorld * scale;
+    } else if(m_model == m_bear) {
+        scale.makeScale(.904f);
+        m_bear->m_toWorld = m_bear->m_toWorld * scale;
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -191,8 +203,6 @@ void Window::keyCallback(unsigned char key, int x, int y) {
             m_light = m_spotLight;
             break;
         case 'r':
-            m_light = nullptr;
-            m_model->m_toWorld.identity();
             rescale();
             break;
         case 's':
