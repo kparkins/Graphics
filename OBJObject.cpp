@@ -2,7 +2,7 @@
 #include "Globals.h"
 
 
-OBJObject::OBJObject() : Drawable() {
+OBJObject::OBJObject() {
 }
 
 OBJObject::~OBJObject() {
@@ -11,11 +11,11 @@ OBJObject::~OBJObject() {
 }
 
 void OBJObject::draw(DrawData& data) {
-    m_material.apply();
+    //m_material.apply();
     
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
-    glMultMatrixf(m_toWorld.ptr());
+    //glMultMatrixf(m_toWorld.ptr());
     glBindVertexArray(m_vao);
 
     glDrawArrays(GL_TRIANGLES, 0, m_numVertices);
@@ -78,9 +78,6 @@ void OBJObject::generateMesh(std::string filename) {
             }
         }
     }
-    this->computeBoundingBox();
-    this->translateToOrigin();
-    this->scaleToScreenSize();
     this->generateInterleavedArray();
     std::cout << filename + "\tDone." << std::endl;
 }
@@ -100,86 +97,10 @@ void OBJObject::generateInterleavedArray() {
         m_interleaved.push_back(m_vertices[vertexIndex]);
         m_interleaved.push_back(m_vertices[vertexIndex + 1]);
         m_interleaved.push_back(m_vertices[vertexIndex + 2]);
-        m_vertexArray.push_back(m_vertices[vertexIndex]);
-        m_vertexArray.push_back(m_vertices[vertexIndex + 1]);
-        m_vertexArray.push_back(m_vertices[vertexIndex + 2]);
     }
     m_numVertices = m_interleaved.size() / 9;
 }
 
-void OBJObject::computeBoundingBox() {
-    m_box.xmin = std::numeric_limits<float>::max();
-    m_box.ymin = std::numeric_limits<float>::max();
-    m_box.zmin = std::numeric_limits<float>::max();
-    m_box.xmax = std::numeric_limits<float>::min();
-    m_box.ymax = std::numeric_limits<float>::min();
-    m_box.zmax = std::numeric_limits<float>::min();
-
-    for(int i = 0; i < m_vertices.size(); i += 3) {
-        // x
-        if (m_vertices[i] < m_box.xmin) {
-            m_box.xmin = m_vertices[i];
-        }
-        if (m_vertices[i] > m_box.xmax) {
-            m_box.xmax = m_vertices[i];
-        }
-
-        // y
-        if (m_vertices[i + 1] < m_box.ymin) {
-            m_box.ymin = m_vertices[i + 1];
-        }
-        if (m_vertices[i + 1] > m_box.ymax) {
-            m_box.ymax = m_vertices[i + 1];
-        }
-
-        // z
-        if (m_vertices[i + 2] < m_box.zmin) {
-            m_box.zmin = m_vertices[i + 2];
-        }
-        if (m_vertices[i + 2] > m_box.zmax) {
-            m_box.zmax = m_vertices[i + 2];
-        }
-    }
-}
-
-void OBJObject::translateToOrigin() {
-    Vector4 v;
-    Matrix4 translate;
-    float xorigin = -((m_box.xmax - m_box.xmin) * .5f + m_box.xmin);
-    float yorigin = -((m_box.ymax - m_box.ymin) * .5f + m_box.ymin);
-    float zorigin = -((m_box.zmax - m_box.zmin) * .5f + m_box.zmin);
-    translate.makeTranslate(xorigin, yorigin, zorigin);
-
-    for(int i = 0; i < m_vertices.size(); i += 3) {
-        v.x = m_vertices[i];
-        v.y = m_vertices[i + 1];
-        v.z = m_vertices[i + 2];
-        v.w = 1.f;
-
-        v = translate * v;
-        v.dehomogenize();
-
-        m_vertices[i] = v.x;
-        m_vertices[i + 1] = v.y;
-        m_vertices[i + 2] = v.z;
-    }
-}
-
-void OBJObject::scaleToScreenSize() {
-    this->computeBoundingBox();
-
-    Vector3 lookAt = Globals::camera.d - Globals::camera.e;
-    float fov = Globals::camera.fov;
-    float h =  lookAt.magnitude() * tanf(fov * .5f);
-    float scaleFactor = std::max(m_box.ymax, std::max(m_box.xmax, m_box.zmax));
-    float scale = h / scaleFactor;
-
-    for(int i = 0; i < m_vertices.size(); i += 3) {
-        m_vertices[i] = m_vertices[i] * scale;
-        m_vertices[i + 1] = m_vertices[i + 1] * scale;
-        m_vertices[i + 2] = m_vertices[i + 2] * scale;
-    }
-}
 
 void OBJObject::loadVabo() {
     glGenVertexArrays(1, &m_vao);

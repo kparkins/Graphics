@@ -26,7 +26,7 @@ using std::string;
 using std::vector;
 using std::shared_ptr;
 
-class OBJObject : public Drawable {
+class OBJObject {
     
 public:
     
@@ -38,12 +38,9 @@ public:
 
     const vector<float> & getVertices();
 
-    virtual void draw(DrawData&) override;
-    virtual void update(UpdateData&) override;
-    virtual void computeBoundingBox();
-    virtual void translateToOrigin() override;
+    void draw(DrawData&);
+    void update(UpdateData&);
 
-    void scaleToScreenSize();
     void generateInterleavedArray();
 
 protected:

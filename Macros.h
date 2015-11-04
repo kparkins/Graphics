@@ -3,7 +3,6 @@
 //  Graphics
 //
 //  Created by Kyle J Parkinson on 10/2/15.
-//  Copyright © 2015 RexWest. All rights reserved.
 //
 
 #ifndef MACROS_H
