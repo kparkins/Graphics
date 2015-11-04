@@ -1,4 +1,5 @@
 #include "Sphere.h"
+#include "MaterialFactory.h"
 
 #ifdef __APPLE__
     #include <GLUT/glut.h>
@@ -25,6 +26,6 @@ void Sphere::setStacks(int stacks) {
 }
 
 void Sphere::render() {
-
+    glutSolidSphere(m_radius, m_slices, m_stacks);
 }
 

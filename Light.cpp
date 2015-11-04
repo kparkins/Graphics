@@ -1,7 +1,5 @@
 #include "Light.h"
 #include "Window.h"
-#include "Sphere.h"
-#include "Globals.h"
 
 #ifdef __APPLE__
     #include <GLUT/glut.h>
@@ -22,7 +20,6 @@ Light::Light() : m_bindID(-1) {
     m_spotAngle = 0.f;
     m_spotExponent = 1.f;
     m_spotDirection = Vector3(0.f, 0.f, 0.f) - m_position.toVector3();
-    m_model = std::make_shared<Sphere>(.5f, 100.f, 100.f);
 }
 
 Light::~Light() {
@@ -65,10 +62,6 @@ void Light::bind(int id) {
     }
 }
 
-DrawablePtr Light::getModel() {
-    return this->m_model;
-}
-
 void Light::unbind(void) {
     glDisable(GL_LIGHT0 + m_bindID);
     m_bindID = -1;
@@ -88,18 +81,10 @@ void Light::setSpotDirection(const Vector3 & lookAt) {
 
 void Light::setPosition(const Vector4 & pos) {
     this->m_position = pos;
-    this->m_model->m_toWorld.identity();
-    Matrix4 translate;
-    translate.makeTranslate(Vector3(pos.x, pos.y, pos.z));
-    m_model->m_toWorld = translate * m_model->m_toWorld;
 }
 
 Vector4 Light::getPosition() {
     return this->m_position;
-}
-
-void Light::debugDraw() {
-    m_model->draw(Globals::drawData);
 }
 
 void Light::setDirectional(bool on) {

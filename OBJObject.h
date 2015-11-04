@@ -20,7 +20,6 @@
 #include <iostream>
 
 #include "Vector3.h"
-#include "Drawable.h"
 
 using std::string;
 using std::vector;
@@ -35,11 +34,9 @@ public:
 
     void generateMesh(string);
     void loadVabo();
+    void render();
 
     const vector<float> & getVertices();
-
-    void draw(DrawData&);
-    void update(UpdateData&);
 
     void generateInterleavedArray();
 

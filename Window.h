@@ -8,9 +8,11 @@
 #include <unistd.h>
 
 #include "OBJObject.h"
-#include "Drawable.h"
+#include "Geode.h"
 #include "MaterialFactory.h"
 #include "Light.h"
+#include "Camera.h"
+#include "Sphere.h"
 
 using std::make_pair;
 using std::shared_ptr;
@@ -33,7 +35,8 @@ public:
     static void specialKeyCallback(int key, int x, int y);
     static void mouseButtonCallback(int, int, int, int);
 
-    static DrawablePtr m_sphere;
+    static GeodePtr m_sphere;
+    static CameraPtr m_camera;
 
     static int frame;
     static int timebase;

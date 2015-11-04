@@ -1,5 +1,4 @@
 #include "OBJObject.h"
-#include "Globals.h"
 
 
 OBJObject::OBJObject() {
@@ -10,7 +9,7 @@ OBJObject::~OBJObject() {
     glDeleteVertexArrays(1, &m_vao);
 }
 
-void OBJObject::draw(DrawData& data) {
+void OBJObject::render() {
     //m_material.apply();
     
     glMatrixMode(GL_MODELVIEW);
@@ -22,10 +21,6 @@ void OBJObject::draw(DrawData& data) {
 
     glBindVertexArray(0);
     glPopMatrix();
-}
-
-void OBJObject::update(UpdateData& data) {
-    //
 }
 
 void OBJObject::generateMesh(std::string filename) {

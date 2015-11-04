@@ -1,1 +1,1 @@
-#ifndef CUBE_H#define CUBE_H#include "Drawable.h"#include "Vector3.h"class Cube : public Drawable {    public:        float m_size;        Cube(float);    virtual ~Cube(void);        virtual void draw(DrawData &);    virtual void update(UpdateData &);};#endif // 
+#ifndef CUBE_H#define CUBE_H#include "Vector3.h"#include "Geode.h"class Cube : public Geode {    public:        float m_size;        Cube(float);    virtual ~Cube(void);    void render() override;    };#endif // 

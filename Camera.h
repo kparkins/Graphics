@@ -1,8 +1,12 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <memory>
+
 #include "Matrix4.h"
 #include "Vector3.h"
+
+using std::shared_ptr;
 
 class Camera {
     
@@ -30,5 +34,7 @@ protected:
     Matrix4 ci;  //Inverse of Camera Matrix
     
 };
+
+typedef shared_ptr<Camera> CameraPtr;
 
 #endif
