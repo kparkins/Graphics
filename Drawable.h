@@ -13,10 +13,6 @@
 
 using std::vector;
 
-typedef struct BoundingBox {
-    float xmin, ymin, zmin;
-    float xmax, ymax, zmax;
-}BoundingBox;
 
 class Drawable {
     
@@ -38,7 +34,6 @@ public:
 
 protected:
 
-    BoundingBox m_box;
     vector<float> m_vertexArray;
 
 };

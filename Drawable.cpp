@@ -4,7 +4,6 @@
 Drawable::Drawable() {
     this->m_toWorld.identity();
     this->m_rotationY = 0.f;
-    memset(static_cast<void*>(&m_box), 0, sizeof(m_box));
 }
 
 Drawable::~Drawable() {

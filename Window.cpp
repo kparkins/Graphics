@@ -27,7 +27,6 @@ void Window::initialize(void) {
     m_directionalLight = make_shared<Light>();
     m_directionalLight->setPosition(Vector4(0.f, 0.f, 1.f, 0.f));
 
-
     m_sphere->m_material = materialFactory.make("polished gold");
 }
 

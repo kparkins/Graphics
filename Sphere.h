@@ -2,10 +2,10 @@
 #define SPHERE_H
 
 #include <iostream>
-#include "Drawable.h"
 #include "Vector3.h"
+#include "Geode.h"
 
-class Sphere : public Drawable {
+class Sphere : public Geode {
     
 public:
 
@@ -15,8 +15,7 @@ public:
     void setSlices(int slices);
     void setStacks(int stacks);
     
-    virtual void draw(DrawData&);
-    virtual void update(UpdateData&);
+    void render() override;
 
 protected:
 

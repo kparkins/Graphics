@@ -2,6 +2,7 @@
 #define OBJOBJECT_H
 
 #ifdef __APPLE__
+#include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
     #define glGenVertexArrays glGenVertexArraysAPPLE
     #define glBindVertexArray glBindVertexArrayAPPLE
@@ -17,7 +18,6 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <OpenGL/OpenGL.h>
 
 #include "Vector3.h"
 #include "Drawable.h"
