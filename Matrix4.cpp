@@ -3,7 +3,7 @@
 #include "Vector3.h"
 
 Matrix4::Matrix4() {
-    std::memset(static_cast<void*>(&m), 0, sizeof(float) * 16);
+    this->identity();
 }
 
 Matrix4::Matrix4(float m00, float m01, float m02, float m03,

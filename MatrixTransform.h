@@ -12,11 +12,15 @@ public:
     ~MatrixTransform();
 
     void draw(Matrix4 & c) override;
+    void setTransform(const Matrix4 & transform);
+    Matrix4& getTransform();
 
 protected:
 
     Matrix4 m_transform;
 
 };
+
+typedef shared_ptr<MatrixTransform> MatrixTransformPtr;
 
 #endif

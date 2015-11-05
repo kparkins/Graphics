@@ -26,4 +26,6 @@ protected:
 
 };
 
+typedef shared_ptr<Group> GroupPtr;
+
 #endif

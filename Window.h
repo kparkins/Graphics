@@ -8,11 +8,13 @@
 #include <unistd.h>
 
 #include "OBJObject.h"
-#include "Geode.h"
 #include "MaterialFactory.h"
 #include "Light.h"
 #include "Camera.h"
 #include "Sphere.h"
+#include "Robot.h"
+#include "Cube.h"
+#include "MatrixTransform.h"
 
 using std::make_pair;
 using std::shared_ptr;
@@ -36,7 +38,10 @@ public:
     static void mouseButtonCallback(int, int, int, int);
 
     static GeodePtr m_sphere;
+    static GeodePtr m_cube;
     static CameraPtr m_camera;
+    static GroupPtr m_scene;
+    static GeodePtr m_robot;
 
     static int frame;
     static int timebase;

@@ -14,3 +14,11 @@ void MatrixTransform::draw(Matrix4 &c) {
         child->draw(trans);
     }
 }
+
+void MatrixTransform::setTransform(const Matrix4 & transform) {
+    this->m_transform = transform;
+}
+
+Matrix4& MatrixTransform::getTransform() {
+    return this->m_transform;
+}

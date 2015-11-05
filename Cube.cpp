@@ -1,5 +1,4 @@
 #include "Cube.h"
-#include "MaterialFactory.h"
 
 #ifdef __APPLE__
     #include <GLUT/glut.h>
@@ -9,6 +8,10 @@
 
 Cube::Cube(float size) {
     this->m_size = size;
+}
+
+Cube::Cube() {
+    this->m_size = 1.f;
 }
 
 Cube::~Cube() {

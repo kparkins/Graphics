@@ -17,11 +17,19 @@ int Window::time = 0;
 LightPtr Window::m_directionalLight;
 
 GeodePtr Window::m_sphere;
+GeodePtr Window::m_cube;
 CameraPtr Window::m_camera;
+GroupPtr Window::m_scene;
+GeodePtr Window::m_robot;
 
 void Window::initialize() {
     m_camera = make_shared<Camera>();
-    m_sphere = make_shared<Sphere>(5.f, 3000, 3000);
+    m_sphere = make_shared<Sphere>(1.f, 1000, 1000);
+    m_cube = make_shared<Cube>(1.f);
+    m_scene = make_shared<Group>();
+    m_robot = make_shared<Robot>(m_sphere, m_sphere, m_sphere, m_sphere);
+
+    m_scene->addChild(m_robot);
 
     m_directionalLight = make_shared<Light>();
     m_directionalLight->setPosition(Vector4(0.f, 0.f, 1.f, 0.f));
@@ -79,9 +87,11 @@ void Window::displayCallback() {
     //(if we didn't the light would move with the camera, why is that?)
 
     m_directionalLight->bind(1);
+
     Matrix4 ident;
     ident.identity();
-    m_sphere->draw(ident);
+    //m_sphere->draw(ident);
+    m_scene->draw(ident);
 
     //Pop off the changes we made to the matrix stack this frame
     glPopMatrix();
