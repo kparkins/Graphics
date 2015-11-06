@@ -175,3 +175,4 @@ Matrix4& Matrix4::makeTranslate(float x, float y, float z) {
     m[3][2] = z;
     return *this;
 }
+

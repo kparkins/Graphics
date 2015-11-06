@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "Geode.h"
+#include "Globals.h"
 #include "MatrixTransform.h"
 
 using std::shared_ptr;
@@ -14,6 +15,7 @@ using std::unordered_map;
 
 typedef struct BodyPart{
     MatrixTransformPtr scale;
+    MatrixTransformPtr firstTranslate;
     MatrixTransformPtr rotatation;
     MatrixTransformPtr translation;
 }BodyPart;
@@ -26,9 +28,8 @@ public:
     ~Robot();
 
     void render();
+    void update(float dt);
     void build();
-
-protected:
 
     enum {
         HEAD,
@@ -39,10 +40,18 @@ protected:
         RLEG
     };
 
+    void initialState();
+
+    float m_elapsedTime;
+
     GeodePtr m_head;
     GeodePtr m_torso;
     GeodePtr m_legs;
     GeodePtr m_arms;
+
+    float m_rotZ;
+    float m_rotX;
+    float m_delta;
 
     MatrixTransformPtr m_robotScale;
     MatrixTransformPtr m_robotRotation;

@@ -24,3 +24,7 @@ void Group::draw(Matrix4 & c) {
         child->draw(c);
     }
 }
+
+void Group::update(float dt) {
+
+}

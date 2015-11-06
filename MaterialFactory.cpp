@@ -65,6 +65,11 @@ MaterialFactory::~MaterialFactory() {
 
 }
 
+Material MaterialFactory::material(const string &material) {
+    static MaterialFactory factory;
+    return factory.make(material);
+}
+
 MaterialFactory& MaterialFactory::setAmbient(Color c) {
     m_material.m_ambientColor = c;
     return *this;

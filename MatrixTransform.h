@@ -3,6 +3,10 @@
 
 #include "Group.h"
 #include "Matrix4.h"
+#include "Globals.h"
+#include "Material.h"
+
+extern Frustrum frustrum;
 
 class MatrixTransform : public Group {
 
@@ -18,7 +22,7 @@ public:
 protected:
 
     Matrix4 m_transform;
-
+    Material m_material;
 };
 
 typedef shared_ptr<MatrixTransform> MatrixTransformPtr;

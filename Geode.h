@@ -2,7 +2,9 @@
 #define CUBE_GEODE_H
 
 #include "Node.h"
+#include "Globals.h"
 #include "MaterialFactory.h"
+
 
 class Geode : public Node {
 
@@ -13,6 +15,7 @@ public:
 
     virtual void render() = 0;
     void draw(Matrix4 & c) override;
+    void update(float dt) override;
 
     Material m_material;
 };

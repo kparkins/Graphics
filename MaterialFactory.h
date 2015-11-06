@@ -36,6 +36,8 @@ public:
     void save(const string & name);
     bool load(const string & material);
 
+    static Material material(const string & material);
+
 private:
 
     Material m_material;

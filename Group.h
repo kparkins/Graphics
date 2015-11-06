@@ -19,6 +19,7 @@ public:
     void removeChild(NodePtr child);
 
     void draw(Matrix4 & c) override;
+    void update(float dt) override;
 
 protected:
 
