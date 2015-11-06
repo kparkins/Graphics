@@ -20,14 +20,13 @@ typedef struct BodyPart{
     MatrixTransformPtr translation;
 }BodyPart;
 
-class Robot : public Geode {
+class Robot : public Group {
 
 public:
 
     Robot(GeodePtr head, GeodePtr torso, GeodePtr arms, GeodePtr legs);
     ~Robot();
 
-    void render();
     void update(float dt);
     void build();
 
@@ -53,9 +52,6 @@ public:
     float m_rotX;
     float m_delta;
 
-    MatrixTransformPtr m_robotScale;
-    MatrixTransformPtr m_robotRotation;
-    MatrixTransformPtr m_robotTranslatation;
     unordered_map<int, BodyPart> m_bodyParts;
 
 };

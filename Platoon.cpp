@@ -1,7 +1,7 @@
 #include "Platoon.h"
 
 
-Platoon::Platoon(int rows, int cols, Vector3 origin, GeodePtr geom)  {
+Platoon::Platoon(int rows, int cols, Vector3 origin, NodePtr geom)  {
     this->rows = rows;
     this->cols = cols;
     this->origin = origin;
@@ -31,5 +31,4 @@ void Platoon::draw(Matrix4 & c) {
             m_rotation->draw(res);
         }
     }
-    //m_geometry->draw(c);
 }

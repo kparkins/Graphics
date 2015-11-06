@@ -45,7 +45,7 @@ public:
     static GeodePtr m_cube;
     static CameraPtr m_camera;
     static GroupPtr m_scene;
-    static GeodePtr m_robot;
+    static GroupPtr m_robot;
     static Frustrum frustrum;
 
 

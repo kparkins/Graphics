@@ -21,7 +21,7 @@ GeodePtr Window::m_sphere;
 GeodePtr Window::m_cube;
 CameraPtr Window::m_camera;
 GroupPtr Window::m_scene;
-GeodePtr Window::m_robot;
+GroupPtr Window::m_robot;
 Frustrum Window::frustrum;
 MatrixTransformPtr Window::squad1Rot;
 MatrixTransformPtr Window::squad1Trans;
@@ -42,10 +42,10 @@ void Window::initialize() {
     m_scene = make_shared<Group>();
     m_robot = make_shared<Robot>(m_sphere, m_sphere, m_sphere, m_sphere);
 
-    float row1 = 5;
-    float col1 = 5;
-    float row2 = 5;
-    float col2 = 5;
+    float row1 = 8;
+    float col1 = 8;
+    float row2 = 8;
+    float col2 = 8;
     totalCols = col2 + col1;
     squad1 = make_shared<Platoon>(row1, col1, Vector3(2.5f, 0.f, 3.5f), m_robot);
     squad1Rot = make_shared<MatrixTransform>();
@@ -256,16 +256,10 @@ void Window::keyCallback(unsigned char key, int x, int y) {
         case 's':
             trans.makeScale(.9f);
             worldScale = worldScale * trans;
-           /* squad1scale->setTransform(squad1scale->getTransform() * trans);
-            squad2scale->setTransform(squad2scale->getTransform() * trans);
-            */
             break;
         case 'S':
             trans.makeScale(1.1f);
             worldScale = worldScale * trans;
-            /*squad1scale->setTransform(squad1scale->getTransform() * trans);
-            squad2scale->setTransform(squad2scale->getTransform() * trans);
-            */
             break;
         default:
             break;
@@ -304,5 +298,6 @@ void Window::specialKeyCallback(int key, int x, int y) {
 }
 
 void Window::mouseButtonCallback(int button, int state, int x, int y) {
+
 }
 

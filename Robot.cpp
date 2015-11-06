@@ -7,13 +7,6 @@ Robot::Robot(GeodePtr head, GeodePtr torso, GeodePtr arms, GeodePtr legs) :
         m_legs(legs),
         m_elapsedTime(0.f) {
 
-    m_robotScale = make_shared<MatrixTransform>();
-    m_robotRotation = make_shared<MatrixTransform>();
-    m_robotTranslatation = make_shared<MatrixTransform>();
-
-    m_robotTranslatation->addChild(m_robotRotation);
-    m_robotRotation->addChild(m_robotScale);
-    m_robotScale->m_cull = true;
     m_delta = .05f;
 
     this->build();
@@ -54,10 +47,6 @@ void Robot::update(float dt) {
 
 }
 
-void Robot::render() {
-    Matrix4 ident;
-    m_robotTranslatation->draw(ident);
-}
 
 void Robot::build() {
     BodyPart b;
@@ -83,12 +72,12 @@ void Robot::build() {
     BodyPart larm = m_bodyParts[LARM];
     BodyPart rarm = m_bodyParts[RARM];
 
-    m_robotTranslatation->addChild(head.translation);
-    m_robotTranslatation->addChild(torso.translation);
-    m_robotTranslatation->addChild(larm.translation);
-    m_robotTranslatation->addChild(rarm.translation);
-    m_robotTranslatation->addChild(lleg.translation);
-    m_robotTranslatation->addChild(rleg.translation);
+    this->addChild(head.translation);
+    this->addChild(torso.translation);
+    this->addChild(larm.translation);
+    this->addChild(rarm.translation);
+    this->addChild(lleg.translation);
+    this->addChild(rleg.translation);
 
     head.scale->addChild(m_head);
     torso.scale->addChild(m_torso);

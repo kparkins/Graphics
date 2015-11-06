@@ -10,7 +10,7 @@ class Platoon : public MatrixTransform {
 
 public:
 
-    Platoon(int rows, int cols, Vector3 origin, GeodePtr geom);
+    Platoon(int rows, int cols, Vector3 origin, NodePtr geom);
     ~Platoon();
 
     void draw(Matrix4 & c);
@@ -22,7 +22,7 @@ public:
     float m_xOffsetSign;
     Vector3 origin;
     MatrixTransformPtr m_rotation;
-    GeodePtr m_geometry;
+    NodePtr m_geometry;
 };
 
 typedef shared_ptr<Platoon> PlatoonPtr;
