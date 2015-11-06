@@ -49,7 +49,7 @@ public:
         bool result = true;
         for(int i = 0; i < 6; ++i) {
             d = planes[i].distance(origin);
-            if(d < -1 * radius) {
+            if(d < -radius) {
                 return false;
             }
         }

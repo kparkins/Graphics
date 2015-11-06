@@ -34,7 +34,6 @@ public:
     BoundingSphere getBoundingSphere();
     virtual void drawBoundingSphere();
 
-    Matrix4 m_c;
     bool m_cull;
     bool m_bs;
     BoundingSphere m_boundingSphere;

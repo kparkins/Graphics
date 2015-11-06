@@ -42,10 +42,10 @@ void Window::initialize() {
     m_scene = make_shared<Group>();
     m_robot = make_shared<Robot>(m_sphere, m_sphere, m_sphere, m_sphere);
 
-    float row1 = 8;
-    float col1 = 8;
-    float row2 = 8;
-    float col2 = 8;
+    float row1 = 12;
+    float col1 = 12;
+    float row2 = 12;
+    float col2 = 12;
     totalCols = col2 + col1;
     squad1 = make_shared<Platoon>(row1, col1, Vector3(2.5f, 0.f, 3.5f), m_robot);
     squad1Rot = make_shared<MatrixTransform>();
@@ -249,6 +249,7 @@ void Window::keyCallback(unsigned char key, int x, int y) {
     switch (key) {
         case 'c':
             Globals::enableCulling = !Globals::enableCulling;
+            m_robot->m_cull = Globals::enableCulling;
             break;
         case 'b':
             Globals::drawBoundingSphere = !Globals::drawBoundingSphere;
