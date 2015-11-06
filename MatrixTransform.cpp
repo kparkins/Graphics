@@ -31,7 +31,7 @@ void MatrixTransform::draw(Matrix4 &c) {
         glPushMatrix();
         glMultMatrixf(c.ptr());
         m_material.apply();
-        glutWireSphere(m_boundingSphere.radius, 20, 20);
+        glutWireSphere(m_boundingSphere.radius, 10, 10);
         glPopMatrix();
     }
 }

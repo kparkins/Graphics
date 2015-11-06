@@ -24,7 +24,7 @@ void Geode::draw(Matrix4 &c) {
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
         glMultMatrixf(trans.ptr());
-        glutWireSphere(m_boundingSphere.radius, 20, 20);
+        glutWireSphere(m_boundingSphere.radius, 10, 10);
         m_boundingSphere.origin = ((c * trans) * v).toVector3() ;
         glPopMatrix();
     }

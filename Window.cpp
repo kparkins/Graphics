@@ -37,15 +37,15 @@ float totalCols;
 
 void Window::initialize() {
     m_camera = make_shared<Camera>();
-    m_sphere = make_shared<Sphere>(1.f, 100, 100);
+    m_sphere = make_shared<Sphere>(1.f, 15, 15);
     m_cube = make_shared<Cube>(1.f);
     m_scene = make_shared<Group>();
     m_robot = make_shared<Robot>(m_sphere, m_sphere, m_sphere, m_sphere);
 
-    float row1 = 3;
-    float col1 = 3;
-    float row2 = 3;
-    float col2 = 3;
+    float row1 = 5;
+    float col1 = 5;
+    float row2 = 5;
+    float col2 = 5;
     totalCols = col2 + col1;
     squad1 = make_shared<Platoon>(row1, col1, Vector3(2.5f, 0.f, 3.5f), m_robot);
     squad1Rot = make_shared<MatrixTransform>();
