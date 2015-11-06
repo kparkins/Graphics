@@ -229,7 +229,6 @@ void Window::displayCallback() {
     m_directionalLight->bind(1);
     runSquadAnim();
 
-    Matrix4 ident;
     m_scene->draw(worldScale);
 
     //Pop off the changes we made to the matrix stack this frame
