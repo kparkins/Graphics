@@ -278,19 +278,19 @@ void Window::specialKeyCallback(int key, int x, int y) {
     Matrix4 trans;
     switch (key) {
         case GLUT_KEY_UP:
-            trans.makeRotateX(.05f);
-            doShit(trans);
-            break;
-        case GLUT_KEY_DOWN:
             trans.makeRotateX(-.05f);
             doShit(trans);
             break;
+        case GLUT_KEY_DOWN:
+            trans.makeRotateX(.05f);
+            doShit(trans);
+            break;
         case GLUT_KEY_LEFT:
-            trans.makeRotateY(.05f);
+            trans.makeRotateY(-.05f);
             doShit(trans);
             break;
         case GLUT_KEY_RIGHT:
-            trans.makeRotateY(-.05f);
+            trans.makeRotateY(.05f);
             doShit(trans);
             break;
         default:
