@@ -1,5 +1,4 @@
-#include "Light.h"
-#include "Window.h"
+#include "light.h"
 
 #ifdef __APPLE__
     #include <GLUT/glut.h>
@@ -7,118 +6,117 @@
     #include <GL/glut.h>
 #endif
 
-Light::Light() : m_bindID(-1) {
-    MaterialFactory materialFactory;
-    m_ambientColor = Color::black();
-    m_diffuseColor = Color::white();
-    m_specularColor = Color::white();
+gfx::light::light() : m_id(-1) {
+    m_ambient = color::color();
+    m_diffuse = color::color();
+    m_specular = color::color();
 
     m_directional = false;
-    m_constantAttenuation = 1.0;
-    m_linearAttenuation = 0.0;
-    m_quadraticAttenuation = 0.f;
-    m_spotAngle = 0.f;
-    m_spotExponent = 1.f;
-    m_spotDirection = Vector3(0.f, 0.f, 0.f) - m_position.toVector3();
+    m_constantatt = 1.0;
+    m_linearatt = 0.0;
+    m_quadraticatt = 0.f;
+    m_angle = 0.f;
+    m_exponent = 1.f;
+    m_direction = vec3(0.f, 0.f, 0.f) - m_position.toVector3();
 }
 
-Light::~Light() {
-    //Delete any dynamically allocated memory/objects here
+gfx::light::~light() {
+
 }
 
-void Light::bind(int id) {
+void gfx::light::bind(int id) {
     if(id < 0 || id > 7) {
         std::cout << "ERROR: The light bind ID " << id << " is not valid!" << std::endl;
         return;
     }
     
-    //Set the m_bindID
-    m_bindID = id;
+    //Set the m_id
+    m_id = id;
     
-    //Configure the light at the m_bindID
-    glEnable(GL_LIGHT0 + m_bindID);
+    //Configure the light at the m_id
+    glEnable(GL_LIGHT0 + m_id);
     
     //Configure the m_color of the light
-    glLightfv(GL_LIGHT0 + m_bindID, GL_AMBIENT, m_ambientColor.ptr());
-    glLightfv(GL_LIGHT0 + m_bindID, GL_DIFFUSE, m_diffuseColor.ptr());
-    glLightfv(GL_LIGHT0 + m_bindID, GL_SPECULAR, m_specularColor.ptr());
-    
+    glLightfv(GL_LIGHT0 + m_id, GL_AMBIENT, m_ambient.ptr());
+    glLightfv(GL_LIGHT0 + m_id, GL_DIFFUSE, m_diffuse.ptr());
+    glLightfv(GL_LIGHT0 + m_id, GL_SPECULAR, m_specular.ptr());
+
     //Configure the attenuation properties of the light
-    glLightf(GL_LIGHT0 + m_bindID, GL_QUADRATIC_ATTENUATION, m_quadraticAttenuation);
-    glLightf(GL_LIGHT0 + m_bindID, GL_LINEAR_ATTENUATION, m_linearAttenuation);
-    glLightf(GL_LIGHT0 + m_bindID, GL_CONSTANT_ATTENUATION, m_constantAttenuation);
-    
+    glLightf(GL_LIGHT0 + m_id, GL_QUADRATIC_ATTENUATION, m_quadraticatt);
+    glLightf(GL_LIGHT0 + m_id, GL_LINEAR_ATTENUATION, m_linearatt);
+    glLightf(GL_LIGHT0 + m_id, GL_CONSTANT_ATTENUATION, m_constantatt);
+
     //Position the light
-    glLightfv(GL_LIGHT0 + m_bindID, GL_POSITION, m_position.ptr());
-    
+    glLightfv(GL_LIGHT0 + m_id, GL_POSITION, m_position.ptr());
+
     //Setup spotlight direction, angle, and exponent here
-    if(m_spotAngle) {
-        glLightf(GL_LIGHT0 + m_bindID, GL_SPOT_EXPONENT, m_spotExponent);
-        glLightf(GL_LIGHT0 + m_bindID, GL_SPOT_CUTOFF, m_spotAngle);
+    if(m_angle) {
+        glLightf(GL_LIGHT0 + m_id, GL_SPOT_EXPONENT, m_exponent);
+        glLightf(GL_LIGHT0 + m_id, GL_SPOT_CUTOFF, m_angle);
     }
 
     if(m_directional) {
-        glLightfv(GL_LIGHT0 + m_bindID, GL_SPOT_DIRECTION, m_spotDirection.ptr());
+        glLightfv(GL_LIGHT0 + m_id, GL_SPOT_DIRECTION, m_direction.ptr());
     }
 }
 
-void Light::unbind(void) {
-    glDisable(GL_LIGHT0 + m_bindID);
-    m_bindID = -1;
+void gfx::light::unbind(void) {
+    glDisable(GL_LIGHT0 + m_id);
+    m_id = -1;
 }
 
-void Light::setSpotAngle(float angle) {
-    this->m_spotAngle = angle;
+void gfx::light::angle(float angle) {
+    this->m_angle = angle;
 }
 
-void Light::setSpotExponent(float exp) {
-    this->m_spotExponent = exp;
+void gfx::light::exponent(float exp) {
+    this->m_exponent = exp;
 }
 
-void Light::setSpotDirection(const Vector3 & lookAt) {
-    this->m_spotDirection = lookAt - m_position.toVector3();
+void gfx::light::direction(const vec3 & lookAt) {
+    this->m_direction = lookAt - m_position.toVector3();
 }
 
-void Light::setPosition(const Vector4 & pos) {
+void gfx::light::position(const vec4 & pos) {
     this->m_position = pos;
 }
 
-Vector4 Light::getPosition() {
+vec4 gfx::light::position() {
     return this->m_position;
 }
 
-void Light::setDirectional(bool on) {
+void gfx::light::directional(bool on) {
     this->m_directional = on;
 }
 
-float Light::getConstantAttenuation() {
-    return this->m_constantAttenuation;
+float gfx::light::constant_attenuation() {
+    return this->m_constantatt;
 }
 
-float Light::getLinearAttenuation() {
-    return this->m_linearAttenuation;
+float gfx::light::linear_attenuation() {
+    return this->m_linearatt;
 }
 
-float Light::getQuadraticAttentuation() {
-    return this->m_quadraticAttenuation;
+float gfx::light::quadratic_attentuation() {
+    return this->m_quadraticatt;
 }
 
-void Light::setConstantAttenuation(float c) {
-    this->m_constantAttenuation = c;
+void gfx::light::constant_attenuation(float c) {
+    this->m_constantatt = c;
 }
 
-void Light::setLinearAttenuation(float c) {
-    this->m_linearAttenuation = c;
+void gfx::light::linear_attenuation(float c) {
+    this->m_linearatt = c;
 }
 
-void Light::setQuadraticAttentuation(float c) {
-    this->m_quadraticAttenuation = c;
+void gfx::light::quadratic_attentuation(float c) {
+    this->m_quadraticatt = c;
 }
 
-float Light::getSpotAngle() {
-    return m_spotAngle;
+float gfx::light::angle() {
+    return m_angle;
 }
 
-float Light::getSpotExponent() {
-    return m_spotExponent;
+float gfx::light::exponent() {
+    return m_exponent;
 }

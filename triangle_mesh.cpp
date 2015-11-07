@@ -1,15 +1,15 @@
-#include "OBJObject.h"
+#include "triangle_mesh.h"
 
 
-OBJObject::OBJObject() {
+gfx::triangle_mesh::triangle_mesh() {
 }
 
-OBJObject::~OBJObject() {
+gfx::triangle_mesh::~triangle_mesh() {
     glDeleteBuffers(1, &m_vbo);
     glDeleteVertexArrays(1, &m_vao);
 }
 
-void OBJObject::render() {
+void gfx::triangle_mesh::render() {
     //m_material.apply();
     
     glMatrixMode(GL_MODELVIEW);
@@ -17,17 +17,17 @@ void OBJObject::render() {
     //glMultMatrixf(m_toWorld.ptr());
     glBindVertexArray(m_vao);
 
-    glDrawArrays(GL_TRIANGLES, 0, m_numVertices);
+    glDrawArrays(GL_TRIANGLES, 0, m_numverts);
 
     glBindVertexArray(0);
     glPopMatrix();
 }
 
-void OBJObject::generateMesh(std::string filename) {
+void gfx::triangle_mesh::generate_mesh(std::string filename) {
     int vi, vni;
     size_t pos;
     std::string line;
-    Vector3 normalizer;
+    vec3 normalizer;
     std::ifstream infile(filename);
     std::vector<std::string> tokens;
 
@@ -35,10 +35,12 @@ void OBJObject::generateMesh(std::string filename) {
         tokens.resize(0);
         tokens = split(line, ' ', tokens);
         if(tokens[0] == "v") {
+            m_properties |= VERTICES;
             m_vertices.push_back(std::stof(tokens[1]));
             m_vertices.push_back(std::stof(tokens[2]));
             m_vertices.push_back(std::stof(tokens[3]));
             if(tokens.size() >= 7) {
+                m_properties |= COLORS;
                 m_colors.push_back(std::stof(tokens[4]));
                 m_colors.push_back(std::stof(tokens[5]));
                 m_colors.push_back(std::stof(tokens[6]));
@@ -48,6 +50,7 @@ void OBJObject::generateMesh(std::string filename) {
                 m_colors.push_back(0.5f);
             }
         } else if(tokens[0] == "vn") {
+            m_properties |= NORMALS;
             normalizer.x = std::stof(tokens[1]);
             normalizer.y = std::stof(tokens[2]);
             normalizer.z = std::stof(tokens[3]);
@@ -73,31 +76,32 @@ void OBJObject::generateMesh(std::string filename) {
             }
         }
     }
-    this->generateInterleavedArray();
+    this->flatten();
     std::cout << filename + "\tDone." << std::endl;
 }
 
-void OBJObject::generateInterleavedArray() {
-    int colorIndex, normalIndex, vertexIndex;
+void gfx::triangle_mesh::flatten() {
+    int ci, ni, vi;
     for(int i = 0; i < m_faces.size(); i += 3) {
-        colorIndex = 3 *  m_faces[i];
-        normalIndex = 3 * m_faces[i + 1];
-        vertexIndex = 3 * m_faces[i + 2];
-        m_interleaved.push_back(m_colors[colorIndex]);
-        m_interleaved.push_back(m_colors[colorIndex + 1]);
-        m_interleaved.push_back(m_colors[colorIndex + 2]);
-        m_interleaved.push_back(m_normals[normalIndex]);
-        m_interleaved.push_back(m_normals[normalIndex + 1]);
-        m_interleaved.push_back(m_normals[normalIndex + 2]);
-        m_interleaved.push_back(m_vertices[vertexIndex]);
-        m_interleaved.push_back(m_vertices[vertexIndex + 1]);
-        m_interleaved.push_back(m_vertices[vertexIndex + 2]);
+        ci = 3 *  m_faces[i];
+        ni = 3 * m_faces[i + 1];
+        vi= 3 * m_faces[i + 2];
+        m_interleaved.push_back(m_colors[ci]);
+        m_interleaved.push_back(m_colors[ci + 1]);
+        m_interleaved.push_back(m_colors[ci + 2]);
+        m_interleaved.push_back(m_normals[ni]);
+        m_interleaved.push_back(m_normals[ni + 1]);
+        m_interleaved.push_back(m_normals[ni + 2]);
+        m_interleaved.push_back(m_vertices[vi]);
+        m_interleaved.push_back(m_vertices[vi + 1]);
+        m_interleaved.push_back(m_vertices[vi + 2]);
     }
-    m_numVertices = m_interleaved.size() / 9;
+    m_numverts = m_interleaved.size() / 9;
 }
 
 
-void OBJObject::loadVabo() {
+void gfx::triangle_mesh::buffer_mesh(){
+    int stride = 0;
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
 
@@ -105,11 +109,23 @@ void OBJObject::loadVabo() {
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
     glBufferData(GL_ARRAY_BUFFER, m_interleaved.size() * sizeof(float), &m_interleaved[0], GL_STATIC_DRAW);
 
-    glEnableClientState(GL_COLOR_ARRAY);
-    glColorPointer(3, GL_FLOAT, sizeof(float)* 9, (void*) 0);
+    if(m_properties & COLORS) {
+        glEnableClientState(GL_COLOR_ARRAY);
+        glColorPointer(3, GL_FLOAT, sizeof(float) * 9, (void *) 0);
+        stride += 3;
+    }
 
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glNormalPointer(GL_FLOAT, sizeof(float) * 9, (void*) (sizeof(float) * 3));
+    if(m_properties & NORMALS) {
+        glEnableClientState(GL_NORMAL_ARRAY);
+        glNormalPointer(GL_FLOAT, sizeof(float) * 9, (void*) (sizeof(float) * stride));
+        stride += 3;
+    }
+
+    if(m_properties & TEXTURES) {
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glTexCoordPointer(3, GL_FLOAT, sizeof(float) * 9, (void*) (sizeof(float) * stride));
+        stride += 3;
+    }
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, sizeof(float) * 9, (void*) (sizeof(float) * 6));
@@ -117,7 +133,7 @@ void OBJObject::loadVabo() {
     glBindVertexArray(0);
 }
 
-std::vector<std::string>& OBJObject::split(const std::string &s, char delim,
+std::vector<std::string>& gfx::triangle_mesh::split(const std::string &s, char delim,
                                            std::vector<std::string> &elems) {
     std::stringstream ss(s);
     std::string item;
@@ -127,7 +143,7 @@ std::vector<std::string>& OBJObject::split(const std::string &s, char delim,
     return elems;
 }
 
-std::vector<std::string> OBJObject::split(const std::string &s, char delim) {
+std::vector<std::string> gfx::triangle_mesh::split(const std::string &s, char delim) {
     std::vector<std::string> elems;
     split(s, delim, elems);
     return elems;

@@ -7,16 +7,13 @@
 #include <functional>
 #include <unistd.h>
 
-#include "OBJObject.h"
-#include "MaterialFactory.h"
-#include "Light.h"
-#include "Camera.h"
-#include "Sphere.h"
-#include "Robot.h"
-#include "Cube.h"
-#include "Platoon.h"
-#include "MatrixTransform.h"
-#include "Globals.h"
+#include "triangle_mesh.h"
+#include "material_factory.h"
+#include "light.h"
+#include "camera.h"
+#include "sphere.h"
+#include "cube.h"
+#include "matrix_transform.h"
 
 using std::make_pair;
 using std::shared_ptr;
@@ -24,47 +21,35 @@ using std::make_shared;
 using std::placeholders::_1;
 using std::thread;
 
-class Window {
-    
-public:
-    
-    static int width, height; 	            // window m_size
-    static void initialize(void);
-    static LightPtr m_directionalLight;
+namespace gfx {
+    class window {
 
-    static void idleCallback(void);
-    static void reshapeCallback(int, int);
-    static void displayCallback(void);
-    static void keyCallback(unsigned char key, int x, int y);
-    static void specialKeyCallback(int key, int x, int y);
-    static void mouseButtonCallback(int, int, int, int);
-    static void doShit(Matrix4 & c);
-    static void runSquadAnim();
+    public:
 
-    static GeodePtr m_sphere;
-    static GeodePtr m_cube;
-    static CameraPtr m_camera;
-    static GroupPtr m_scene;
-    static GroupPtr m_robot;
-    static Frustrum frustrum;
+        static int width, height;                // window m_size
+        static void initialize(void);
+
+        static void idlecb(void);
+        static void reshapecb(int, int);
+        static void displaycb(void);
+        static void keycb(unsigned char key, int x, int y);
+        static void specialkeycb(int key, int x, int y);
+        static void mousebuttoncb(int, int, int, int);
+
+        static geode_ptr m_sphere;
+        static geode_ptr m_cube;
+        static camera_ptr m_camera;
+        static group_ptr m_scene;
+        static group_ptr m_robot;
 
 
-    static PlatoonPtr squad1;
-    static PlatoonPtr squad2;
-    static MatrixTransformPtr squad1Rot;
-    static MatrixTransformPtr squad1Trans;
-    static MatrixTransformPtr squad2Rot;
-    static MatrixTransformPtr squad2Trans;
-    static MatrixTransformPtr squad2scale;
-    static MatrixTransformPtr squad1scale;
-    static Matrix4 worldScale;
+        static mat4 world_scale;
 
-    static bool runAnimation;
-    static int frame;
-    static int timebase;
-    static int time;
+        static int frame;
+        static int timebase;
+        static int time;
 
-};
-
+    };
+}
 #endif
 

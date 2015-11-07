@@ -1,5 +1,5 @@
-#ifndef CUBE_NODE_H
-#define CUBE_NODE_H
+#ifndef GFX_NODE_H
+#define GFX_NODE_H
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
@@ -13,33 +13,24 @@
 
 #include <memory>
 
-#include "Matrix4.h"
-#include "Vector3.h"
+#include "mat4.h"
+#include "vec3.h"
 
 using std::shared_ptr;
 
-typedef struct BoundingSphere {
-    Vector3 origin;
-    float radius;
-}BoundingSphere;
+namespace gfx {
+    class node {
 
-class Node {
+    public:
 
-public:
+        virtual ~node();
 
-    Node();
-    virtual ~Node();
-    virtual void draw(Matrix4 & c) = 0;
-    virtual void update(float dt) = 0;
-    BoundingSphere getBoundingSphere();
-    virtual void drawBoundingSphere();
+        virtual void draw(mat4 &c) = 0;
+        virtual void update(float dt) = 0;
 
-    bool m_cull;
-    bool m_bs;
-    BoundingSphere m_boundingSphere;
+    };
 
-};
-
-typedef shared_ptr<Node> NodePtr;
+    typedef shared_ptr<node> node_ptr;
+}
 
 #endif

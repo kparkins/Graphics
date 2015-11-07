@@ -1,68 +1,72 @@
-#ifndef COLOR_H
-#define COLOR_H
+#ifndef GFX_COLOR_H
+#define GFX_COLOR_H
 
-#include "Macros.h"
+#include <iostream>
+#include <string.h>
 
-class Color {
+#include "macros.h"
 
-    
-public:
-    
-    Color(void);
-    Color(float r, float g, float b);
-    Color(float r, float g, float b, float a);
-    Color(unsigned int hex);
-    
-    ~Color(void);
-    
-    float* ptr(void);
-    float& operator [] (int);
-    
-    //Mathematical operations on colors
-    Color interpolate(Color&, float);
+namespace gfx {
+    class color {
 
-    //Pre-Defined Colors
-    static Color red(void);
-    static Color blue(void);
-    static Color green(void);
-    static Color yellow(void);
-    static Color orange(void);
-    static Color purple(void);
-    static Color white(void);
-    static Color black(void);
-    static Color lightBrown(void);
-    
-    //Randomized Colors
-    static Color randomPastel(void);
-    static Color randomDarkPastel(void);
-    static Color randomBrightPastel(void);
-    static Color randomDarkShade(void);
-    
-    //Used by Light
-    static Color ambientDefault(void);
-    static Color diffuseDefault(void);
-    static Color specularDefault(void);
-    
-    //Used by Material
-    static Color ambientMaterialDefault(void);
-    static Color diffuseMaterialDefault(void);
-    static Color specularMaterialDefault(void);
-    static Color emissionMaterialDefault(void);
+    public:
 
-#if defined(__GNUC__) | defined(__clang__)
-    struct {
-        float r, g, b, a;
-    }ALIGN_16;
-#elif defined(_MSC_VER)
-    ALIGN_16 struct {
-        float r, g, b, a;
+        color();
+        color(float r, float g, float b);
+        color(float r, float g, float b, float a);
+        color(unsigned int hex);
+
+        ~color();
+
+        float* ptr();
+        float& operator[](int);
+
+        //Mathematical operations on colors
+        color interpolate(color &, float);
+
+        //Pre-Defined Colors
+        static color red();
+        static color blue();
+        static color green();
+        static color yellow();
+        static color orange();
+        static color purple();
+        static color white();
+        static color black();
+        static color light_brown();
+
+        //Randomized Colors
+        static color random_pastel();
+        static color dark_pastel();
+        static color bright_pastel();
+        static color dark_shade();
+
+        //Used by light
+        static color ambient();
+        static color diffuse();
+        static color specular();
+
+        //Used by material
+        static color ambient_material();
+        static color diffuse_material();
+        static color specular_material();
+        static color emissive_material();
+
+    #if defined(__GNUC__) | defined(__clang__)
+        struct {
+            float r, g, b, a;
+        }ALIGN_16;
+    #elif defined(_MSC_VER)
+        ALIGN_16 struct {
+            float r, g, b, a;
+        };
+    #endif
+
+    protected:
+
+        unsigned char m_u8bit;
+
     };
-#endif
-
-protected:
-
-    unsigned char u8bit;
-    
-};
+}
 
 #endif

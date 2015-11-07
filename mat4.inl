@@ -1,6 +1,6 @@
-#include "Matrix4.h"
+#include "mat4.h"
 
-void Matrix4::set(float m00, float m01, float m02, float m03,
+void gfx::mat4::set(float m00, float m01, float m02, float m03,
                   float m10, float m11, float m12, float m13,
                   float m20, float m21, float m22, float m23,
                   float m30, float m31, float m32, float m33) {
@@ -22,24 +22,24 @@ void Matrix4::set(float m00, float m01, float m02, float m03,
     m[3][3] = m33;
 }
 
-float Matrix4::get(int column, int element) {
+float gfx::mat4::get(int column, int element) {
     return m[column][element];
 }
 
-Matrix4& Matrix4::operator=(const Matrix4 & a) {
+mat4& gfx::mat4::operator=(const mat4 & a) {
     memcpy(static_cast<void*>(&m), static_cast<const void*>(&a), sizeof(m));
     return *this;
 }
 
-float* Matrix4::operator[](int i) {
+float* gfx::mat4::operator[](int i) {
     return m[i];
 }
 
-float* Matrix4::ptr() {
+float* gfx::mat4::ptr() {
     return &m[0][0];
 }
 
-Matrix4& Matrix4::identity() {
+mat4& gfx::mat4::identity() {
     static const float ident[4][4] = {
         {1,0,0,0},
         {0,1,0,0},
@@ -50,8 +50,8 @@ Matrix4& Matrix4::identity() {
     return *this;
 }
 
-Matrix4 Matrix4::operator*(const Matrix4 & a) {
-    Matrix4 b;
+mat4 gfx::mat4::operator*(const mat4 & a) {
+    mat4 b;
     __m128 m0c = _mm_load_ps(m[0]);
     __m128 m1c = _mm_load_ps(m[1]);
     __m128 m2c = _mm_load_ps(m[2]);
@@ -115,11 +115,11 @@ Matrix4 Matrix4::operator*(const Matrix4 & a) {
 }
 
 
-Matrix4 Matrix4::multiply(const Matrix4 & a) {
+mat4 gfx::mat4::multiply(const mat4 & a) {
     return (*this) * a;
 }
 
-Matrix4& Matrix4::makeRotateX(float angle) {
+mat4& gfx::mat4::rotatex(float angle) {
     this->identity();
     
     m[1][1] = cos(angle);
@@ -130,7 +130,7 @@ Matrix4& Matrix4::makeRotateX(float angle) {
     return *this;
 }
 
-Matrix4& Matrix4::makeRotateY(float angle) {
+mat4& gfx::mat4::rotatey(float angle) {
     this->identity();
     
     m[0][0] = cos(angle);
@@ -141,7 +141,7 @@ Matrix4& Matrix4::makeRotateY(float angle) {
     return *this;
 }
 
-Matrix4& Matrix4::makeRotateZ(float angle) {
+mat4& gfx::mat4::rotatez(float angle) {
     this->identity();
 
     m[0][0] = cos(angle);
@@ -152,7 +152,7 @@ Matrix4& Matrix4::makeRotateZ(float angle) {
     return *this;
 }
 
-Matrix4& Matrix4::makeScale(float sx, float sy, float sz) {
+mat4& gfx::mat4::scale(float sx, float sy, float sz) {
     this->identity();
 
     m[0][0] *= sx;
@@ -162,12 +162,12 @@ Matrix4& Matrix4::makeScale(float sx, float sy, float sz) {
     return *this;
 }
 
-Matrix4& Matrix4::makeScale(float s) {
+mat4& gfx::mat4::scale(float s) {
     return makeScale(s, s, s);
 }
 
 
-Matrix4& Matrix4::makeTranslate(float x, float y, float z) {
+mat4& gfx::mat4::translate(float x, float y, float z) {
     this->identity();
 
     m[3][0] = x;

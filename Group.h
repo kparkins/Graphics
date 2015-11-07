@@ -1,32 +1,35 @@
-#ifndef CUBE_GROUP_H
-#define CUBE_GROUP_H
+#ifndef GFX_GROUP_H
+#define GFX_GROUP_H
 
 #include <algorithm>
 #include <vector>
-#include "Node.h"
+
+#include "node.h"
+#include "window.h"
 
 using std::find;
 using std::vector;
 
-class Group : public Node {
+namespace gfx {
+    class group : public node {
 
-public:
+    public:
 
-    Group();
-    ~Group();
+        group();
+        virtual ~group();
 
-    void addChild(NodePtr child);
-    void removeChild(NodePtr child);
+        void addChild(node_ptr child);
+        void removeChild(node_ptr child);
 
-    void draw(Matrix4 & c) override;
-    void update(float dt) override;
+        void draw(mat4 &c) override;
 
-protected:
+    protected:
 
-    vector<NodePtr> m_children;
+        vector<node_ptr> m_children;
 
-};
+    };
 
-typedef shared_ptr<Group> GroupPtr;
+    typedef shared_ptr<group> group_ptr;
+}
 
 #endif

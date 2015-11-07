@@ -1,12 +1,12 @@
-#include "Matrix4.h"
-#include "Vector4.h"
-#include "Vector3.h"
+#include "mat4.h"
+#include "vec4.h"
+#include "vec3.h"
 
-Matrix4::Matrix4() {
+gfx::mat4::mat4() {
     this->identity();
 }
 
-Matrix4::Matrix4(float m00, float m01, float m02, float m03,
+gfx::mat4::mat4(float m00, float m01, float m02, float m03,
                  float m10, float m11, float m12, float m13,
                  float m20, float m21, float m22, float m23,
                  float m30, float m31, float m32, float m33 ) {
@@ -16,8 +16,8 @@ Matrix4::Matrix4(float m00, float m01, float m02, float m03,
               m30, m31, m32, m33);
 }
 
-Vector4 Matrix4::operator*(Vector4 & a) {
-    Vector4 b(0.f, 0.f, 0.f, 0.f);
+vec4 gfx::mat4::operator*(vec4 & a) {
+    vec4 b(0.f, 0.f, 0.f, 0.f);
     
     _mm_store_ps(b.ptr(),
         _mm_add_ps(
@@ -31,8 +31,8 @@ Vector4 Matrix4::operator*(Vector4 & a) {
     return b;
 }
 
-Vector4 Matrix4::multiply(Vector4 & a) {
-	Vector4 b(0.f, 0.f, 0.f, 0.f);
+vec4 gfx::mat4::multiply(vec4 & a) {
+	vec4 b(0.f, 0.f, 0.f, 0.f);
     
     _mm_store_ps(b.ptr(),
         _mm_add_ps(
@@ -46,8 +46,8 @@ Vector4 Matrix4::multiply(Vector4 & a) {
 	return b;
 }
 
-Vector3 Matrix4::operator*(Vector3 & a) {
-    Vector3 b(0.f, 0.f, 0.f);
+vec3 gfx::mat4::operator*(vec3 & a) {
+    vec3 b(0.f, 0.f, 0.f);
 
     _mm_store_ps(&b.x,
         _mm_add_ps(
@@ -59,8 +59,8 @@ Vector3 Matrix4::operator*(Vector3 & a) {
     return b;
 }
 
-Vector3 Matrix4::multiply(Vector3 & a) {
-	Vector3 b(0.f, 0.f, 0.f);
+vec3 gfx::mat4::multiply(vec3 & a) {
+	vec3 b(0.f, 0.f, 0.f);
 
     _mm_store_ps(&b.x,
         _mm_add_ps(
@@ -72,9 +72,9 @@ Vector3 Matrix4::multiply(Vector3 & a) {
 	return b;
 }
 
-Matrix4& Matrix4::makeRotateArbitrary(const Vector3 & a, float angle) {
+mat4& gfx::mat4::rotate_arbitrary(const vec3 &a, float angle) {
     this->identity();
-    Vector3 b = a.asNormalized();
+    vec3 b = a.asNormalized();
     
     float cos0 = cos(angle);
     float sin0 = sin(angle);
@@ -101,7 +101,7 @@ Matrix4& Matrix4::makeRotateArbitrary(const Vector3 & a, float angle) {
     return *this;
 }
 
-Matrix4& Matrix4::makeTranslate(const Vector3 & a) {
+mat4& gfx::mat4::translate(const vec3 &a) {
 	this->identity();
 
 	//Configure this matrix to be a translation by vector 'a'
@@ -112,8 +112,8 @@ Matrix4& Matrix4::makeTranslate(const Vector3 & a) {
 	return *this;
 }
 
-Matrix4 Matrix4::transpose(void) {
-    Matrix4 b;
+mat4 gfx::mat4::transpose() {
+    mat4 b;
     __m128 row0 = _mm_load_ps(m[0]);
     __m128 row1 = _mm_load_ps(m[1]);
     __m128 row2 = _mm_load_ps(m[2]);
@@ -126,19 +126,16 @@ Matrix4 Matrix4::transpose(void) {
     return b;
 }
 
-//Hint: Try basing this on code by cool people on the internet
-//In this class it is okay to use code from the internet
-//So long as you fully understand the code and can clearly explain it if asked to
 //http://stackoverflow.com/questions/2624422/efficient-4x4-matrix-inverse-affine-transform
-Matrix4 Matrix4::inverse(void) {
-    Matrix4 b;
+mat4 gfx::mat4::inverse() {
+    mat4 b;
 
     return b;
 }
 
-Matrix4 Matrix4::rigidInverse(void) {
-    Matrix4 b;
-    Matrix4 c;
+mat4 gfx::mat4::rigid_inverse() {
+    mat4 b;
+    mat4 c;
 
     c.identity();
     __m128 row0 = _mm_setr_ps(m[0][0], m[0][1], m[0][2], 0.f);
@@ -161,7 +158,7 @@ Matrix4 Matrix4::rigidInverse(void) {
 }
 
 
-Matrix4& Matrix4::makePerspectiveProjection(float fov, float width, float height, float near, float far) {
+mat4& gfx::mat4::perspective_projection(float fov, float width, float height, float near, float far) {
     this->identity();
     float aspect = width / height;
 
@@ -174,7 +171,7 @@ Matrix4& Matrix4::makePerspectiveProjection(float fov, float width, float height
     return *this;
 }
 
-Matrix4& Matrix4::makeViewport(float xmin, float xmax, float ymin, float ymax) {
+mat4& gfx::mat4::viewport(float xmin, float xmax, float ymin, float ymax) {
     this->identity();
 
     m[0][0] = (xmax - xmin) / 2.f;
@@ -188,7 +185,7 @@ Matrix4& Matrix4::makeViewport(float xmin, float xmax, float ymin, float ymax) {
     return *this;
 }
 
-void Matrix4::print(const std::string & comment) {
+void gfx::mat4::print(const std::string & comment) {
     //Width constants and variables
     static const int pointWidth = 1;
     static const int precisionWidth = 4;

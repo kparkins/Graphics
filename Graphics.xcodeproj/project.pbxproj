@@ -7,27 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2702E73B1BBEFEBF00E880A3 /* Matrix4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2702E7381BBEFEBF00E880A3 /* Matrix4.cpp */; settings = {ASSET_TAGS = (); }; };
-		2702E73C1BBEFEBF00E880A3 /* Vector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2702E7391BBEFEBF00E880A3 /* Vector3.cpp */; settings = {ASSET_TAGS = (); }; };
-		2702E73D1BBEFEBF00E880A3 /* Vector4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2702E73A1BBEFEBF00E880A3 /* Vector4.cpp */; settings = {ASSET_TAGS = (); }; };
+		2702E73B1BBEFEBF00E880A3 /* mat4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2702E7381BBEFEBF00E880A3 /* mat4.cpp */; settings = {ASSET_TAGS = (); }; };
+		2702E73C1BBEFEBF00E880A3 /* vec3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2702E7391BBEFEBF00E880A3 /* vec3.cpp */; settings = {ASSET_TAGS = (); }; };
+		2702E73D1BBEFEBF00E880A3 /* vec4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2702E73A1BBEFEBF00E880A3 /* vec4.cpp */; settings = {ASSET_TAGS = (); }; };
 		2779EF931BC231FB00CB2C0D /* InputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2779EF911BC231FB00CB2C0D /* InputHandler.cpp */; settings = {ASSET_TAGS = (); }; };
 		D40AFA801AD1E2E7008D61CC /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D40AFA7E1AD1E2E7008D61CC /* Shader.cpp */; };
-		D42FFC321AAFCC9C006F8E9C /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC2C1AAFCC9C006F8E9C /* Window.cpp */; };
-		D42FFC331AAFCC9C006F8E9C /* Cube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC2D1AAFCC9C006F8E9C /* Cube.cpp */; };
+		D42FFC321AAFCC9C006F8E9C /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC2C1AAFCC9C006F8E9C /* window.cpp */; };
+		D42FFC331AAFCC9C006F8E9C /* cube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC2D1AAFCC9C006F8E9C /* cube.cpp */; };
 		D42FFC351AAFCD9A006F8E9C /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42FFC341AAFCD9A006F8E9C /* GLUT.framework */; };
 		D42FFC371AAFCDA0006F8E9C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42FFC361AAFCDA0006F8E9C /* OpenGL.framework */; };
-		D42FFC531AAFCF71006F8E9C /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC391AAFCF71006F8E9C /* Color.cpp */; };
+		D42FFC531AAFCF71006F8E9C /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC391AAFCF71006F8E9C /* color.cpp */; };
 		D42FFC541AAFCF71006F8E9C /* Drawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC3B1AAFCF71006F8E9C /* Drawable.cpp */; };
-		D42FFC551AAFCF71006F8E9C /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC3D1AAFCF71006F8E9C /* Camera.cpp */; };
-		D42FFC581AAFCF71006F8E9C /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC431AAFCF71006F8E9C /* Light.cpp */; };
-		D42FFC591AAFCF71006F8E9C /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC441AAFCF71006F8E9C /* Sphere.cpp */; };
+		D42FFC551AAFCF71006F8E9C /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC3D1AAFCF71006F8E9C /* camera.cpp */; };
+		D42FFC581AAFCF71006F8E9C /* light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC431AAFCF71006F8E9C /* light.cpp */; };
+		D42FFC591AAFCF71006F8E9C /* sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC441AAFCF71006F8E9C /* sphere.cpp */; };
 		D42FFC5A1AAFCF71006F8E9C /* UpdateData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC481AAFCF71006F8E9C /* UpdateData.cpp */; };
 		D42FFC5B1AAFCF71006F8E9C /* DrawData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC4A1AAFCF71006F8E9C /* DrawData.cpp */; };
 		D42FFC5C1AAFCF71006F8E9C /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC4C1AAFCF71006F8E9C /* Texture.cpp */; };
-		D42FFC5D1AAFCF71006F8E9C /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC4E1AAFCF71006F8E9C /* Material.cpp */; };
+		D42FFC5D1AAFCF71006F8E9C /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC4E1AAFCF71006F8E9C /* material.cpp */; };
 		D42FFC641AB67F52006F8E9C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC631AB67F52006F8E9C /* main.cpp */; };
 		D42FFC661AB68012006F8E9C /* Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D42FFC651AB68012006F8E9C /* Globals.cpp */; };
-		D4D588151ACE591500D1F802 /* OBJObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4D588131ACE591500D1F802 /* OBJObject.cpp */; };
+		D4D588151ACE591500D1F802 /* triangle_mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4D588131ACE591500D1F802 /* triangle_mesh.cpp */; };
 		D4FEE23F1AC895C6006CF92D /* MathTestBench.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4FEE23D1AC895C6006CF92D /* MathTestBench.cpp */; };
 /* End PBXBuildFile section */
 
@@ -44,50 +44,50 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2702E7381BBEFEBF00E880A3 /* Matrix4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix4.cpp; sourceTree = SOURCE_ROOT; };
-		2702E7391BBEFEBF00E880A3 /* Vector3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector3.cpp; sourceTree = SOURCE_ROOT; };
-		2702E73A1BBEFEBF00E880A3 /* Vector4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector4.cpp; sourceTree = SOURCE_ROOT; };
-		2702E73E1BBF071F00E880A3 /* Matrix4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Matrix4.inl; sourceTree = SOURCE_ROOT; };
-		2702E73F1BBF071F00E880A3 /* Vector3.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector3.inl; sourceTree = SOURCE_ROOT; };
-		2702E7401BBF071F00E880A3 /* Vector4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector4.inl; sourceTree = SOURCE_ROOT; };
+		2702E7381BBEFEBF00E880A3 /* mat4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mat4.cpp; sourceTree = SOURCE_ROOT; };
+		2702E7391BBEFEBF00E880A3 /* vec3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vec3.cpp; sourceTree = SOURCE_ROOT; };
+		2702E73A1BBEFEBF00E880A3 /* vec4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vec4.cpp; sourceTree = SOURCE_ROOT; };
+		2702E73E1BBF071F00E880A3 /* mat4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mat4.inl; sourceTree = SOURCE_ROOT; };
+		2702E73F1BBF071F00E880A3 /* vec3.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vec3.inl; sourceTree = SOURCE_ROOT; };
+		2702E7401BBF071F00E880A3 /* vec4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vec4.inl; sourceTree = SOURCE_ROOT; };
 		2711520D1BBFA8A2007ECFCE /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Macros.h; path = ../Macros.h; sourceTree = "<group>"; };
 		2779EF911BC231FB00CB2C0D /* InputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputHandler.cpp; sourceTree = SOURCE_ROOT; };
 		2779EF921BC231FB00CB2C0D /* InputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputHandler.h; sourceTree = SOURCE_ROOT; };
 		D40AFA7E1AD1E2E7008D61CC /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = SOURCE_ROOT; };
 		D40AFA7F1AD1E2E7008D61CC /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = SOURCE_ROOT; };
 		D42FFC1E1AAFC90E006F8E9C /* Graphics */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Graphics; sourceTree = BUILT_PRODUCTS_DIR; };
-		D42FFC2B1AAFCC9C006F8E9C /* Matrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix4.h; sourceTree = SOURCE_ROOT; };
-		D42FFC2C1AAFCC9C006F8E9C /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = SOURCE_ROOT; };
-		D42FFC2D1AAFCC9C006F8E9C /* Cube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cube.cpp; sourceTree = SOURCE_ROOT; };
-		D42FFC2F1AAFCC9C006F8E9C /* Cube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cube.h; sourceTree = SOURCE_ROOT; };
-		D42FFC301AAFCC9C006F8E9C /* Window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = SOURCE_ROOT; };
+		D42FFC2B1AAFCC9C006F8E9C /* mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4.h; sourceTree = SOURCE_ROOT; };
+		D42FFC2C1AAFCC9C006F8E9C /* window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = window.cpp; sourceTree = SOURCE_ROOT; };
+		D42FFC2D1AAFCC9C006F8E9C /* cube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cube.cpp; sourceTree = SOURCE_ROOT; };
+		D42FFC2F1AAFCC9C006F8E9C /* cube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cube.h; sourceTree = SOURCE_ROOT; };
+		D42FFC301AAFCC9C006F8E9C /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = SOURCE_ROOT; };
 		D42FFC341AAFCD9A006F8E9C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		D42FFC361AAFCDA0006F8E9C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		D42FFC391AAFCF71006F8E9C /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = SOURCE_ROOT; };
-		D42FFC3A1AAFCF71006F8E9C /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = SOURCE_ROOT; };
+		D42FFC391AAFCF71006F8E9C /* color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = color.cpp; sourceTree = SOURCE_ROOT; };
+		D42FFC3A1AAFCF71006F8E9C /* color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = color.h; sourceTree = SOURCE_ROOT; };
 		D42FFC3B1AAFCF71006F8E9C /* Drawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drawable.cpp; sourceTree = SOURCE_ROOT; };
-		D42FFC3C1AAFCF71006F8E9C /* Vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3.h; sourceTree = SOURCE_ROOT; };
-		D42FFC3D1AAFCF71006F8E9C /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = SOURCE_ROOT; };
+		D42FFC3C1AAFCF71006F8E9C /* vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = SOURCE_ROOT; };
+		D42FFC3D1AAFCF71006F8E9C /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = SOURCE_ROOT; };
 		D42FFC3E1AAFCF71006F8E9C /* Drawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drawable.h; sourceTree = SOURCE_ROOT; };
-		D42FFC3F1AAFCF71006F8E9C /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = SOURCE_ROOT; };
-		D42FFC431AAFCF71006F8E9C /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Light.cpp; sourceTree = SOURCE_ROOT; };
-		D42FFC441AAFCF71006F8E9C /* Sphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sphere.cpp; sourceTree = SOURCE_ROOT; };
-		D42FFC451AAFCF71006F8E9C /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Light.h; sourceTree = SOURCE_ROOT; };
-		D42FFC461AAFCF71006F8E9C /* Sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sphere.h; sourceTree = SOURCE_ROOT; };
+		D42FFC3F1AAFCF71006F8E9C /* camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camera.h; sourceTree = SOURCE_ROOT; };
+		D42FFC431AAFCF71006F8E9C /* light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = light.cpp; sourceTree = SOURCE_ROOT; };
+		D42FFC441AAFCF71006F8E9C /* sphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sphere.cpp; sourceTree = SOURCE_ROOT; };
+		D42FFC451AAFCF71006F8E9C /* light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = light.h; sourceTree = SOURCE_ROOT; };
+		D42FFC461AAFCF71006F8E9C /* sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sphere.h; sourceTree = SOURCE_ROOT; };
 		D42FFC481AAFCF71006F8E9C /* UpdateData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UpdateData.cpp; sourceTree = SOURCE_ROOT; };
 		D42FFC491AAFCF71006F8E9C /* UpdateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateData.h; sourceTree = SOURCE_ROOT; };
 		D42FFC4A1AAFCF71006F8E9C /* DrawData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawData.cpp; sourceTree = SOURCE_ROOT; };
 		D42FFC4B1AAFCF71006F8E9C /* DrawData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawData.h; sourceTree = SOURCE_ROOT; };
 		D42FFC4C1AAFCF71006F8E9C /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = SOURCE_ROOT; };
 		D42FFC4D1AAFCF71006F8E9C /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = SOURCE_ROOT; };
-		D42FFC4E1AAFCF71006F8E9C /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = SOURCE_ROOT; };
-		D42FFC4F1AAFCF71006F8E9C /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = SOURCE_ROOT; };
-		D42FFC511AAFCF71006F8E9C /* Vector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector4.h; sourceTree = SOURCE_ROOT; };
+		D42FFC4E1AAFCF71006F8E9C /* material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = material.cpp; sourceTree = SOURCE_ROOT; };
+		D42FFC4F1AAFCF71006F8E9C /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = SOURCE_ROOT; };
+		D42FFC511AAFCF71006F8E9C /* vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = SOURCE_ROOT; };
 		D42FFC5F1AB672A8006F8E9C /* Globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = SOURCE_ROOT; };
 		D42FFC631AB67F52006F8E9C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = SOURCE_ROOT; };
 		D42FFC651AB68012006F8E9C /* Globals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Globals.cpp; sourceTree = SOURCE_ROOT; };
-		D4D588131ACE591500D1F802 /* OBJObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OBJObject.cpp; sourceTree = SOURCE_ROOT; };
-		D4D588141ACE591500D1F802 /* OBJObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBJObject.h; sourceTree = SOURCE_ROOT; };
+		D4D588131ACE591500D1F802 /* triangle_mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = triangle_mesh.cpp; sourceTree = SOURCE_ROOT; };
+		D4D588141ACE591500D1F802 /* triangle_mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = triangle_mesh.h; sourceTree = SOURCE_ROOT; };
 		D4FEE23D1AC895C6006CF92D /* MathTestBench.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathTestBench.cpp; sourceTree = SOURCE_ROOT; };
 		D4FEE23E1AC895C6006CF92D /* MathTestBench.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathTestBench.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -130,24 +130,24 @@
 				2779EF921BC231FB00CB2C0D /* InputHandler.h */,
 				2711520D1BBFA8A2007ECFCE /* Macros.h */,
 				D42FFC631AB67F52006F8E9C /* main.cpp */,
-				D42FFC2C1AAFCC9C006F8E9C /* Window.cpp */,
-				D42FFC301AAFCC9C006F8E9C /* Window.h */,
+				D42FFC2C1AAFCC9C006F8E9C /* window.cpp */,
+				D42FFC301AAFCC9C006F8E9C /* window.h */,
 				D42FFC651AB68012006F8E9C /* Globals.cpp */,
 				D42FFC5F1AB672A8006F8E9C /* Globals.h */,
-				D42FFC2D1AAFCC9C006F8E9C /* Cube.cpp */,
-				D42FFC2F1AAFCC9C006F8E9C /* Cube.h */,
-				D42FFC441AAFCF71006F8E9C /* Sphere.cpp */,
-				D42FFC461AAFCF71006F8E9C /* Sphere.h */,
-				D4D588131ACE591500D1F802 /* OBJObject.cpp */,
-				D4D588141ACE591500D1F802 /* OBJObject.h */,
-				D42FFC3D1AAFCF71006F8E9C /* Camera.cpp */,
-				D42FFC3F1AAFCF71006F8E9C /* Camera.h */,
-				D42FFC391AAFCF71006F8E9C /* Color.cpp */,
-				D42FFC3A1AAFCF71006F8E9C /* Color.h */,
-				D42FFC431AAFCF71006F8E9C /* Light.cpp */,
-				D42FFC451AAFCF71006F8E9C /* Light.h */,
-				D42FFC4E1AAFCF71006F8E9C /* Material.cpp */,
-				D42FFC4F1AAFCF71006F8E9C /* Material.h */,
+				D42FFC2D1AAFCC9C006F8E9C /* cube.cpp */,
+				D42FFC2F1AAFCC9C006F8E9C /* cube.h */,
+				D42FFC441AAFCF71006F8E9C /* sphere.cpp */,
+				D42FFC461AAFCF71006F8E9C /* sphere.h */,
+				D4D588131ACE591500D1F802 /* triangle_mesh.cpp */,
+				D4D588141ACE591500D1F802 /* triangle_mesh.h */,
+				D42FFC3D1AAFCF71006F8E9C /* camera.cpp */,
+				D42FFC3F1AAFCF71006F8E9C /* camera.h */,
+				D42FFC391AAFCF71006F8E9C /* color.cpp */,
+				D42FFC3A1AAFCF71006F8E9C /* color.h */,
+				D42FFC431AAFCF71006F8E9C /* light.cpp */,
+				D42FFC451AAFCF71006F8E9C /* light.h */,
+				D42FFC4E1AAFCF71006F8E9C /* material.cpp */,
+				D42FFC4F1AAFCF71006F8E9C /* material.h */,
 				D42FFC3B1AAFCF71006F8E9C /* Drawable.cpp */,
 				D42FFC3E1AAFCF71006F8E9C /* Drawable.h */,
 				D42FFC4A1AAFCF71006F8E9C /* DrawData.cpp */,
@@ -158,15 +158,15 @@
 				D42FFC4D1AAFCF71006F8E9C /* Texture.h */,
 				D40AFA7E1AD1E2E7008D61CC /* Shader.cpp */,
 				D40AFA7F1AD1E2E7008D61CC /* Shader.h */,
-				2702E73A1BBEFEBF00E880A3 /* Vector4.cpp */,
-				2702E7401BBF071F00E880A3 /* Vector4.inl */,
-				D42FFC511AAFCF71006F8E9C /* Vector4.h */,
-				2702E7391BBEFEBF00E880A3 /* Vector3.cpp */,
-				2702E73F1BBF071F00E880A3 /* Vector3.inl */,
-				D42FFC3C1AAFCF71006F8E9C /* Vector3.h */,
-				2702E7381BBEFEBF00E880A3 /* Matrix4.cpp */,
-				2702E73E1BBF071F00E880A3 /* Matrix4.inl */,
-				D42FFC2B1AAFCC9C006F8E9C /* Matrix4.h */,
+				2702E73A1BBEFEBF00E880A3 /* vec4.cpp */,
+				2702E7401BBF071F00E880A3 /* vec4.inl */,
+				D42FFC511AAFCF71006F8E9C /* vec4.h */,
+				2702E7391BBEFEBF00E880A3 /* vec3.cpp */,
+				2702E73F1BBF071F00E880A3 /* vec3.inl */,
+				D42FFC3C1AAFCF71006F8E9C /* vec3.h */,
+				2702E7381BBEFEBF00E880A3 /* mat4.cpp */,
+				2702E73E1BBF071F00E880A3 /* mat4.inl */,
+				D42FFC2B1AAFCC9C006F8E9C /* mat4.h */,
 				D4FEE23D1AC895C6006CF92D /* MathTestBench.cpp */,
 				D4FEE23E1AC895C6006CF92D /* MathTestBench.h */,
 			);
@@ -230,20 +230,20 @@
 				D42FFC5A1AAFCF71006F8E9C /* UpdateData.cpp in Sources */,
 				2779EF931BC231FB00CB2C0D /* InputHandler.cpp in Sources */,
 				D42FFC5B1AAFCF71006F8E9C /* DrawData.cpp in Sources */,
-				2702E73C1BBEFEBF00E880A3 /* Vector3.cpp in Sources */,
-				D42FFC581AAFCF71006F8E9C /* Light.cpp in Sources */,
-				2702E73D1BBEFEBF00E880A3 /* Vector4.cpp in Sources */,
-				D42FFC331AAFCC9C006F8E9C /* Cube.cpp in Sources */,
-				D4D588151ACE591500D1F802 /* OBJObject.cpp in Sources */,
+				2702E73C1BBEFEBF00E880A3 /* vec3.cpp in Sources */,
+				D42FFC581AAFCF71006F8E9C /* light.cpp in Sources */,
+				2702E73D1BBEFEBF00E880A3 /* vec4.cpp in Sources */,
+				D42FFC331AAFCC9C006F8E9C /* cube.cpp in Sources */,
+				D4D588151ACE591500D1F802 /* triangle_mesh.cpp in Sources */,
 				D42FFC541AAFCF71006F8E9C /* Drawable.cpp in Sources */,
-				D42FFC531AAFCF71006F8E9C /* Color.cpp in Sources */,
+				D42FFC531AAFCF71006F8E9C /* color.cpp in Sources */,
 				D42FFC641AB67F52006F8E9C /* main.cpp in Sources */,
-				D42FFC551AAFCF71006F8E9C /* Camera.cpp in Sources */,
-				D42FFC321AAFCC9C006F8E9C /* Window.cpp in Sources */,
-				D42FFC5D1AAFCF71006F8E9C /* Material.cpp in Sources */,
-				2702E73B1BBEFEBF00E880A3 /* Matrix4.cpp in Sources */,
+				D42FFC551AAFCF71006F8E9C /* camera.cpp in Sources */,
+				D42FFC321AAFCC9C006F8E9C /* window.cpp in Sources */,
+				D42FFC5D1AAFCF71006F8E9C /* material.cpp in Sources */,
+				2702E73B1BBEFEBF00E880A3 /* mat4.cpp in Sources */,
 				D4FEE23F1AC895C6006CF92D /* MathTestBench.cpp in Sources */,
-				D42FFC591AAFCF71006F8E9C /* Sphere.cpp in Sources */,
+				D42FFC591AAFCF71006F8E9C /* sphere.cpp in Sources */,
 				D40AFA801AD1E2E7008D61CC /* Shader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

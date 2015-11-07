@@ -1,4 +1,4 @@
-#include "Cube.h"
+#include "cube.h"
 
 #ifdef __APPLE__
     #include <GLUT/glut.h>
@@ -6,20 +6,19 @@
     #include <GL/glut.h>
 #endif
 
-Cube::Cube(float size) {
+gfx::cube::cube(float size) {
     this->m_size = size;
 }
 
-Cube::Cube() {
+gfx::cube::cube() {
     this->m_size = 1.f;
 }
 
-Cube::~Cube() {
+gfx::cube::~cube() {
     //Delete any dynamically allocated memory/objects here
 }
 
-
-void Cube::render() {
+void gfx::cube::render() {
     glutSolidCube(m_size);
 }
 

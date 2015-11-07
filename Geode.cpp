@@ -1,34 +1,20 @@
-#include "Geode.h"
-#include "Globals.h"
+#include "geode.h"
 
-Geode::Geode() {
-    m_material = MaterialFactory::material("polished gold");
+gfx::geode::geode() {
+    m_material = material_factory::material("polished gold");
 }
 
-Geode::~Geode() {
+gfx::geode::~geode() {
 
 }
 
-void Geode::draw(Matrix4 &c) {
+void gfx::geode::draw(mat4 &c) {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glMultMatrixf(c.ptr());
-    m_material.apply();
+    apply(m_material);
     this->render();
-
-    if(m_bs && Globals::drawBoundingSphere) {
-        Matrix4 trans;
-        trans.makeTranslate(0.f, -.45f, 0.f);
-        glMatrixMode(GL_MODELVIEW);
-        glPushMatrix();
-        glMultMatrixf(trans.ptr());
-        glutWireSphere(m_boundingSphere.radius, 10, 10);
-        glPopMatrix();
-    }
     glPopMatrix();
 }
 
-void Geode::update(float dt) {
-
-}
 

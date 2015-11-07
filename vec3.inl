@@ -1,121 +1,121 @@
-#include "Vector3.h"
+#include "vec3.h"
 
 
-void Vector3::set(float x, float y, float z) {
+void vec3::set(float x, float y, float z) {
     this->x = x;
     this->y = y;
     this->z = z;
 }
 
-float& Vector3::operator[](int loc) {
+float& vec3::operator[](int loc) {
     return (&x)[loc];
 }
 
-float* Vector3::ptr() {
+float* vec3::ptr() {
     return &x;
 }
 
-Vector3& Vector3::operator*=(const Vector3 & a) {
+vec3& vec3::operator*=(const vec3 & a) {
     _mm_store_ps(&x, _mm_mul_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return *this;
 }
 
-Vector3& Vector3::operator+=(const Vector3 & a) {
+vec3& vec3::operator+=(const vec3 & a) {
     _mm_store_ps(&x, _mm_add_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return *this;
 }
 
-Vector3& Vector3::operator-=(const Vector3 & a) {
+vec3& vec3::operator-=(const vec3 & a) {
     _mm_store_ps(&x, _mm_sub_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return *this;
 }
 
-Vector3& Vector3::operator=(const Vector3 & a) {
+vec3& vec3::operator=(const vec3 & a) {
     _mm_store_ps(&x, _mm_load_ps(&a.x));
     return *this;
 }
 
-Vector3& Vector3::operator*=(float s) {
+vec3& vec3::operator*=(float s) {
     _mm_store_ps(&x, _mm_mul_ps(_mm_load_ps(&x), _mm_set1_ps(s)));
     return *this;
 }
 
-Vector3& Vector3::operator+=(float s) {
+vec3& vec3::operator+=(float s) {
     _mm_store_ps(&x, _mm_add_ps(_mm_load_ps(&x), _mm_set1_ps(s)));
     return *this;
 }
 
-Vector3& Vector3::operator-=(float s) {
+vec3& vec3::operator-=(float s) {
     _mm_store_ps(&x, _mm_sub_ps(_mm_load_ps(&x), _mm_set1_ps(s)));
     return *this;
 }
 
-Vector3& Vector3::operator=(float s) {
+vec3& vec3::operator=(float s) {
     _mm_store_ps(&x, _mm_set1_ps(s));
     return *this;
 }
 
-Vector3 Vector3::operator+(const Vector3& a) const {
-    Vector3 b;
+vec3 vec3::operator+(const vec3& a) const {
+    vec3 b;
     _mm_store_ps(&b.x, _mm_add_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
-Vector3 Vector3::add(const Vector3 & a) const {
-    Vector3 b;
+vec3 vec3::add(const vec3 & a) const {
+    vec3 b;
     _mm_store_ps(&b.x, _mm_add_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
-Vector3 Vector3::operator-(const Vector3 & a) const {
-    Vector3 b;
+vec3 vec3::operator-(const vec3 & a) const {
+    vec3 b;
     _mm_store_ps(&b.x, _mm_sub_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
-Vector3 Vector3::subtract(const Vector3 & a) const {
-    Vector3 b;
+vec3 vec3::subtract(const vec3 & a) const {
+    vec3 b;
     _mm_store_ps(&b.x, _mm_sub_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
-Vector3 Vector3::operator*(float a) const {
-    Vector3 b;
+vec3 vec3::operator*(float a) const {
+    vec3 b;
     _mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_set1_ps(a)));
     return b;
 }
 
-Vector3 Vector3::negate(void) const {
-    Vector3 b;
+vec3 vec3::negate(void) const {
+    vec3 b;
     _mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_set1_ps(-1.f)));
     return b;
 }
 
-Vector3 Vector3::scale(float s) const {
-    Vector3 b;
+vec3 vec3::scale(float s) const {
+    vec3 b;
     _mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_set1_ps(s)));
     return b;
 }
 
-Vector3 Vector3::multiply(float a) const {
-    Vector3 b;
+vec3 vec3::multiply(float a) const {
+    vec3 b;
     _mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_set1_ps(a)));
     return b;
 }
 
-Vector3 Vector3::operator*(const Vector3 & a) const {
-    Vector3 b;
+vec3 vec3::operator*(const vec3 & a) const {
+    vec3 b;
     _mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
-Vector3 Vector3::multiply(const Vector3 & a) const {
-    Vector3 b;
+vec3 vec3::multiply(const vec3 & a) const {
+    vec3 b;
     _mm_store_ps(&b.x, _mm_mul_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
-float Vector3::dot(const Vector3 & a) {
+float vec3::dot(const vec3 & a) {
     float res;
     __m128 r = _mm_mul_ps(_mm_setr_ps(x, y, z, 0.f),
                           _mm_setr_ps(a.x, a.y, a.z, 0.f));
@@ -125,8 +125,8 @@ float Vector3::dot(const Vector3 & a) {
     return res;
 }
 
-Vector3 Vector3::cross(const Vector3 & a) {
-    Vector3 r;
+vec3 vec3::cross(const vec3 & a) {
+    vec3 r;
     __m128 m0 = _mm_load_ps(&x);
     __m128 a0 = _mm_load_ps(&a.x);
     _mm_store_ps(&r.x,
@@ -141,7 +141,7 @@ Vector3 Vector3::cross(const Vector3 & a) {
     return r;
 }
 
-float Vector3::angle(const Vector3 & a) {
+float vec3::angle(const vec3 & a) {
     float m, n, r;
     __m128 m0, n0, d0;
 
@@ -177,7 +177,7 @@ float Vector3::angle(const Vector3 & a) {
     return acosf(r / (m * n));
 }
 
-float Vector3::magnitude(void) const {
+float vec3::magnitude(void) const {
     float r;
     __m128 m0 = _mm_setr_ps(x, y, z, 0.f);
 
@@ -190,7 +190,7 @@ float Vector3::magnitude(void) const {
     return r;
 }
 
-Vector3& Vector3::normalize() {
+vec3& vec3::normalize() {
     float r;
     __m128 m0 = _mm_setr_ps(x, y, z, 0.f);
 
@@ -209,9 +209,9 @@ Vector3& Vector3::normalize() {
     return *this;
 }
 
-Vector3 Vector3::asNormalized(void) const {
+vec3 vec3::asNormalized(void) const {
     float r;
-    Vector3 vr(0.f, 0.f, 0.f);
+    vec3 vr(0.f, 0.f, 0.f);
     __m128 m0 = _mm_setr_ps(x, y, z, 0.f);
 
     __m128 m1 = _mm_mul_ps(m0, m0);

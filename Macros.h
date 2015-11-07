@@ -2,11 +2,9 @@
 //  Macros.h
 //  Graphics
 //
-//  Created by Kyle J Parkinson on 10/2/15.
-//
 
-#ifndef MACROS_H
-#define MACROS_H
+#ifndef GFX_MACROS_H
+#define GFX_MACROS_H
 
 #if defined (__APPLE__) || defined(__MACH__) || defined(__GNUC__)
 

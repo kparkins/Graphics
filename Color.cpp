@@ -1,131 +1,128 @@
-#include "Color.h"
-#include <iostream>
-#include <cstdlib>
-#include <string.h>
+#include "color.h"
 
 #define clampf(min,max,num) (num < min ? min : num > max ? max : num)
 
 
-Color::Color(void) {
-    u8bit = 0xFF;
+gfx::color::color() {
+    m_u8bit = 0xFF;
     memset(static_cast<void*>(&r), 1.f, sizeof(float) * 4);
 }
 
-Color::Color(float r, float g, float b) {
-    u8bit = 0xFF;
+gfx::color::color(float r, float g, float b) {
+    m_u8bit = 0xFF;
     memset(static_cast<void*>(&r), 1.f, sizeof(float) * 4);
     a = 1.f;
 }
 
-Color::Color(float r, float g, float b, float a) {
-    u8bit = 0xFF;
+gfx::color::color(float r, float g, float b, float a) {
+    m_u8bit = 0xFF;
     this->r = r;
     this->g = g;
     this->b = b;
     this->a = a;
 }
 
-Color::Color(unsigned int hex) {
-    u8bit = 0xFF;
+gfx::color::color(unsigned int hex) {
+    m_u8bit = 0xFF;
     //construct a bit mask 0xff000000
     unsigned int mask = 0xff << 0x18;
     
     //Unpack each 8bit segment into a float, and normalize such that 255 ~= 1.0
     for(int i = 0; mask; ++i, mask >>= 0x8) {
-        (&r)[i] = ((float) ((hex & mask) >> ((3 - i) * 0x8))) / u8bit;
+        (&r)[i] = ((float) ((hex & mask) >> ((3 - i) * 0x8))) / m_u8bit;
     }
 }
 
-Color::~Color() {
+gfx::color::~color() {
     //Delete any dynamically allocated memory/objects here
 }
 
 
-float* Color::ptr(void) {
+float* gfx::color::ptr() {
     //Returns a pointer to the m_color array
     return &r;
 }
 
-float& Color::operator [] (int i) {
+float& gfx::color::operator [] (int i) {
     //Returns a reference to the specified element
     return (&r)[i];
 }
 
-Color Color::interpolate(Color& c1, float t) {
+color gfx::color::interpolate(gfx::color & c1, float t) {
     t = static_cast<float>(clampf(0.0, 1.0, t));
-    return Color((1.f - t) * r + t * c1[0],
+    return color((1.f - t) * r + t * c1[0],
                  (1.f - t) * g + t * c1[1],
                  (1.f - t) * b + t * c1[2],
                  (1.f - t) * a + t * c1[3]);
 }
 
-Color Color::red(void) {
-    return Color(0xff0000ff);
+gfx::color gfx::color::red() {
+    return color(0xff0000ff);
 }
 
-Color Color::blue(void) {
-    return Color(0x0000ffff);
+color gfx::color::blue() {
+    return color(0x0000ffff);
 }
 
-Color Color::green(void) {
-    return Color(0x00ff00ff);
+color gfx::color::green() {
+    return color(0x00ff00ff);
 }
 
-Color Color::yellow(void) {
-    return Color(0xffff00ff);
+color gfx::color::yellow() {
+    return color(0xffff00ff);
 }
 
-Color Color::orange(void) {
-    return Color(0xff8800ff);
+color gfx::color::orange() {
+    return color(0xff8800ff);
 }
 
-Color Color::purple(void) {
-    return Color(0xff00ffff);
+color gfx::color::purple() {
+    return color(0xff00ffff);
 }
 
-Color Color::white(void) {
-    return Color(0xffffffff);
+color gfx::color::white() {
+    return color(0xffffffff);
 }
 
-Color Color::black(void) {
-    return Color(0x00000000);
+color gfx::color::black() {
+    return color(0x00000000);
 }
 
-Color Color::lightBrown(void) {
-    return Color(0xFFCCAAFF);
+color gfx::color::light_brown() {
+    return color(0xFFCCAAFF);
 }
 
-Color Color::randomPastel(void) {
+color gfx::color::random_pastel() {
     unsigned int color =
         ((0x50 + (static_cast<unsigned int>(rand()) % 128)) << 0x18) +
         ((0x50 + (static_cast<unsigned int>(rand()) % 128)) << 0x10) +
         ((0x50 + (static_cast<unsigned int>(rand()) % 128)) << 0x08) +
         0xFF;
     
-    return Color(color);
+    return color(color);
 }
 
-Color Color::randomDarkPastel(void) {
+color gfx::color::dark_pastel() {
     unsigned int color =
         ((0x10 + (static_cast<unsigned int>(rand()) % 128)) << 0x18) +
         ((0x10 + (static_cast<unsigned int>(rand()) % 128)) << 0x10) +
         ((0x10 + (static_cast<unsigned int>(rand()) % 128)) << 0x08) +
         0xFF;
     
-    return Color(color);
+    return color(color);
 }
 
-Color Color::randomBrightPastel(void) {
+color gfx::color::bright_pastel() {
     unsigned int color =
         ((0x10 + (static_cast<unsigned int>(rand()) % 200)) << 0x18) +
         ((0x10 + (static_cast<unsigned int>(rand()) % 200)) << 0x10) +
         ((0x10 + (static_cast<unsigned int>(rand()) % 200)) << 0x08) +
         0xFF;
     
-    return Color(color);
+    return color(color);
 }
 
-Color Color::randomDarkShade(void) {
+color gfx::color::dark_shade() {
     unsigned int shade = 0x0 + (rand() % 80);
     
     unsigned int color =
@@ -134,34 +131,34 @@ Color Color::randomDarkShade(void) {
         (shade << 0x08) +
         0xFF;
     
-    return Color(color);
+    return color(color);
 }
 
-Color Color::ambientDefault(void) {
-    return Color(0x111111FF);
+color gfx::color::ambient() {
+    return color(0x111111FF);
 }
 
-Color Color::diffuseDefault(void) {
-    return Color(0xffffffFF);
+color gfx::color::diffuse() {
+    return color(0xffffffFF);
 }
 
-Color Color::specularDefault(void) {
-    return Color(0xffffffFF);
+color gfx::color::specular() {
+    return color(0xffffffFF);
 }
 
-Color Color::ambientMaterialDefault(void) {
-    return Color(0x434343FF);
+color gfx::color::ambient_material() {
+    return color(0x434343FF);
 }
 
-Color Color::diffuseMaterialDefault(void) {
-    return Color(0xbcbcbcFF);
+color gfx::color::diffuse_material() {
+    return color(0xbcbcbcFF);
 }
 
-Color Color::specularMaterialDefault(void) {
-    return Color(0xffffffFF);
+color gfx::color::specular_material() {
+    return color(0xffffffFF);
 }
 
-Color Color::emissionMaterialDefault(void) {
-    return Color(0x000000FF);
+color gfx::color::emissive_material() {
+    return color(0x000000FF);
 }
 

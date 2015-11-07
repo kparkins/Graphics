@@ -1,4 +1,4 @@
-#include "Vector4.h"
+#include "vec4.h"
 
 Vector4& Vector4::set(float x, float y, float z, float w) {
     this->x = x;

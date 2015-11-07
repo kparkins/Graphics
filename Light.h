@@ -1,62 +1,65 @@
-#ifndef LIGHT_H
-#define LIGHT_H
+#ifndef GFX_LIGHT_H
+#define GFX_LIGHT_H
 
-#include "Matrix4.h"
-#include "Vector4.h"
-#include "Color.h"
-#include "Vector3.h"
-#include "MaterialFactory.h"
+#include "mat4.h"
+#include "vec4.h"
+#include "color.h"
+#include "vec3.h"
+#include "material_factory.h"
 
 #include <memory>
 #include <vector>
 
-class Light {
- 
-public:
-    
-    Light();
-    virtual ~Light();
+namespace  gfx {
+    class light {
 
-    void bind(int);
-    void unbind(void);
+    public:
+
+        light();
+        virtual ~light();
+
+        void bind(int);
+        void unbind(void);
 
 
-    Vector4 getPosition();
-    float getConstantAttenuation();
-    float getLinearAttenuation();
-    float getQuadraticAttentuation();
-    float getSpotAngle();
-    float getSpotExponent();
+        vec4 position();
+        float constant_attenuation();
+        float linear_attenuation();
+        float quadratic_attentuation();
+        float angle();
+        float exponent();
 
-    void setConstantAttenuation(float c);
-    void setLinearAttenuation(float c);
-    void setQuadraticAttentuation(float c);
+        void constant_attenuation(float c);
+        void linear_attenuation(float c);
+        void quadratic_attentuation(float c);
+        void position(const vec4 & pos);
+        void angle(float angle);
+        void direction(const vec3 & lookat);
+        void exponent(float exp);
+        void directional(bool on);
 
-    void setPosition(const Vector4 & pos);
-    void setSpotAngle(float angle);
-    void setSpotDirection(const Vector3 & lookAt);
-    void setSpotExponent(float exp);
-    void setDirectional(bool on);
+    protected:
 
-protected:
+        color m_ambient;
+        color m_diffuse;
+        color m_specular;
 
-    Color m_ambientColor;
-    Color m_diffuseColor;
-    Color m_specularColor;
+        float m_constantatt;
+        float m_linearatt;
+        float m_quadraticatt;
+        float m_exponent;
+        float m_angle;
 
-    float m_constantAttenuation;
-    float m_linearAttenuation;
-    float m_quadraticAttenuation;
+        bool m_directional;
 
-    bool m_directional;
-    float m_spotExponent;
-    float m_spotAngle;
-    Vector3 m_spotDirection;
-    Vector4 m_position;
-    int m_bindID;
+        vec3 m_direction;
+        vec4 m_position;
 
-};
+        int m_id;
 
-typedef std::shared_ptr<Light> LightPtr;
+    };
+
+    typedef std::shared_ptr<light> light_ptr;
+}
 
 #endif

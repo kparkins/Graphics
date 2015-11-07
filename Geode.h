@@ -1,25 +1,36 @@
-#ifndef CUBE_GEODE_H
-#define CUBE_GEODE_H
+#ifndef GFX_GEODE_H
+#define GFX_GEODE_H
 
-#include "Node.h"
-#include "Globals.h"
-#include "MaterialFactory.h"
+#include "node.h"
+#include "material_factory.h"
 
 
-class Geode : public Node {
+namespace gfx {
+    class geode : public node {
 
-public:
+    public:
 
-    Geode();
-    virtual ~Geode();
+        geode();
+        virtual ~geode();
 
-    virtual void render() = 0;
-    void draw(Matrix4 & c) override;
-    void update(float dt) override;
+        virtual void render() = 0;
 
-    Material m_material;
-};
+        void draw(mat4 &c) override;
+        void update(float dt) override;
 
-typedef shared_ptr<Geode> GeodePtr;
+        inline void set_material(material &mat);
+
+    protected:
+
+        material m_material;
+
+    };
+
+    inline void geode::set_material(material & mat) {
+        this->m_material = mat;
+    }
+
+    typedef shared_ptr<geode> geode_ptr;
+}
 
 #endif
