@@ -2,6 +2,7 @@
 
 
 gfx::triangle_mesh::triangle_mesh() {
+
 }
 
 gfx::triangle_mesh::~triangle_mesh() {
@@ -10,16 +11,14 @@ gfx::triangle_mesh::~triangle_mesh() {
 }
 
 void gfx::triangle_mesh::render() {
-    //m_material.apply();
-    
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
-    //glMultMatrixf(m_toWorld.ptr());
+    glLoadIdentity();
+
     glBindVertexArray(m_vao);
-
     glDrawArrays(GL_TRIANGLES, 0, m_numverts);
-
     glBindVertexArray(0);
+
     glPopMatrix();
 }
 
@@ -99,9 +98,9 @@ void gfx::triangle_mesh::flatten() {
     m_numverts = m_interleaved.size() / 9;
 }
 
-
 void gfx::triangle_mesh::buffer_mesh(){
-    int stride = 0;
+    int offset = 0;
+    int stride = calculate_stride(m_properties);
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
 
@@ -111,26 +110,37 @@ void gfx::triangle_mesh::buffer_mesh(){
 
     if(m_properties & COLORS) {
         glEnableClientState(GL_COLOR_ARRAY);
-        glColorPointer(3, GL_FLOAT, sizeof(float) * 9, (void *) 0);
-        stride += 3;
+        glColorPointer(3, GL_FLOAT, sizeof(float) * stride, (void *) 0);
+        offset += 3;
     }
 
     if(m_properties & NORMALS) {
         glEnableClientState(GL_NORMAL_ARRAY);
-        glNormalPointer(GL_FLOAT, sizeof(float) * 9, (void*) (sizeof(float) * stride));
-        stride += 3;
+        glNormalPointer(GL_FLOAT, sizeof(float) * stride, (void*) (sizeof(float) * offset));
+        offset += 3;
     }
 
     if(m_properties & TEXTURES) {
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        glTexCoordPointer(3, GL_FLOAT, sizeof(float) * 9, (void*) (sizeof(float) * stride));
-        stride += 3;
+        glTexCoordPointer(3, GL_FLOAT, sizeof(float) * stride, (void*) (sizeof(float) * offset));
+        offset += 3;
     }
 
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, sizeof(float) * 9, (void*) (sizeof(float) * 6));
+    if(m_properties & VERTICES) {
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glVertexPointer(3, GL_FLOAT, sizeof(float) * stride, (void *) (sizeof(float) * offset));
+    }
 
     glBindVertexArray(0);
+}
+
+unsigned int gfx::triangle_mesh::calculate_stride(unsigned int props) {
+    unsigned int stride = 0;
+    stride += (props & VERTICES) ? 3 : 0;
+    stride += (props & COLORS) ? 3 : 0;
+    stride += (props & NORMALS) ? 3 : 0;
+    stride += (props & TEXTURES) ? 3 : 0;
+    return stride;
 }
 
 std::vector<std::string>& gfx::triangle_mesh::split(const std::string &s, char delim,
@@ -143,8 +153,3 @@ std::vector<std::string>& gfx::triangle_mesh::split(const std::string &s, char d
     return elems;
 }
 
-std::vector<std::string> gfx::triangle_mesh::split(const std::string &s, char delim) {
-    std::vector<std::string> elems;
-    split(s, delim, elems);
-    return elems;
-}

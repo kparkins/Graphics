@@ -38,7 +38,6 @@ namespace gfx {
         };
 
         triangle_mesh();
-
         virtual ~triangle_mesh(void);
 
         void generate_mesh(string);
@@ -50,11 +49,9 @@ namespace gfx {
 
     protected:
 
-        //Helper functions
+        unsigned int calculate_stride(unsigned int props);
         vector<string>& split(const string &, char, vector<string> &);
-        vector<string> split(const string &, char);
 
-        //Storage vectors
         vector<float> m_interleaved;
         vector<float> m_vertices;
         vector<float> m_normals;
