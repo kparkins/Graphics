@@ -18,8 +18,8 @@ namespace gfx {
         group();
         virtual ~group();
 
-        void addChild(node_ptr child);
-        void removeChild(node_ptr child);
+        void add(node_ptr child);
+        void remove(node_ptr child);
 
         void draw(mat4 &c) override;
 

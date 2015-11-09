@@ -1,29 +1,29 @@
-#ifndef TEXTURE_H
-#define TEXTURE_H
+#ifndef GFX_TEXTURE_H
+#define GFX_TEXTURE_H
 
 #include <iostream>
 #include <string>
 
-class Texture {
+class texture {
     
 public:
 
     
-    Texture(void);
-    Texture(const char* filename);
-    virtual ~Texture(void);
+    texture(void);
+    texture(const char* filename);
+    virtual ~texture(void);
     
     void bind(void);
     void unbind(void);
     
     unsigned int m_id;
-    static Texture* m_emptyTexture;
+    static texture * m_emptyTexture;
     
 protected:
     
     const char*m_filename;
     
-    static unsigned char* loadPPM(const char*, int&, int&);
+    static unsigned char* loadppm(const char*, int&, int&);
     
 };
 

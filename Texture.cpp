@@ -1,4 +1,4 @@
-#include "Texture.h"
+#include "texture.h"
 
 #ifdef __APPLE__
     #include <GLUT/glut.h>
@@ -7,13 +7,13 @@
 #endif
 
 
-Texture* Texture::m_emptyTexture = new Texture();
+texture *texture::m_emptyTexture = new texture();
 
-Texture::Texture() {
+texture::texture() {
     m_id = 0;
 }
 
-Texture::Texture(const char* fname) {
+texture::texture(const char* fname) {
     m_filename = fname;
     
     GLuint texture[1];     // storage for one texture
@@ -52,15 +52,15 @@ Texture::Texture(const char* fname) {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-Texture::~Texture() {
+texture::~texture() {
     //
 }
 
-void Texture::bind(void) {
+void texture::bind(void) {
     glBindTexture(GL_TEXTURE_2D, m_id);
 }
 
-void Texture::unbind(void) {
+void texture::unbind(void) {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
@@ -71,7 +71,7 @@ void Texture::unbind(void) {
  @input height This will be modified to contain the height of the loaded image, or 0 if file not found
  @return Returns the RGB pixel data as m_interleaved unsigned chars (R0 G0 B0 R1 G1 B1 R2 G2 B2 .... etc) or 0 if an error ocured
  **/
-unsigned char* Texture::loadPPM(const char* filename, int& width, int& height) {
+unsigned char*texture::loadPPM(const char* filename, int& width, int& height) {
     const int BUFSIZE = 128;
     FILE* fp;
     size_t read;

@@ -1,18 +1,25 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef GFX_WINDOW_H
+#define GFX_WINDOW_H
 
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+#include <mutex>
 #include <thread>
 #include <memory>
-#include <mutex>
-#include <functional>
 #include <unistd.h>
+#include <iostream>
+#include <functional>
 
-#include "triangle_mesh.h"
-#include "material_factory.h"
+#include "cube.h"
 #include "light.h"
 #include "camera.h"
 #include "sphere.h"
-#include "cube.h"
+#include "triangle_mesh.h"
+#include "material_factory.h"
 #include "matrix_transform.h"
 
 using std::make_pair;
@@ -40,8 +47,6 @@ namespace gfx {
         static geode_ptr m_cube;
         static camera_ptr m_camera;
         static group_ptr m_scene;
-        static group_ptr m_robot;
-
 
         static mat4 world_scale;
 

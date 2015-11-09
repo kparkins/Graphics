@@ -1,7 +1,7 @@
 #include "geode.h"
 
 gfx::geode::geode() {
-    m_material = material_factory::material("polished gold");
+    m_material = material_factory::get("polished gold");
 }
 
 gfx::geode::~geode() {

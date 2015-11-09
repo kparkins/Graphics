@@ -1,9 +1,15 @@
 #ifndef GFX_MATERIAL_H
 #define GFX_MATERIAL_H
 
-#include <iostream>
-#include "color.h"
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 
+#include <iostream>
+
+#include "color.h"
 
 namespace gfx {
 

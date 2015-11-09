@@ -15,8 +15,8 @@
  
  */
 
-#ifndef SHADER_H
-#define SHADER_H
+#ifndef GFX_SHADER_H
+#define GFX_SHADER_H
 
 #ifdef __APPLE__
     #include <OpenGL/gl3.h>
@@ -25,32 +25,36 @@
     #include "glee.h"
 #endif
 
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+
 /*! Handles GLSL shaders.  It can load the code from a file or read straight
  * from a char array. */
-class Shader {
-    
-public:
-    
-	Shader(const char *vert, const char *frag, bool isFile=true);
-	~Shader();
-    
-	void bind();
-	void unbind();
-    
-	GLhandleARB getPid();
-    
-	void printLog(const char* tag = "");
-    
-protected:
-    
-    GLhandleARB m_pid;
-    static GLhandleARB m_currentlyBoundShaderID;
-    
-private:
-    
-    char* read(const char *filename);
-    void setup(const char *vs, const char *fs);
-    
-};
+namespace gfx {
+    class shader {
 
+    public:
+
+        shader(const char *vert, const char *frag, bool isFile = true);
+        ~shader();
+
+        void bind();
+        void unbind();
+        GLhandleARB pid();
+
+        void print_log(const char *tag = "");
+
+    protected:
+
+        GLhandleARB m_pid;
+        static GLhandleARB m_currentlyBoundShaderID;
+
+    private:
+
+        char *read(const char *filename);
+        void setup(const char *vs, const char *fs);
+
+    };
+}
 #endif

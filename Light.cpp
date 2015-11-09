@@ -15,7 +15,7 @@ gfx::light::light() : m_id(-1) {
     m_constantatt = 1.0;
     m_linearatt = 0.0;
     m_quadraticatt = 0.f;
-    m_angle = 0.f;
+    m_angle = -1.f;
     m_exponent = 1.f;
     m_direction = vec3(0.f, 0.f, 0.f) - m_position.toVector3();
 }
@@ -50,7 +50,7 @@ void gfx::light::bind(int id) {
     glLightfv(GL_LIGHT0 + m_id, GL_POSITION, m_position.ptr());
 
     //Setup spotlight direction, angle, and exponent here
-    if(m_angle) {
+    if(m_angle >= 0.f) {
         glLightf(GL_LIGHT0 + m_id, GL_SPOT_EXPONENT, m_exponent);
         glLightf(GL_LIGHT0 + m_id, GL_SPOT_CUTOFF, m_angle);
     }

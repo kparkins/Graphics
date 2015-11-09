@@ -1,10 +1,3 @@
-#include <iostream>
-
-#ifdef __APPLE__
-    #include <GLUT/glut.h>
-#else
-    #include <GL/glut.h>
-#endif
 
 #include "window.h"
 
@@ -38,7 +31,6 @@ void gfx::window::idlecb() {
         frame = 0;
         std::cout << "fps\t" << fps << std::endl;
     }
-    m_robot->update(1.f);
     displaycb();
 }
 
@@ -65,9 +57,11 @@ void gfx::window::displaycb() {
 }
 
 void gfx::window::keycb(unsigned char key, int x, int y) {
+
 }
 
 void gfx::window::specialkeycb(int key, int x, int y) {
+
 }
 
 void gfx::window::mousebuttoncb(int button, int state, int x, int y) {
