@@ -189,7 +189,7 @@ void gfx::mat4::print(const std::string & comment) {
     static const int precisionWidth = 4;
     int integerWidth = 1;
     
-    //Determine the necessary width to the left of the decimal point
+    //Determine the necessary m_width to the left of the decimal point
     float* elementPtr = (float*) m;
     float maxValue = fabsf(*(elementPtr++));
 
@@ -204,7 +204,7 @@ void gfx::mat4::print(const std::string & comment) {
         maxValue /= 10.0; 
     }
     
-    //Sum up the widths to determine the cell width needed
+    //Sum up the widths to determine the cell m_width needed
     int cellWidth = integerWidth + pointWidth + precisionWidth;
     
     //Set the stream parameters for fixed number of digits after the decimal point

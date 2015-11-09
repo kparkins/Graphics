@@ -33,28 +33,41 @@ namespace gfx {
 
     public:
 
-        static int width, height;                // window m_size
-        static void initialize(void);
+        void initialize();
 
-        static void idlecb(void);
-        static void reshapecb(int, int);
-        static void displaycb(void);
-        static void keycb(unsigned char key, int x, int y);
-        static void specialkeycb(int key, int x, int y);
-        static void mousebuttoncb(int, int, int, int);
+        void idlecb();
+        void reshapecb(int, int);
+        void displaycb();
+        void keycb(unsigned char key, int x, int y);
+        void specialkeycb(int key, int x, int y);
+        void mousebuttoncb(int, int, int, int);
 
-        static geode_ptr m_sphere;
-        static geode_ptr m_cube;
-        static camera_ptr m_camera;
-        static group_ptr m_scene;
+        int width();
+        int height();
 
-        static mat4 world_scale;
+        void width(int w);
+        void height(int h);
 
-        static int frame;
-        static int timebase;
-        static int time;
+
+    protected:
+
+        geode_ptr m_sphere;
+        geode_ptr m_cube;
+        camera_ptr m_camera;
+        group_ptr m_scene;
+        light_ptr m_directlight;
+        light_ptr m_pointlight;
+
+        mat4 m_worldscale;
+
+        int frame;
+        int timebase;
+        int time;
+        int m_width, m_height;                // window m_size
 
     };
+
+    typedef shared_ptr<window> window_ptr;
 }
 #endif
 

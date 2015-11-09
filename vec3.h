@@ -1,5 +1,5 @@
-#ifndef VECTOR3_H
-#define VECTOR3_H
+#ifndef GFX_VECTOR3_H
+#define GFX_VECTOR3_H
 
 #include <string>
 #include <math.h>
@@ -9,11 +9,11 @@
 
 #include "immintrin.h"
 #include "macros.h"
-#include "vec4.h"
-
-class vec4;
 
 namespace gfx {
+
+    class vec4;
+
     class vec3 {
 
     public:
@@ -50,7 +50,7 @@ namespace gfx {
         FORCE_INLINE vec3 &normalize();
         FORCE_INLINE vec3 normalized() const;
 
-        vec4 to_vec4(float) const;
+        gfx::vec4 to_vec4(float) const;
 
         void print(const std::string &) const;
 

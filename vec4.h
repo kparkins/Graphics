@@ -1,5 +1,5 @@
-#ifndef VECTOR4_H
-#define VECTOR4_H
+#ifndef GFX_VECTOR4_H
+#define GFX_VECTOR4_H
 
 #include <string>
 #include <math.h>
@@ -9,9 +9,10 @@
 #include "immintrin.h"
 #include "macros.h"
 
-class vec3;
-
 namespace gfx {
+
+    class vec3;
+
     class vec4 {
 
     public:
@@ -32,7 +33,7 @@ namespace gfx {
         FORCE_INLINE vec4 &dehomogenize();
         FORCE_INLINE float dot(const vec4 &) const;
 
-        vec3 to_vec3();
+        gfx::vec3 to_vec3();
         void print(const std::string &) const;
 
 #if defined(__GNUC__) || defined(__clang__)

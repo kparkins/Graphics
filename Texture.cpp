@@ -17,7 +17,7 @@ gfx::texture::texture(const char* fname) {
     m_filename = fname;
     
     GLuint texture[1];     // storage for one texture
-    int twidth, theight;   // texture width/height [pixels]
+    int twidth, theight;   // texture m_width/m_height [pixels]
     unsigned char* tdata;  // texture pixel data
     
     //Load image file
@@ -67,8 +67,8 @@ void gfx::texture::unbind(void) {
 /** Load a ppm file from disk.
  @input m_filename The location of the PPM file.  If the file is not found, an error message
  will be printed and this function will return 0
- @input width This will be modified to contain the width of the loaded image, or 0 if file not found
- @input height This will be modified to contain the height of the loaded image, or 0 if file not found
+ @input m_width This will be modified to contain the m_width of the loaded image, or 0 if file not found
+ @input m_height This will be modified to contain the m_height of the loaded image, or 0 if file not found
  @return Returns the RGB pixel data as m_interleaved unsigned chars (R0 G0 B0 R1 G1 B1 R2 G2 B2 .... etc) or 0 if an error ocured
  **/
 unsigned char* gfx::texture::loadppm(const char* filename, int& width, int& height) {
@@ -91,12 +91,12 @@ unsigned char* gfx::texture::loadppm(const char* filename, int& width, int& heig
     //Read magic number:
     retval_fgets = fgets(buf[0], BUFSIZE, fp);
     
-    //Read width and height:
+    //Read m_width and m_height:
     do {
         retval_fgets = fgets(buf[0], BUFSIZE, fp);
     } while(buf[0][0] == '#');
     
-    //Set the width and height
+    //Set the m_width and m_height
     retval_sscanf=sscanf(buf[0], "%s %s", buf[1], buf[2]);
     width  = atoi(buf[1]);
     height = atoi(buf[2]);

@@ -10,11 +10,40 @@
 
 #include "window.h"
 
+static gfx::window_ptr main_window;
+
+static void display() {
+    main_window->displaycb();
+}
+
+static void reshape(int x, int y) {
+    main_window->reshapecb(x, y);
+}
+
+static void idle() {
+    main_window->idlecb();
+}
+
+static void key(unsigned char key, int x, int y) {
+    main_window->keycb(key, x, y);
+}
+
+static void specialkey(int key, int x, int y) {
+    main_window->specialkeycb(key, x, y);
+}
+
+static void mousebutton(int button, int state, int x, int y) {
+    main_window->mousebuttoncb(button, state, x, y);
+}
+
 int main(int argc, char *argv[]) {
+    main_window = make_shared<gfx::window>();
+    main_window->height(512);
+    main_window->width(512);
     //GLUT and OpenGL Configuration
     glutInit(&argc, argv);                                      //Initialize GLUT
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);   //Open an OpenGL context with double buffering, RGB colors, and depth buffering
-    glutInitWindowSize(gfx::window::width, gfx::window::height);          //Set initial window m_size
+    glutInitWindowSize(main_window->width(), main_window->height());          //Set initial window m_size
     glutCreateWindow("UCSD CSE 167 - Project 1 - OpenGL cube"); //Open window and set window title
     
     glEnable(GL_DEPTH_TEST);                                    //Enable depth buffering
@@ -31,25 +60,22 @@ int main(int argc, char *argv[]) {
     glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);        //Enable Local Viewer light Model
 
     //Register callback functions:
-    glutDisplayFunc(gfx::window::displaycb);
-    glutReshapeFunc(gfx::window::reshapecb);
-    glutIdleFunc(gfx::window::idlecb);
-    glutKeyboardFunc(gfx::window::keycb);
-    glutSpecialFunc(gfx::window::specialkeycb);
-    glutMouseFunc(gfx::window::mousebuttoncb);
-
+    glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
+    glutIdleFunc(idle);
+    glutKeyboardFunc(key);
+    glutSpecialFunc(specialkey);
+    glutMouseFunc(mousebutton);
     //Print Shader Debug Information:
     printf("%s\n%s\n",
            glGetString(GL_RENDERER),  // e.g. Intel HD Graphics 3000 OpenGL Engine
            glGetString(GL_VERSION)    // e.g. 3.2 INTEL-8.0.61
            );
    
-    //Initialize the window:
-    //The body of this function is a great place to load textures, shaders, etc.
-    //and do any operations/calculations/configurations that only need to happen once.
-    gfx::window::initialize();
 
+    main_window->initialize();
     glutMainLoop();
-    
+    main_window.reset();
+
     return 0;
 }

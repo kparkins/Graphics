@@ -26,7 +26,6 @@ namespace gfx {
         virtual ~node();
 
         virtual void draw(mat4 &c) = 0;
-        virtual void update(float dt) = 0;
 
     };
 

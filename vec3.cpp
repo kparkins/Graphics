@@ -1,4 +1,5 @@
 #include "vec3.h"
+#include "vec4.h"
 
 gfx::vec3::vec3() {
     _mm_store_ps(&x, _mm_set1_ps(0.f));
