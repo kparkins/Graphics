@@ -1,6 +1,6 @@
 #include "vec4.h"
 
-Vector4& Vector4::set(float x, float y, float z, float w) {
+gfx::vec4& gfx::vec4::set(float x, float y, float z, float w) {
     this->x = x;
     this->y = y;
     this->z = z;
@@ -8,39 +8,39 @@ Vector4& Vector4::set(float x, float y, float z, float w) {
     return *this;
 }
 
-float* Vector4::ptr() {
+float* gfx::vec4::ptr() {
     return &x;
 }
 
-float& Vector4::operator[](int loc) {
+float& gfx::vec4::operator[](int loc) {
     return (&x)[loc];
 }
 
-Vector4 Vector4::add(const Vector4 & a) const {
-    Vector4 b;
+gfx::vec4 gfx::vec4::add(const gfx::vec4 & a) const {
+    vec4 b;
     _mm_store_ps(&b.x, _mm_add_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
-Vector4 Vector4::operator+(const Vector4 & a) const {
-    Vector4 b;
+gfx::vec4 gfx::vec4::operator+(const gfx::vec4 & a) const {
+    vec4 b;
     _mm_store_ps(&b.x, _mm_add_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
-Vector4 Vector4::subtract(const Vector4 & a) const {
-    Vector4 b;
+gfx::vec4 gfx::vec4::subtract(const gfx::vec4 & a) const {
+    vec4 b;
     _mm_store_ps(&b.x, _mm_sub_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
-Vector4 Vector4::operator-(const Vector4 & a) const {
-    Vector4 b;
+gfx::vec4 gfx::vec4::operator-(const gfx::vec4 & a) const {
+    vec4 b;
     _mm_store_ps(&b.x, _mm_sub_ps(_mm_load_ps(&x), _mm_load_ps(&a.x)));
     return b;
 }
 
-Vector4& Vector4::dehomogenize() {
+gfx::vec4& gfx::vec4::dehomogenize() {
     if (!w) {
         return *this;
     }
@@ -49,7 +49,7 @@ Vector4& Vector4::dehomogenize() {
     return *this;
 }
 
-float Vector4::dot(const Vector4 & a) const {
+float gfx::vec4::dot(const gfx::vec4 & a) const {
     float res;
     __m128 r = _mm_mul_ps(_mm_load_ps(&x), _mm_load_ps(&a.x));
     r = _mm_hadd_ps(r, r);

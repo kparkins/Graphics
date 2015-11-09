@@ -48,7 +48,7 @@ float& gfx::color::operator [] (int i) {
     return (&r)[i];
 }
 
-color gfx::color::interpolate(gfx::color & c1, float t) {
+gfx::color gfx::color::interpolate(gfx::color & c1, float t) {
     t = static_cast<float>(clampf(0.0, 1.0, t));
     return color((1.f - t) * r + t * c1[0],
                  (1.f - t) * g + t * c1[1],
@@ -60,105 +60,105 @@ gfx::color gfx::color::red() {
     return color(0xff0000ff);
 }
 
-color gfx::color::blue() {
+gfx::color gfx::color::blue() {
     return color(0x0000ffff);
 }
 
-color gfx::color::green() {
+gfx::color gfx::color::green() {
     return color(0x00ff00ff);
 }
 
-color gfx::color::yellow() {
+gfx::color gfx::color::yellow() {
     return color(0xffff00ff);
 }
 
-color gfx::color::orange() {
+gfx::color gfx::color::orange() {
     return color(0xff8800ff);
 }
 
-color gfx::color::purple() {
+gfx::color gfx::color::purple() {
     return color(0xff00ffff);
 }
 
-color gfx::color::white() {
+gfx::color gfx::color::white() {
     return color(0xffffffff);
 }
 
-color gfx::color::black() {
+gfx::color gfx::color::black() {
     return color(0x00000000);
 }
 
-color gfx::color::light_brown() {
+gfx::color gfx::color::light_brown() {
     return color(0xFFCCAAFF);
 }
 
-color gfx::color::random_pastel() {
-    unsigned int color =
+gfx::color gfx::color::random_pastel() {
+    unsigned int c =
         ((0x50 + (static_cast<unsigned int>(rand()) % 128)) << 0x18) +
         ((0x50 + (static_cast<unsigned int>(rand()) % 128)) << 0x10) +
         ((0x50 + (static_cast<unsigned int>(rand()) % 128)) << 0x08) +
         0xFF;
     
-    return color(color);
+    return color(c);
 }
 
-color gfx::color::dark_pastel() {
-    unsigned int color =
+gfx::color gfx::color::dark_pastel() {
+    unsigned int c =
         ((0x10 + (static_cast<unsigned int>(rand()) % 128)) << 0x18) +
         ((0x10 + (static_cast<unsigned int>(rand()) % 128)) << 0x10) +
         ((0x10 + (static_cast<unsigned int>(rand()) % 128)) << 0x08) +
         0xFF;
     
-    return color(color);
+    return color(c);
 }
 
-color gfx::color::bright_pastel() {
-    unsigned int color =
+gfx::color gfx::color::bright_pastel() {
+    unsigned int c =
         ((0x10 + (static_cast<unsigned int>(rand()) % 200)) << 0x18) +
         ((0x10 + (static_cast<unsigned int>(rand()) % 200)) << 0x10) +
         ((0x10 + (static_cast<unsigned int>(rand()) % 200)) << 0x08) +
         0xFF;
     
-    return color(color);
+    return color(c);
 }
 
-color gfx::color::dark_shade() {
+gfx::color gfx::color::dark_shade() {
     unsigned int shade = 0x0 + (rand() % 80);
     
-    unsigned int color =
+    unsigned int c =
         (shade << 0x18) +
         (shade << 0x10) +
         (shade << 0x08) +
         0xFF;
     
-    return color(color);
+    return color(c);
 }
 
-color gfx::color::ambient() {
+gfx::color gfx::color::ambient() {
     return color(0x111111FF);
 }
 
-color gfx::color::diffuse() {
+gfx::color gfx::color::diffuse() {
     return color(0xffffffFF);
 }
 
-color gfx::color::specular() {
+gfx::color gfx::color::specular() {
     return color(0xffffffFF);
 }
 
-color gfx::color::ambient_material() {
+gfx::color gfx::color::ambient_material() {
     return color(0x434343FF);
 }
 
-color gfx::color::diffuse_material() {
+gfx::color gfx::color::diffuse_material() {
     return color(0xbcbcbcFF);
 }
 
-color gfx::color::specular_material() {
+gfx::color gfx::color::specular_material() {
     return color(0xffffffFF);
 }
 
-color gfx::color::emissive_material() {
+gfx::color gfx::color::emissive_material() {
     return color(0x000000FF);
 }
 

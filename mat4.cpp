@@ -1,6 +1,4 @@
 #include "mat4.h"
-#include "vec4.h"
-#include "vec3.h"
 
 gfx::mat4::mat4() {
     this->identity();
@@ -16,7 +14,7 @@ gfx::mat4::mat4(float m00, float m01, float m02, float m03,
               m30, m31, m32, m33);
 }
 
-vec4 gfx::mat4::operator*(vec4 & a) {
+gfx::vec4 gfx::mat4::operator*(vec4 & a) {
     vec4 b(0.f, 0.f, 0.f, 0.f);
     
     _mm_store_ps(b.ptr(),
@@ -31,7 +29,7 @@ vec4 gfx::mat4::operator*(vec4 & a) {
     return b;
 }
 
-vec4 gfx::mat4::multiply(vec4 & a) {
+gfx::vec4 gfx::mat4::multiply(vec4 & a) {
 	vec4 b(0.f, 0.f, 0.f, 0.f);
     
     _mm_store_ps(b.ptr(),
@@ -46,7 +44,7 @@ vec4 gfx::mat4::multiply(vec4 & a) {
 	return b;
 }
 
-vec3 gfx::mat4::operator*(vec3 & a) {
+gfx::vec3 gfx::mat4::operator*(vec3 & a) {
     vec3 b(0.f, 0.f, 0.f);
 
     _mm_store_ps(&b.x,
@@ -59,7 +57,7 @@ vec3 gfx::mat4::operator*(vec3 & a) {
     return b;
 }
 
-vec3 gfx::mat4::multiply(vec3 & a) {
+gfx::vec3 gfx::mat4::multiply(vec3 & a) {
 	vec3 b(0.f, 0.f, 0.f);
 
     _mm_store_ps(&b.x,
@@ -72,9 +70,9 @@ vec3 gfx::mat4::multiply(vec3 & a) {
 	return b;
 }
 
-mat4& gfx::mat4::rotate_arbitrary(const vec3 &a, float angle) {
+gfx::mat4& gfx::mat4::rotate_arbitrary(const vec3 &a, float angle) {
     this->identity();
-    vec3 b = a.asNormalized();
+    vec3 b = a.normalized();
     
     float cos0 = cos(angle);
     float sin0 = sin(angle);
@@ -101,7 +99,7 @@ mat4& gfx::mat4::rotate_arbitrary(const vec3 &a, float angle) {
     return *this;
 }
 
-mat4& gfx::mat4::translate(const vec3 &a) {
+gfx::mat4& gfx::mat4::translate(const vec3 &a) {
 	this->identity();
 
 	//Configure this matrix to be a translation by vector 'a'
@@ -112,7 +110,7 @@ mat4& gfx::mat4::translate(const vec3 &a) {
 	return *this;
 }
 
-mat4 gfx::mat4::transpose() {
+gfx::mat4 gfx::mat4::transpose() {
     mat4 b;
     __m128 row0 = _mm_load_ps(m[0]);
     __m128 row1 = _mm_load_ps(m[1]);
@@ -127,13 +125,13 @@ mat4 gfx::mat4::transpose() {
 }
 
 //http://stackoverflow.com/questions/2624422/efficient-4x4-matrix-inverse-affine-transform
-mat4 gfx::mat4::inverse() {
+gfx::mat4 gfx::mat4::inverse() {
     mat4 b;
 
     return b;
 }
 
-mat4 gfx::mat4::rigid_inverse() {
+gfx::mat4 gfx::mat4::rigid_inverse() {
     mat4 b;
     mat4 c;
 
@@ -158,7 +156,7 @@ mat4 gfx::mat4::rigid_inverse() {
 }
 
 
-mat4& gfx::mat4::perspective_projection(float fov, float width, float height, float near, float far) {
+gfx::mat4& gfx::mat4::perspective_projection(float fov, float width, float height, float near, float far) {
     this->identity();
     float aspect = width / height;
 
@@ -171,7 +169,7 @@ mat4& gfx::mat4::perspective_projection(float fov, float width, float height, fl
     return *this;
 }
 
-mat4& gfx::mat4::viewport(float xmin, float xmax, float ymin, float ymax) {
+gfx::mat4& gfx::mat4::viewport(float xmin, float xmax, float ymin, float ymax) {
     this->identity();
 
     m[0][0] = (xmax - xmin) / 2.f;

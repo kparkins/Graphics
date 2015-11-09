@@ -10,9 +10,9 @@
 
 #include "immintrin.h"
 #include "macros.h"
+#include "vec4.h"
+#include "vec3.h"
 
-class vec3;
-class vec4;
 
 namespace gfx {
     class mat4 {
@@ -31,15 +31,10 @@ namespace gfx {
                               float, float, float, float);
 
         FORCE_INLINE float get(int,int);
-
         FORCE_INLINE mat4 & operator=(const mat4 &);
-
         FORCE_INLINE float* operator[](int);
-
         FORCE_INLINE float* ptr();
-
         FORCE_INLINE mat4 & identity();
-
         FORCE_INLINE mat4 multiply(const mat4 &);
         FORCE_INLINE mat4 operator*(const mat4 &);
 

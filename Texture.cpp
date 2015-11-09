@@ -7,13 +7,13 @@
 #endif
 
 
-texture *texture::m_emptyTexture = new texture();
+gfx::texture* gfx::texture::m_emptytexture = new gfx::texture();
 
-texture::texture() {
+gfx::texture::texture() {
     m_id = 0;
 }
 
-texture::texture(const char* fname) {
+gfx::texture::texture(const char* fname) {
     m_filename = fname;
     
     GLuint texture[1];     // storage for one texture
@@ -21,7 +21,7 @@ texture::texture(const char* fname) {
     unsigned char* tdata;  // texture pixel data
     
     //Load image file
-    tdata = loadPPM(m_filename, twidth, theight);
+    tdata = loadppm(m_filename, twidth, theight);
     
     //If the image wasn't loaded, can't continue
     if(tdata == NULL) {
@@ -52,15 +52,15 @@ texture::texture(const char* fname) {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-texture::~texture() {
+gfx::texture::~texture() {
     //
 }
 
-void texture::bind(void) {
+void gfx::texture::bind(void) {
     glBindTexture(GL_TEXTURE_2D, m_id);
 }
 
-void texture::unbind(void) {
+void gfx::texture::unbind(void) {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
@@ -71,7 +71,7 @@ void texture::unbind(void) {
  @input height This will be modified to contain the height of the loaded image, or 0 if file not found
  @return Returns the RGB pixel data as m_interleaved unsigned chars (R0 G0 B0 R1 G1 B1 R2 G2 B2 .... etc) or 0 if an error ocured
  **/
-unsigned char*texture::loadPPM(const char* filename, int& width, int& height) {
+unsigned char* gfx::texture::loadppm(const char* filename, int& width, int& height) {
     const int BUFSIZE = 128;
     FILE* fp;
     size_t read;

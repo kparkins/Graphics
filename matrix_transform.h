@@ -2,9 +2,6 @@
 #define GFX_MATRIX_TRANSFORM_H
 
 #include "group.h"
-#include "mat4.h"
-#include "window.h"
-#include "material.h"
 #include "material_factory.h"
 
 namespace gfx {

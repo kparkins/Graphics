@@ -7,9 +7,9 @@
 #endif
 
 gfx::light::light() : m_id(-1) {
-    m_ambient = color::color();
-    m_diffuse = color::color();
-    m_specular = color::color();
+    m_ambient = color();
+    m_diffuse = color();
+    m_specular = color();
 
     m_directional = false;
     m_constantatt = 1.0;
@@ -17,7 +17,7 @@ gfx::light::light() : m_id(-1) {
     m_quadraticatt = 0.f;
     m_angle = -1.f;
     m_exponent = 1.f;
-    m_direction = vec3(0.f, 0.f, 0.f) - m_position.toVector3();
+    m_direction = vec3(0.f, 0.f, 0.f) - vec3(m_position.x, m_position.y, m_position.z);
 }
 
 gfx::light::~light() {
@@ -74,14 +74,14 @@ void gfx::light::exponent(float exp) {
 }
 
 void gfx::light::direction(const vec3 & lookAt) {
-    this->m_direction = lookAt - m_position.toVector3();
+    this->m_direction = lookAt - vec3(m_position.x, m_position.y, m_position.z);
 }
 
 void gfx::light::position(const vec4 & pos) {
     this->m_position = pos;
 }
 
-vec4 gfx::light::position() {
+gfx::vec4 gfx::light::position() {
     return this->m_position;
 }
 

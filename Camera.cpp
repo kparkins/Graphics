@@ -21,11 +21,11 @@ gfx::camera::~camera() {
     //Delete and dynamically allocated memory/objects here
 }
 
-mat4 & gfx::camera::matrix() {
+gfx::mat4 & gfx::camera::matrix() {
     return m_matrix;
 }
 
-mat4 & gfx::camera::inverse_matrix() {
+gfx::mat4 & gfx::camera::inverse_matrix() {
     return m_inverse;
 }
 

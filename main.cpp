@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     //GLUT and OpenGL Configuration
     glutInit(&argc, argv);                                      //Initialize GLUT
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);   //Open an OpenGL context with double buffering, RGB colors, and depth buffering
-    glutInitWindowSize(window::width, window::height);          //Set initial window m_size
+    glutInitWindowSize(gfx::window::width, gfx::window::height);          //Set initial window m_size
     glutCreateWindow("UCSD CSE 167 - Project 1 - OpenGL cube"); //Open window and set window title
     
     glEnable(GL_DEPTH_TEST);                                    //Enable depth buffering
@@ -31,12 +31,12 @@ int main(int argc, char *argv[]) {
     glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);        //Enable Local Viewer light Model
 
     //Register callback functions:
-    glutDisplayFunc(window::displaycb);
-    glutReshapeFunc(window::reshapecb);
-    glutIdleFunc(window::idlecb);
-    glutKeyboardFunc(window::keycb);
-    glutSpecialFunc(window::specialkeycb);
-    glutMouseFunc(window::mousebuttoncb);
+    glutDisplayFunc(gfx::window::displaycb);
+    glutReshapeFunc(gfx::window::reshapecb);
+    glutIdleFunc(gfx::window::idlecb);
+    glutKeyboardFunc(gfx::window::keycb);
+    glutSpecialFunc(gfx::window::specialkeycb);
+    glutMouseFunc(gfx::window::mousebuttoncb);
 
     //Print Shader Debug Information:
     printf("%s\n%s\n",
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     //Initialize the window:
     //The body of this function is a great place to load textures, shaders, etc.
     //and do any operations/calculations/configurations that only need to happen once.
-    window::initialize();
+    gfx::window::initialize();
 
     glutMainLoop();
     

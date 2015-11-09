@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "node.h"
-#include "window.h"
 
 using std::find;
 using std::vector;

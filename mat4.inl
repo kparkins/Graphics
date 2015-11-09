@@ -26,7 +26,7 @@ float gfx::mat4::get(int column, int element) {
     return m[column][element];
 }
 
-mat4& gfx::mat4::operator=(const mat4 & a) {
+gfx::mat4& gfx::mat4::operator=(const mat4 & a) {
     memcpy(static_cast<void*>(&m), static_cast<const void*>(&a), sizeof(m));
     return *this;
 }
@@ -39,7 +39,7 @@ float* gfx::mat4::ptr() {
     return &m[0][0];
 }
 
-mat4& gfx::mat4::identity() {
+gfx::mat4& gfx::mat4::identity() {
     static const float ident[4][4] = {
         {1,0,0,0},
         {0,1,0,0},
@@ -50,7 +50,7 @@ mat4& gfx::mat4::identity() {
     return *this;
 }
 
-mat4 gfx::mat4::operator*(const mat4 & a) {
+gfx::mat4 gfx::mat4::operator*(const mat4 & a) {
     mat4 b;
     __m128 m0c = _mm_load_ps(m[0]);
     __m128 m1c = _mm_load_ps(m[1]);
@@ -115,11 +115,11 @@ mat4 gfx::mat4::operator*(const mat4 & a) {
 }
 
 
-mat4 gfx::mat4::multiply(const mat4 & a) {
+gfx::mat4 gfx::mat4::multiply(const mat4 & a) {
     return (*this) * a;
 }
 
-mat4& gfx::mat4::rotatex(float angle) {
+gfx::mat4& gfx::mat4::rotatex(float angle) {
     this->identity();
     
     m[1][1] = cos(angle);
@@ -130,7 +130,7 @@ mat4& gfx::mat4::rotatex(float angle) {
     return *this;
 }
 
-mat4& gfx::mat4::rotatey(float angle) {
+gfx::mat4& gfx::mat4::rotatey(float angle) {
     this->identity();
     
     m[0][0] = cos(angle);
@@ -141,7 +141,7 @@ mat4& gfx::mat4::rotatey(float angle) {
     return *this;
 }
 
-mat4& gfx::mat4::rotatez(float angle) {
+gfx::mat4& gfx::mat4::rotatez(float angle) {
     this->identity();
 
     m[0][0] = cos(angle);
@@ -152,7 +152,7 @@ mat4& gfx::mat4::rotatez(float angle) {
     return *this;
 }
 
-mat4& gfx::mat4::scale(float sx, float sy, float sz) {
+gfx::mat4& gfx::mat4::scale(float sx, float sy, float sz) {
     this->identity();
 
     m[0][0] *= sx;
@@ -162,12 +162,12 @@ mat4& gfx::mat4::scale(float sx, float sy, float sz) {
     return *this;
 }
 
-mat4& gfx::mat4::scale(float s) {
-    return makeScale(s, s, s);
+gfx::mat4& gfx::mat4::scale(float s) {
+    return scale(s, s, s);
 }
 
 
-mat4& gfx::mat4::translate(float x, float y, float z) {
+gfx::mat4& gfx::mat4::translate(float x, float y, float z) {
     this->identity();
 
     m[3][0] = x;

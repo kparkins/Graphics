@@ -17,9 +17,9 @@
 
 #include "shader.h"
 
-GLhandleARB shader::m_currentlyBoundShaderID = 0x0;
+GLhandleARB gfx::shader::m_currshaderid = 0x0;
 
-shader::shader(const char *vert, const char *frag, bool isFile) {
+gfx::shader::shader(const char *vert, const char *frag, bool isFile) {
 	if(isFile) {
         //Read in the vertex and fragment shaders
         //We must delete these after we are finished compiling the shaders
@@ -38,25 +38,25 @@ shader::shader(const char *vert, const char *frag, bool isFile) {
     }
 }
 
-shader::~shader() {
+gfx::shader::~shader() {
 	glDeleteObjectARB(m_pid);
 }
 
-void shader::bind() {
-    if(m_currentlyBoundShaderID != m_pid) {
-        m_currentlyBoundShaderID = m_pid;
+void gfx::shader::bind() {
+    if(m_currshaderid != m_pid) {
+        m_currshaderid = m_pid;
         glUseProgramObjectARB(m_pid);
     }
 }
 
-void shader::unbind() {
-    if(m_currentlyBoundShaderID != (void*)(0x0)) {
-        m_currentlyBoundShaderID = (void*)(0x0);
+void gfx::shader::unbind() {
+    if(m_currshaderid != (void*)(0x0)) {
+        m_currshaderid = (void*)(0x0);
         glUseProgramObjectARB(0);
     }
 }
 
-void shader::print_log(const char* tag) {
+void gfx::shader::print_log(const char* tag) {
 	char glslLog[1024];
 	GLsizei glslLogSize;
     
@@ -71,7 +71,7 @@ void shader::print_log(const char* tag) {
     }
 }
 
-char* shader::read(const char *filename) {
+char* gfx::shader::read(const char *filename) {
 	char* shaderFile = 0;
 	
     //Open the file
@@ -97,7 +97,7 @@ char* shader::read(const char *filename) {
 	return shaderFile;
 }
 
-void shader::setup(const char *vs, const char *fs) {
+void gfx::shader::setup(const char *vs, const char *fs) {
     //Create two new Shader Object IDs
 	GLhandleARB vid = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
 	GLhandleARB fid = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);

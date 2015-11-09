@@ -48,7 +48,7 @@ namespace gfx {
     protected:
 
         GLhandleARB m_pid;
-        static GLhandleARB m_currentlyBoundShaderID;
+        static GLhandleARB m_currshaderid;
 
     private:
 

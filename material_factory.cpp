@@ -54,9 +54,9 @@ gfx::material_factory::material_factory() {
    .shinniness(0.f)
    .save("flat yellow");
 
-    ambient(color::color())
-   .diffuse(color::color())
-   .specular(color::color())
+    ambient(color())
+   .diffuse(color())
+   .specular(color())
    .shinniness(0.f)
    .save("white");
 }
@@ -65,53 +65,53 @@ gfx::material_factory::~material_factory() {
 
 }
 
-material gfx::material_factory::get(const string &material) {
+gfx::material gfx::material_factory::get(const string &material) {
     static material_factory factory;
     return factory.make(material);
 }
 
-material_factory& gfx::material_factory::ambient(color c) {
+gfx::material_factory& gfx::material_factory::ambient(color c) {
     m_material.ambient = c;
     return *this;
 }
 
-material_factory& gfx::material_factory::ambient(float r, float g, float b, float a) {
+gfx::material_factory& gfx::material_factory::ambient(float r, float g, float b, float a) {
     return this->ambient(color(r, g, b, a));
 }
 
-material_factory& gfx::material_factory::diffuse(color c) {
+gfx::material_factory& gfx::material_factory::diffuse(color c) {
     m_material.diffuse = c;
     return  *this;
 }
 
-material_factory& gfx::material_factory::diffuse(float r, float g, float b, float a) {
+gfx::material_factory& gfx::material_factory::diffuse(float r, float g, float b, float a) {
     return this->diffuse(color(r, g, b, a));
 }
 
-material_factory &gfx::material_factory::specular(color c) {
+gfx::material_factory& gfx::material_factory::specular(color c) {
     m_material.specular = c;
     return *this;
 }
 
-material_factory &gfx::material_factory::specular(float r, float g, float b, float a) {
+gfx::material_factory& gfx::material_factory::specular(float r, float g, float b, float a) {
     return this->specular(color(r, g, b, a));
 }
 
-material_factory &gfx::material_factory::emissive(color c) {
+gfx::material_factory& gfx::material_factory::emissive(color c) {
     m_material.emissive = c;
     return *this;
 }
 
-material_factory &gfx::material_factory::emissive(float r, float g, float b, float a) {
+gfx::material_factory& gfx::material_factory::emissive(float r, float g, float b, float a) {
     return this->emissive(color(r, g, b, a));
 }
 
-material_factory &gfx::material_factory::shinniness(float s) {
+gfx::material_factory& gfx::material_factory::shinniness(float s) {
     m_material.shininess = s;
     return *this;
 }
 
-material gfx::material_factory::make(const string & material) {
+gfx::material gfx::material_factory::make(const string & material) {
     auto item = m_materials.find(material);
     if(item != m_materials.end()) {
         return item->second;
@@ -119,7 +119,7 @@ material gfx::material_factory::make(const string & material) {
     return gfx::material();
 }
 
-material gfx::material_factory::build() {
+gfx::material gfx::material_factory::build() {
     return this->m_material;
 }
 
