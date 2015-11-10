@@ -10,7 +10,7 @@ gfx::light::light() : m_id(-1) {
     m_ambient = color::ambient();
     m_diffuse = color::diffuse();
     m_specular = color::specular();
-
+    m_id = m_light_counter++;
     m_directional = false;
     m_constantatt = 1.0;
     m_linearatt = 0.0;
@@ -24,15 +24,20 @@ gfx::light::~light() {
 
 }
 
-void gfx::light::bind(int id) {
+void gfx::light::id(int id) {
     if(id < 0 || id > 7) {
         std::cout << "ERROR: The light bind ID " << id << " is not valid!" << std::endl;
         return;
     }
-    
-    //Set the m_id
     m_id = id;
-    
+}
+
+int gfx::light::id() {
+    return this->m_id;
+}
+
+void gfx::light::bind() {
+
     //Configure the light at the m_id
     glEnable(GL_LIGHT0 + m_id);
     
@@ -60,7 +65,7 @@ void gfx::light::bind(int id) {
     }
 }
 
-void gfx::light::unbind(void) {
+void gfx::light::unbind() {
     glDisable(GL_LIGHT0 + m_id);
     m_id = -1;
 }

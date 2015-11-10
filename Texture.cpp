@@ -22,7 +22,7 @@ gfx::texture::texture(const char* fname) {
     
     //Load image file
     tdata = loadppm(m_filename, twidth, theight);
-    
+
     //If the image wasn't loaded, can't continue
     if(tdata == NULL) {
         return;

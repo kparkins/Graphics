@@ -42,7 +42,7 @@ void gfx::window::displaycb() {
     glPushMatrix();
     glLoadMatrixf(m_camera->inverse_matrix().ptr());
 
-    m_directlight->bind(1);
+    m_directlight->bind();
     m_scene->draw(m_worldscale);
     glPopMatrix();
     glFlush();

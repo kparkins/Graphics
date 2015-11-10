@@ -18,10 +18,11 @@ namespace  gfx {
         light();
         virtual ~light();
 
-        void bind(int);
-        void unbind(void);
+        void id(int id);
+        void bind();
+        void unbind();
 
-
+        int id();
         vec4 position();
         float constant_attenuation();
         float linear_attenuation();
@@ -56,6 +57,10 @@ namespace  gfx {
         vec4 m_position;
 
         int m_id;
+
+    private:
+
+        unsigned int m_light_counter;
 
     };
 

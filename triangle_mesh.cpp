@@ -98,7 +98,7 @@ void gfx::triangle_mesh::flatten() {
     m_numverts = m_interleaved.size() / 9;
 }
 
-void gfx::triangle_mesh::buffer_mesh(){
+void gfx::triangle_mesh::buffer_mesh() {
     int offset = 0;
     int stride = calculate_stride(m_properties);
     glGenVertexArrays(1, &m_vao);
