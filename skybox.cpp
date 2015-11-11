@@ -12,6 +12,9 @@ void gfx::skybox::draw(mat4 & c) {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glMultMatrixf(c.ptr());
+
+    GLboolean lighting;
+    glGetBooleanv(GL_LIGHTING, &lighting);
     glDisable(GL_LIGHTING);
     glEnable(GL_TEXTURE_2D);
 
@@ -83,9 +86,12 @@ void gfx::skybox::draw(mat4 & c) {
     glEnd();
     m_sides[BOTTOM]->unbind();
 
-
     glDisable(GL_TEXTURE_2D);
-    glEnable(GL_LIGHTING);
+
+    if(lighting) {
+        glEnable(GL_LIGHTING);
+    }
+    
     glPopMatrix();
 }
 
