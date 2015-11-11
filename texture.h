@@ -17,7 +17,6 @@ namespace gfx {
     public:
 
         texture();
-        //texture(const char *filename);
         texture(const string & filename);
         virtual ~texture();
 
@@ -25,14 +24,11 @@ namespace gfx {
         void unbind();
         void generate(unsigned char* data, int width, int height);
 
-        //static texture *m_emptytexture;
-
         static unsigned char *loadppm(const char *, int &, int &);
 
     protected:
 
         GLuint m_id;
-      //  const char *m_filename;
 
     };
 
