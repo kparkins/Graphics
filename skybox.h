@@ -37,8 +37,6 @@ namespace gfx {
 
     protected:
 
-        static float m_vertices[72];
-        static float m_texcoords[48];
         vector<texture_ptr> m_sides;
 
     };

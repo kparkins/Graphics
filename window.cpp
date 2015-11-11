@@ -2,27 +2,27 @@
 
 void gfx::window::initialize() {
     m_camera = make_shared<camera>();
-    m_sphere = make_shared<sphere>(1.f, 15, 15);
+    m_sphere = make_shared<sphere>(1.f, 1500, 1500);
     m_cube = make_shared<cube>(1.f);
     m_scene = make_shared<group>();
     m_directlight = make_shared<light>();
     m_pointlight = make_shared<light>();
 
-    vector<string> skybox_images;
-    skybox_images.push_back("img/sorbin/left.ppm");
-    skybox_images.push_back("img/sorbin/front.ppm");
-    skybox_images.push_back("img/sorbin/right.ppm");
-    skybox_images.push_back("img/sorbin/back.ppm");
-    skybox_images.push_back("img/sorbin/top.ppm");
-    skybox_images.push_back("img/sorbin/bottom.ppm");
+    vector<string> skybox_images(6);
+    skybox_images[skybox::LEFT] = "img/sorbin/left.ppm";
+    skybox_images[skybox::FRONT] = "img/sorbin/front.ppm";
+    skybox_images[skybox::RIGHT] = "img/sorbin/right.ppm";
+    skybox_images[skybox::BACK] = "img/sorbin/back.ppm";
+    skybox_images[skybox::TOP] = "img/sorbin/top.ppm";
+    skybox_images[skybox::BOTTOM] = "img/sorbin/bottom.ppm";
     m_skybox.load(skybox_images);
-    m_skyboxtrans.scale(26.f);
-
-//    m_directlight->position(vec4(0.f, 0.f, 40.f, 0.f));
+    m_skyboxtrans.scale(50.f);
 
     m_pointlight->directional(true);
     m_pointlight->angle(180.f);
-    m_pointlight->position(vec4(0.f, 0.f, 0.f, 1.f));
+    m_pointlight->position(vec4(0.f, 0.f, 10.f, 1.f));
+
+    m_scene->add(m_sphere);
 
     m_worldscale.identity();
 }

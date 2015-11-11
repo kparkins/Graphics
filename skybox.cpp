@@ -1,82 +1,5 @@
 #include "skybox.h"
 
-float gfx::skybox::m_vertices[72] = {
-        //left
-        -.5f, .5f, .5f,
-        -.5f, -.5f, .5f,
-        -.5f, -.5f, -.5f,
-        -.5f, .5f, -.5f,
-
-        //front
-        -.5f, .5f, -.5f,
-        -.5f, -.5f, -.5f,
-        .5f, -.5f, -.5f,
-        .5f, .5f, -.5f,
-
-        //right
-        .5f, .5f, -.5f,
-        .5f, -.5f, -.5f,
-        .5f, -.5f, .5f,
-        .5f, .5f, .5f,
-
-        //back
-        .5f, .5f, .5f,
-        .5f, -.5f, .5f,
-        -.5f, -.5f, .5f,
-        -.5f, .5f, .5f,
-
-        //top
-        -.5f, .5f, -.5f,
-        .5f, .5f, -.5f,
-        .5f, .5f, .5f,
-        -.5f, .5f, .5f,
-
-        //bottom
-        -.5f, -.5f, -.5f,
-        -.5f, -.5f, .5f,
-        .5f -5.f, .5f,
-        .5f, -.5f, -.5f
-
-};
-
-float gfx::skybox::m_texcoords[48] = {
-        //left
-        0.f, 1.f,
-        1.f, 1.f,
-        1.f, 0.f,
-        0.f, 0.f,
-
-        //front
-        0.f, 1.f,
-        1.f, 1.f,
-        1.f, 0.f,
-        0.f, 0.f,
-
-        //right
-        0.f, 1.f,
-        1.f, 1.f,
-        1.f, 0.f,
-        0.f, 0.f,
-
-        //back
-        0.f, 1.f,
-        1.f, 1.f,
-        1.f, 0.f,
-        0.f, 0.f,
-
-        //top
-        0.f, 1.f,
-        1.f, 1.f,
-        1.f, 0.f,
-        0.f, 0.f,
-
-        //bottom
-        0.f, 0.f,
-        0.f, 1.f,
-        1.f, 1.f,
-        1.f, 0.f,
-};
-
 gfx::skybox::skybox() {
 
 }
@@ -89,7 +12,9 @@ void gfx::skybox::draw(mat4 & c) {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glMultMatrixf(c.ptr());
+    glDisable(GL_LIGHTING);
     glEnable(GL_TEXTURE_2D);
+
     float halfSize = .5f;
 
     // left
@@ -160,6 +85,7 @@ void gfx::skybox::draw(mat4 & c) {
 
 
     glDisable(GL_TEXTURE_2D);
+    glEnable(GL_LIGHTING);
     glPopMatrix();
 }
 
