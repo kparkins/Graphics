@@ -91,7 +91,7 @@ void gfx::skybox::draw(mat4 & c) {
     if(lighting) {
         glEnable(GL_LIGHTING);
     }
-    
+
     glPopMatrix();
 }
 

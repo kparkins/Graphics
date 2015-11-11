@@ -7,7 +7,25 @@ void gfx::window::initialize() {
     m_scene = make_shared<group>();
     m_directlight = make_shared<light>();
     m_pointlight = make_shared<light>();
+    m_bezierpatch = make_shared<bezier_patch>(100);
 
+    for(int i = 0; i < 4; ++i) {
+        for(int j = 0; j < 4; ++j) {
+            (*m_bezierpatch)[i][j] = vec4(i - 2, j - 2, (i % 2) ? -1.f : 1.f, 1.f);
+        }
+    }
+
+    m_bezierpatch->generate_vertices();
+
+
+    for(size_t i = 0; i < 4; ++i) {
+        for(size_t j = 0; j < 4; ++j) {
+            std::cout << std::setw(2) << (*m_bezierpatch)[j][i].x << " "
+                      << std::setw(2) << (*m_bezierpatch)[j][i].y << " "
+                      << std::setw(2) << (*m_bezierpatch)[j][i].z << " -- ";
+        }
+        std::cout << std::endl;
+    }
     vector<string> skybox_images(6);
     skybox_images[skybox::LEFT] = "img/sorbin/left.ppm";
     skybox_images[skybox::FRONT] = "img/sorbin/front.ppm";
@@ -21,8 +39,6 @@ void gfx::window::initialize() {
     m_pointlight->directional(true);
     m_pointlight->angle(180.f);
     m_pointlight->position(vec4(0.f, 0.f, 10.f, 1.f));
-
-    m_scene->add(m_sphere);
 
     m_worldscale.identity();
 }
@@ -58,6 +74,7 @@ void gfx::window::displaycb() {
     m_directlight->bind();
     m_pointlight->bind();
     m_skybox.draw(m_skyboxtrans);
+    m_bezierpatch->draw(m_worldscale);
     m_scene->draw(m_worldscale);
     glPopMatrix();
     glFlush();

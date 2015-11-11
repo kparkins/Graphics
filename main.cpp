@@ -8,6 +8,7 @@
     #include <GL/glut.h>
 #endif
 
+#include "grid.h"
 #include "window.h"
 
 static gfx::window_ptr main_window;
@@ -74,6 +75,20 @@ int main(int argc, char *argv[]) {
            glGetString(GL_VERSION)    // e.g. 3.2 INTEL-8.0.61
            );
    
+
+    gfx::grid<int> grid(4, 4);
+    for(int i = 0; i < 4; ++i) {
+        for( int j = 0; j < 4; ++j) {
+            grid[i][j] = 4 * i + j;
+        }
+    }
+
+    for(int i = 0; i < 4; ++i) {
+        for( int j = 0; j < 4; ++j) {
+            std::cout << grid[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
 
     main_window->initialize();
     glutMainLoop();

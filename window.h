@@ -19,6 +19,7 @@
 #include "camera.h"
 #include "sphere.h"
 #include "skybox.h"
+#include "bezier_patch.h"
 #include "triangle_mesh.h"
 #include "material_factory.h"
 #include "matrix_transform.h"
@@ -59,6 +60,7 @@ namespace gfx {
         group_ptr m_scene;
         light_ptr m_directlight;
         light_ptr m_pointlight;
+        bezier_patch_ptr m_bezierpatch;
 
         mat4 m_worldscale;
         mat4 m_skyboxtrans;
