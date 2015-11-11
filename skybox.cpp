@@ -107,10 +107,10 @@ void gfx::skybox::draw(mat4 & c) {
     m_sides[FRONT]->bind();
     glBegin(GL_QUADS);
     glNormal3f(0.f, 0.f, 1.f);
-    glTexCoord2f(0, 1); glVertex3f(-halfSize, halfSize, -halfSize);
-    glTexCoord2f(0, 0); glVertex3f(-halfSize, -halfSize, -halfSize);
-    glTexCoord2f(1, 0); glVertex3f(halfSize, -halfSize, -halfSize);
-    glTexCoord2f(1, 1); glVertex3f(halfSize, halfSize, -halfSize);
+    glTexCoord2f(1, 0); glVertex3f(-halfSize, halfSize, -halfSize);
+    glTexCoord2f(1, 1); glVertex3f(-halfSize, -halfSize, -halfSize);
+    glTexCoord2f(0, 1); glVertex3f(halfSize, -halfSize, -halfSize);
+    glTexCoord2f(0, 0); glVertex3f(halfSize, halfSize, -halfSize);
     glEnd();
     m_sides[FRONT]->unbind();
 
@@ -118,9 +118,9 @@ void gfx::skybox::draw(mat4 & c) {
     m_sides[RIGHT]->bind();
     glBegin(GL_QUADS);
     glNormal3f(-1.f, 0.f, 0.f);
-    glTexCoord2f(0, 1); glVertex3f(halfSize, halfSize, -halfSize);
+    glTexCoord2f(1, 0); glVertex3f(halfSize, halfSize, -halfSize);
     glTexCoord2f(1, 1); glVertex3f(halfSize, -halfSize, -halfSize);
-    glTexCoord2f(1, 0); glVertex3f(halfSize, -halfSize, halfSize);
+    glTexCoord2f(0, 1); glVertex3f(halfSize, -halfSize, halfSize);
     glTexCoord2f(0, 0); glVertex3f(halfSize, halfSize, halfSize);
     glEnd();
     m_sides[RIGHT]->unbind();
@@ -129,9 +129,9 @@ void gfx::skybox::draw(mat4 & c) {
     m_sides[BACK]->bind();
     glBegin(GL_QUADS);
     glNormal3f(0.f, 0.f, -1.f);
-    glTexCoord2f(0, 1); glVertex3f(halfSize, halfSize, halfSize);
+    glTexCoord2f(1, 0); glVertex3f(halfSize, halfSize, halfSize);
     glTexCoord2f(1, 1); glVertex3f(halfSize, -halfSize, halfSize);
-    glTexCoord2f(1, 0); glVertex3f(-halfSize, -halfSize, halfSize);
+    glTexCoord2f(0, 1); glVertex3f(-halfSize, -halfSize, halfSize);
     glTexCoord2f(0, 0); glVertex3f(-halfSize, halfSize, halfSize);
     glEnd();
     m_sides[BACK]->unbind();
@@ -140,9 +140,9 @@ void gfx::skybox::draw(mat4 & c) {
     m_sides[TOP]->bind();
     glBegin(GL_QUADS);
     glNormal3f(0.f, -1.f, 0.f);
-    glTexCoord2f(0, 1); glVertex3f(-halfSize, halfSize, -halfSize);
+    glTexCoord2f(1, 0); glVertex3f(-halfSize, halfSize, -halfSize);
     glTexCoord2f(1, 1); glVertex3f(halfSize, halfSize, -halfSize);
-    glTexCoord2f(1, 0); glVertex3f(halfSize, halfSize, halfSize);
+    glTexCoord2f(0, 1); glVertex3f(halfSize, halfSize, halfSize);
     glTexCoord2f(0, 0); glVertex3f(-halfSize, halfSize, halfSize);
     glEnd();
     m_sides[TOP]->unbind();
@@ -151,10 +151,10 @@ void gfx::skybox::draw(mat4 & c) {
     m_sides[BOTTOM]->bind();
     glBegin(GL_QUADS);
     glNormal3f(0.f, 1.f, 0.f);
-    glTexCoord2f(0, 0); glVertex3f(-halfSize, -halfSize, -halfSize);
-    glTexCoord2f(1, 0); glVertex3f(-halfSize, -halfSize, halfSize);
-    glTexCoord2f(1, 1); glVertex3f(halfSize, -halfSize, halfSize);
-    glTexCoord2f(0, 1); glVertex3f(halfSize, -halfSize, -halfSize);
+    glTexCoord2f(1, 1); glVertex3f(-halfSize, -halfSize, -halfSize);
+    glTexCoord2f(0, 1); glVertex3f(-halfSize, -halfSize, halfSize);
+    glTexCoord2f(0, 0); glVertex3f(halfSize, -halfSize, halfSize);
+    glTexCoord2f(1, 0); glVertex3f(halfSize, -halfSize, -halfSize);
     glEnd();
     m_sides[BOTTOM]->unbind();
 
