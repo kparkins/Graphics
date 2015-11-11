@@ -7,62 +7,64 @@
 #endif
 
 
-gfx::texture* gfx::texture::m_emptytexture = new gfx::texture();
+//gfx::texture* gfx::texture::m_emptytexture = new gfx::texture();
 
 gfx::texture::texture() {
     m_id = 0;
-}
-
-gfx::texture::texture(const char* fname) {
-    m_filename = fname;
-    
-    GLuint texture[1];     // storage for one texture
-    int twidth, theight;   // texture m_width/m_height [pixels]
-    unsigned char* tdata;  // texture pixel data
-    
-    //Load image file
-    tdata = loadppm(m_filename, twidth, theight);
-
-    //If the image wasn't loaded, can't continue
-    if(tdata == NULL) {
-        return;
-    }
-    
-    //Create ID for texture
-    glGenTextures(1, &texture[0]);
-    m_id =texture[0];
-    
-    //Set this texture to be the one we are working with
-    glBindTexture(GL_TEXTURE_2D, texture[0]);
-    
-    //Generate the texture
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, twidth, theight, 0, GL_RGB, GL_UNSIGNED_BYTE, tdata);
-    
-    //Make sure no bytes are padded:
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    
-    //Select GL_MODULATE to mix texture with quad m_color for shading:
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    
-    //Use bilinear interpolation:
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    
-    //And unbind it!
-    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 gfx::texture::~texture() {
     //
 }
 
-void gfx::texture::bind(void) {
+void gfx::texture::bind() {
     glBindTexture(GL_TEXTURE_2D, m_id);
 }
 
-void gfx::texture::unbind(void) {
+void gfx::texture::unbind() {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+gfx::texture::texture(const string & filename) {
+    int twidth, theight;   // texture m_width/m_height [pixels]
+    unsigned char* tdata;  // texture pixel data
+
+    //Load image file
+    tdata = loadppm(filename.c_str(), twidth, theight);
+    //tdata = SOIL_load_image(filename.c_str(), &twidth, &theight, 0, SOIL_LOAD_RGB);
+
+    //If the image wasn't loaded, can't continue
+    if(tdata == NULL) {
+        std::cout << "Error loading image -- " << filename << std::endl;
+        return;
+    }
+    this->generate(tdata, twidth, theight);
+}
+void gfx::texture::generate(unsigned char* data, int width, int height) {
+    GLuint texture[1];     // storage for one texture
+    //Create ID for texture
+    glGenTextures(1, &texture[0]);
+    m_id = texture[0];
+    //Set this texture to be the one we are working with
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+
+    //Generate the texture
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+    //Make sure no bytes are padded:
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    //Select GL_MODULATE to mix texture with quad m_color for shading:
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+    //Use bilinear interpolation:
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    //And unbind it!
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 
 /** Load a ppm file from disk.
  @input m_filename The location of the PPM file.  If the file is not found, an error message
@@ -119,6 +121,5 @@ unsigned char* gfx::texture::loadppm(const char* filename, int& width, int& heig
         height = 0;
         return NULL;
     }
-    
     return rawData;
 }

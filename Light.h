@@ -38,6 +38,9 @@ namespace  gfx {
         void direction(const vec3 & lookat);
         void exponent(float exp);
         void directional(bool on);
+        void ambient(color c);
+        void diffuse(color c);
+        void specular(color c);
 
     protected:
 
@@ -60,7 +63,7 @@ namespace  gfx {
 
     private:
 
-        unsigned int m_light_counter;
+        static unsigned int m_light_counter;
 
     };
 

@@ -8,10 +8,23 @@ void gfx::window::initialize() {
     m_directlight = make_shared<light>();
     m_pointlight = make_shared<light>();
 
-    m_directlight->position(vec4(0.f, 0.f, 1.f, 0.f));
+    vector<string> skybox_images;
+    skybox_images.push_back("img/sorbin/left.ppm");
+    skybox_images.push_back("img/sorbin/front.ppm");
+    skybox_images.push_back("img/sorbin/right.ppm");
+    skybox_images.push_back("img/sorbin/back.ppm");
+    skybox_images.push_back("img/sorbin/top.ppm");
+    skybox_images.push_back("img/sorbin/bottom.ppm");
+    m_skybox.load(skybox_images);
+    m_skyboxtrans.scale(26.f);
+
+//    m_directlight->position(vec4(0.f, 0.f, 40.f, 0.f));
+
+    m_pointlight->directional(true);
+    m_pointlight->angle(180.f);
+    m_pointlight->position(vec4(0.f, 0.f, 0.f, 1.f));
 
     m_worldscale.identity();
-    m_scene->add(m_cube);
 }
 
 void gfx::window::idlecb() {
@@ -43,6 +56,8 @@ void gfx::window::displaycb() {
     glLoadMatrixf(m_camera->inverse_matrix().ptr());
 
     m_directlight->bind();
+    m_pointlight->bind();
+    m_skybox.draw(m_skyboxtrans);
     m_scene->draw(m_worldscale);
     glPopMatrix();
     glFlush();

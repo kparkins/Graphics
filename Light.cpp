@@ -6,8 +6,10 @@
     #include <GL/glut.h>
 #endif
 
+unsigned int gfx::light::m_light_counter = 0;
+
 gfx::light::light() : m_id(-1) {
-    m_ambient = color::ambient();
+    m_ambient = color::white();
     m_diffuse = color::diffuse();
     m_specular = color::specular();
     m_id = m_light_counter++;
@@ -124,4 +126,16 @@ float gfx::light::angle() {
 
 float gfx::light::exponent() {
     return m_exponent;
+}
+
+void gfx::light::ambient(color c) {
+    this->m_ambient = c;
+}
+
+void gfx::light::diffuse(color c) {
+    this->m_diffuse = c;
+}
+
+void gfx::light::specular(color c) {
+    this->m_specular = c;
 }

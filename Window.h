@@ -18,6 +18,7 @@
 #include "light.h"
 #include "camera.h"
 #include "sphere.h"
+#include "skybox.h"
 #include "triangle_mesh.h"
 #include "material_factory.h"
 #include "matrix_transform.h"
@@ -51,6 +52,7 @@ namespace gfx {
 
     protected:
 
+        skybox m_skybox;
         geode_ptr m_sphere;
         geode_ptr m_cube;
         camera_ptr m_camera;
@@ -59,6 +61,7 @@ namespace gfx {
         light_ptr m_pointlight;
 
         mat4 m_worldscale;
+        mat4 m_skyboxtrans;
 
         int frame;
         int timebase;
