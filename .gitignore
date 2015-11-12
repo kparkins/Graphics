@@ -1,0 +1,11 @@
+*.o
+cube
+*.DS_Store
+*.suo
+*.sdf
+*.opensdf
+Debug
+*.xcuserstate
+.idea
+*.obj
+objects

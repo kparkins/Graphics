@@ -1,0 +1,20 @@
+* text=auto
+
+*.c text
+*.cpp text
+*.h text
+*.inl text
+*.hpp test
+*.cc text
+
+*.sln text eol=crlf
+
+Debug binary
+*.obj binary
+*.exe binary
+*.pdb binary
+*.idb binary
+*.ilk binary
+*.log binary
+*.lastbuildstate binary
+*.tlog binary
