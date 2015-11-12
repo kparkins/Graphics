@@ -1,5 +1,15 @@
 #include "window.h"
 
+float calculate_z(int j) {
+    j = abs(j);
+    if (j == 1) {
+        return 1.f;
+    } else if(j == 2) {
+        return -1.f;
+    }
+    return 0.f;
+}
+
 void gfx::window::initialize() {
     m_camera = make_shared<camera>();
     m_sphere = make_shared<sphere>(.1f, 1500, 1500);
@@ -13,49 +23,12 @@ void gfx::window::initialize() {
     m_bezierpatch->texture(logo);
     for(int i = 0; i < 4; ++i) {
         for(int j = 0; j < 4; ++j) {
-            (*m_bezierpatch)[i][j] = vec4(i / 4.f, j / 4.f, (abs(i %2)) ? -1.f : 1.f, 1.f);
+            (*m_bezierpatch)[i][j] = vec4(i / 4.f, j / 4.f, calculate_z(j), 1.f);
         }
     }
-    for( int i = 0; i < 4; ++i) {
-        for(int j = 0; j < 4; ++j) {
-            std::cout << (*m_bezierpatch)[i][j].x << " "
-                      << (*m_bezierpatch)[i][j].y << " "
-                      << (*m_bezierpatch)[i][j].z << " | ";
-        }
-        std::cout << std::endl;
-    }
-    /*
-    (*m_bezierpatch)[0][0] = vec4(-.5f, .5f, 0.f, 1.f);
-    (*m_bezierpatch)[1][0] = vec4(-.5f, .25f, 0.f, 1.f);
-    (*m_bezierpatch)[2][0] = vec4(-.5f, -.25f, 0.f, 1.f);
-    (*m_bezierpatch)[3][0] = vec4(-.5f, -.5f, 0.f, 1.f);
 
-    (*m_bezierpatch)[0][1] = vec4(-.25f, .5f, -.5f, 1.f);
-    (*m_bezierpatch)[1][1] = vec4(-.25f, .25f, -.5f, 1.f);
-    (*m_bezierpatch)[2][1] = vec4(-.25f, -.25f, -.5f, 1.f);
-    (*m_bezierpatch)[3][1] = vec4(-.25f, -.5f, -.5f, 1.f);
-
-    (*m_bezierpatch)[0][2] = vec4(.25f, .5f, 0.f, 1.f);
-    (*m_bezierpatch)[1][2] = vec4(.25f, .25f, 0.f, 1.f);
-    (*m_bezierpatch)[2][2] = vec4(.25f, -.25f, 0.f, 1.f);
-    (*m_bezierpatch)[3][2] = vec4(.25f, -.5f, 0.f, 1.f);
-
-    (*m_bezierpatch)[0][3] = vec4(.5f, .5f, -0.5f, 1.f);
-    (*m_bezierpatch)[1][3] = vec4(.5f, .25f, -0.5f, 1.f);
-    (*m_bezierpatch)[2][3] = vec4(.5f, -.25f,-0.5f, 1.f);
-    (*m_bezierpatch)[3][3] = vec4(.5f, -.5f, -0.5f, 1.f);
-*/
     m_bezierpatch->generate();
 
-
-    for(size_t i = 0; i < 4; ++i) {
-        for(size_t j = 0; j < 4; ++j) {
-            std::cout << std::setw(2) << (*m_bezierpatch)[j][i].x << " "
-                      << std::setw(2) << (*m_bezierpatch)[j][i].y << " "
-                      << std::setw(2) << (*m_bezierpatch)[j][i].z << " -- ";
-        }
-        std::cout << std::endl;
-    }
     vector<string> skybox_images(6);
     skybox_images[skybox::LEFT] = "img/sorbin/left.ppm";
     skybox_images[skybox::FRONT] = "img/sorbin/front.ppm";
