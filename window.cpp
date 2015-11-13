@@ -61,9 +61,7 @@ void gfx::window::initialize() {
 void gfx::window::idlecb() {
     frame++;
     time = glutGet(GLUT_ELAPSED_TIME);
-    if(time - timebase > 100) {
         this->update(time - timebase);
-    }
     int fps;
     if (time - timebase > 1000) {
         fps = frame * 1000.0 / (time - timebase);
@@ -101,13 +99,10 @@ void gfx::window::displaycb() {
 void gfx::window::update(float dt) {
     m_time += dt / 100000.f;
     for(int i = 0; i < 4; ++i) {
-        for(int j = 1; j < 4; ++j) {
-            if(j % 2 == 0) {
-                (*m_bezierpatch)[i][j].z = cosf(m_time) ;
-            } else {
-                (*m_bezierpatch)[i][j].z = -cosf(m_time);
-            }
-        }
+        (*m_bezierpatch)[i][1].z = cosf(m_time);
+        (*m_bezierpatch)[i][2].z = cosf(m_time - (M_PI * 90.f / 180.f));
+        (*m_bezierpatch)[i][3].z = cosf(m_time - (M_PI * 180.f / 180.f));
+
     }
     m_bezierpatch->generate();
 }
