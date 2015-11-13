@@ -25,9 +25,12 @@
     #include "glee.h"
 #endif
 
+#include <memory>
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+
+using std::shared_ptr;
 
 /*! Handles GLSL shaders.  It can load the code from a file or read straight
  * from a char array. */
@@ -56,5 +59,7 @@ namespace gfx {
         void setup(const char *vs, const char *fs);
 
     };
+
+    typedef shared_ptr<shader> shader_ptr;
 }
 #endif

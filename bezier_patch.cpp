@@ -7,6 +7,7 @@ gfx::bezier_patch::bezier_patch(size_t fidelity)
           m_normals(fidelity, fidelity),
           m_controlpoints(4, 4),
           m_texcoords(fidelity, fidelity) {
+    m_shader = std::make_shared<shader>("shaders/default.vert", "shaders/default.frag");
 }
 
 gfx::bezier_patch::~bezier_patch() {
@@ -38,7 +39,8 @@ void gfx::bezier_patch::draw(mat4 & c) {
     if (m_texture) {
         m_texture->bind();
     }
-
+    m_shader->bind();
+    glDisable(GL_CULL_FACE);
     glBegin(GL_QUADS);
 
     for(size_t i = 0; i < m_fidelity - 1; ++i) {
@@ -63,7 +65,8 @@ void gfx::bezier_patch::draw(mat4 & c) {
     }
 
     glEnd();
-
+    glEnable(GL_CULL_FACE);
+    m_shader->unbind();
     if(m_texture) {
         m_texture->unbind();
     }

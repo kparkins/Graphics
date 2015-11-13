@@ -25,6 +25,10 @@ namespace gfx {
         void set(vec3 & e, vec3 & d, vec3 & up);
         void set(float fov);
 
+        vec3 e();
+        vec3 d();
+        vec3 up();
+
     protected:
 
         mat4 m_matrix;   //camera Matrix

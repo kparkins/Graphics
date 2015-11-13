@@ -11,6 +11,7 @@ float calculate_z(int j) {
 }
 
 void gfx::window::initialize() {
+    m_prev = vec3(0.f, 0.f, 20.f);
     m_camera = make_shared<camera>();
     m_sphere = make_shared<sphere>(.1f, 1500, 1500);
     m_cube = make_shared<cube>(1.f);
@@ -28,6 +29,16 @@ void gfx::window::initialize() {
     }
 
     m_bezierpatch->generate();
+
+    mat4 scale;
+    mat4 trans;
+    mat4 rot;
+
+    trans.translate(-.5f, -.5f, 0.f);
+    rot.rotatez(M_PI * -90.f/ 180.f);
+    scale.scale(10.f);
+
+    m_beziertrans = scale * rot * trans;
 
     vector<string> skybox_images(6);
     skybox_images[skybox::LEFT] = "img/sorbin/left.ppm";
@@ -74,37 +85,106 @@ void gfx::window::displaycb() {
     glPushMatrix();
     glLoadMatrixf(m_camera->inverse_matrix().ptr());
 
-    mat4 transform;
-    mat4 scale;
-    mat4 trans;
-    mat4 rot;
-
-    trans.translate(-.5f, -.5f, 0.f);
-    rot.rotatez(M_PI * -90.f/ 180.f);
-    scale.scale(5.f);
-
-    transform = scale * rot * trans;
-
-    m_directlight->bind();
     m_pointlight->bind();
     m_skybox.draw(m_skyboxtrans);
-    m_bezierpatch->draw(transform);
-    m_scene->draw(m_worldscale);
+    m_bezierpatch->draw(m_beziertrans);
+
     glPopMatrix();
     glFlush();
     glutSwapBuffers();
 }
 
-void gfx::window::keycb(unsigned char key, int x, int y) {
+void gfx::window::move_camera(gfx::mat4 & m) {
+    vec3 e = m_camera->e();
+    vec3 d = m_camera->d();
+    vec3 up = m_camera->up();
 
+    e = m * e;
+    up = m * up;
+    m_camera->set(e, d, up);
+    reshapecb(m_width, m_height);
+}
+
+void gfx::window::keycb(unsigned char key, int x, int y) {
+    mat4 scale;
+    switch(key) {
+        case 's':
+            scale.scale(.9f);
+            m_worldscale = m_worldscale * scale;
+            m_beziertrans = m_beziertrans * scale;
+            m_skyboxtrans = m_skyboxtrans * scale;
+            break;
+        case 'S':
+            scale.scale(1.1f);
+            m_worldscale = m_worldscale * scale;
+            m_beziertrans = m_beziertrans * scale;
+            m_skyboxtrans = m_skyboxtrans * scale;
+            break;
+        default:
+            break;
+    }
 }
 
 void gfx::window::specialkeycb(int key, int x, int y) {
-
+    mat4 trans;
+    switch (key) {
+        case GLUT_KEY_UP:
+            trans.rotatex(.05f);
+            move_camera(trans);
+            break;
+        case GLUT_KEY_DOWN:
+            trans.rotatex(-.05f);
+            move_camera(trans);
+            break;
+        case GLUT_KEY_LEFT:
+            trans.rotatey(.05f);
+            move_camera(trans);
+            break;
+        case GLUT_KEY_RIGHT:
+            trans.rotatey(-.05f);
+            move_camera(trans);
+            break;
+        default:
+            break;
+    }
 }
 
 void gfx::window::mousebuttoncb(int button, int state, int x, int y) {
 
+}
+
+void gfx::window::mousemotioncb(int x, int y) {
+   /* mat4 rot;
+    vec3 e = m_camera->e();
+    vec3 d = m_camera->d();
+    vec3 up = m_camera->up();
+    vec3 curr = this->convert_coords(x, y);
+    vec3 axis = m_prev.cross(curr);
+    float angle = acosf(curr.dot(m_prev) / (curr.magnitude() * m_prev.magnitude()));
+
+    if(angle < 0.0001f) {
+        return;
+    }
+
+    rot.rotate_arbitrary(axis, angle);
+    e = rot * e;
+    up = rot * up;
+    m_camera->set(e, d, up);
+    m_prev = curr;*/
+}
+
+gfx::vec3 gfx::window::convert_coords(int x, int y) {
+    vec3 v;
+    v.x = (2.f * x - m_width) / m_width;
+    v.y = (m_height - 2.f * y) / m_height;
+    v.z = 0.f;
+    float distance = v.magnitude();
+    if(distance > 1.f) {
+        distance = 1.f;
+    }
+    v.z = sqrtf(1.f - (distance * distance));
+    v.normalize();
+    return v;
 }
 
 int gfx::window::width() {

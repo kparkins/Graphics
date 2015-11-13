@@ -53,3 +53,16 @@ void gfx::camera::set(vec3 & e, vec3 & d, vec3 & up) {
 void gfx::camera::set(float fov) {
     this->m_fov = fov;
 }
+
+gfx::vec3 gfx::camera::e() {
+    return this->m_center;
+}
+
+gfx::vec3 gfx::camera::d() {
+    return this->m_lookat;
+}
+
+gfx::vec3 gfx::camera::up() {
+    return this->m_up;
+}
+

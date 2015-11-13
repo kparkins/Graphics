@@ -43,6 +43,7 @@ namespace gfx {
         void keycb(unsigned char key, int x, int y);
         void specialkeycb(int key, int x, int y);
         void mousebuttoncb(int, int, int, int);
+        void mousemotioncb(int x, int y);
 
         int width();
         int height();
@@ -53,6 +54,12 @@ namespace gfx {
 
     protected:
 
+        void move_camera(mat4 & m);
+        vec3 convert_coords(int x, int y);
+
+        vec3 m_prev;
+        mat4 m_camerarot;
+        mat4 m_beziertrans;
         skybox m_skybox;
         geode_ptr m_sphere;
         geode_ptr m_cube;
