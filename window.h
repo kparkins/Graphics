@@ -54,9 +54,11 @@ namespace gfx {
 
     protected:
 
+        void update(float dt);
         void move_camera(mat4 & m);
         vec3 convert_coords(int x, int y);
 
+        float m_time;
         vec3 m_prev;
         mat4 m_camerarot;
         mat4 m_beziertrans;

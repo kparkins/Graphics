@@ -11,6 +11,7 @@ float calculate_z(int j) {
 }
 
 void gfx::window::initialize() {
+    m_time = 0.f;
     m_prev = vec3(0.f, 0.f, 20.f);
     m_camera = make_shared<camera>();
     m_sphere = make_shared<sphere>(.1f, 1500, 1500);
@@ -24,7 +25,7 @@ void gfx::window::initialize() {
     m_bezierpatch->texture(logo);
     for(int i = 0; i < 4; ++i) {
         for(int j = 0; j < 4; ++j) {
-            (*m_bezierpatch)[i][j] = vec4(i / 4.f, j / 4.f, calculate_z(j), 1.f);
+            (*m_bezierpatch)[i][j] = vec4(i / 4.f, j / 4.f, 0.f, 1.f);
         }
     }
 
@@ -60,6 +61,9 @@ void gfx::window::initialize() {
 void gfx::window::idlecb() {
     frame++;
     time = glutGet(GLUT_ELAPSED_TIME);
+    if(time - timebase > 100) {
+        this->update(time - timebase);
+    }
     int fps;
     if (time - timebase > 1000) {
         fps = frame * 1000.0 / (time - timebase);
@@ -92,6 +96,20 @@ void gfx::window::displaycb() {
     glPopMatrix();
     glFlush();
     glutSwapBuffers();
+}
+
+void gfx::window::update(float dt) {
+    m_time += dt / 100000.f;
+    for(int i = 0; i < 4; ++i) {
+        for(int j = 1; j < 4; ++j) {
+            if(j % 2 == 0) {
+                (*m_bezierpatch)[i][j].z = cosf(m_time) ;
+            } else {
+                (*m_bezierpatch)[i][j].z = -cosf(m_time);
+            }
+        }
+    }
+    m_bezierpatch->generate();
 }
 
 void gfx::window::move_camera(gfx::mat4 & m) {
