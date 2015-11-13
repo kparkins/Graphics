@@ -14,7 +14,6 @@
 #include "vec4.h"
 #include "math.h"
 #include "grid.h"
-#include "shader.h"
 #include "texture.h"
 
 using std::shared_ptr;
@@ -48,7 +47,6 @@ namespace gfx {
         grid<vec4> m_controlpoints;
         grid<vec3> m_texcoords;
 
-        shader_ptr m_shader;
         texture_ptr m_texture;
 
     };

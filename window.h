@@ -19,6 +19,7 @@
 #include "camera.h"
 #include "sphere.h"
 #include "skybox.h"
+#include "shader.h"
 #include "bezier_patch.h"
 #include "triangle_mesh.h"
 #include "material_factory.h"
@@ -59,9 +60,12 @@ namespace gfx {
         vec3 convert_coords(int x, int y);
 
         float m_time;
+        bool m_useshader;
+        bool m_showbezier_right;
         vec3 m_prev;
         mat4 m_camerarot;
         mat4 m_beziertrans;
+        mat4 m_beziertrans_right;
         skybox m_skybox;
         geode_ptr m_sphere;
         geode_ptr m_cube;
@@ -69,7 +73,9 @@ namespace gfx {
         group_ptr m_scene;
         light_ptr m_directlight;
         light_ptr m_pointlight;
+        shader_ptr m_shader;
         bezier_patch_ptr m_bezierpatch;
+        bezier_patch_ptr m_bezierpatch_right;
 
         mat4 m_worldscale;
         mat4 m_skyboxtrans;

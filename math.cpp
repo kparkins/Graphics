@@ -8,3 +8,4 @@ long gfx::math::factorial(unsigned int n) {
     }
     return result;
 }
+

@@ -1,15 +1,5 @@
 #include "window.h"
 
-float calculate_z(int j) {
-    j = abs(j);
-    if (j == 1) {
-        return 1.f;
-    } else if(j == 2) {
-        return -1.f;
-    }
-    return 0.f;
-}
-
 void gfx::window::initialize() {
     m_time = 0.f;
     m_prev = vec3(0.f, 0.f, 20.f);
@@ -20,16 +10,24 @@ void gfx::window::initialize() {
     m_directlight = make_shared<light>();
     m_pointlight = make_shared<light>();
     m_bezierpatch = make_shared<bezier_patch>(100);
+    m_bezierpatch_right = make_shared<bezier_patch>(100);
+    m_shader = std::make_shared<shader>("shaders/default.vert", "shaders/default.frag");
+    m_useshader = false;
+    m_showbezier_right = false;
 
     texture_ptr logo = make_shared<texture>("img/Ucsd-logo.ppm");
     m_bezierpatch->texture(logo);
+    m_bezierpatch_right->texture(logo);
+
     for(int i = 0; i < 4; ++i) {
         for(int j = 0; j < 4; ++j) {
             (*m_bezierpatch)[i][j] = vec4(i / 4.f, j / 4.f, 0.f, 1.f);
+            (*m_bezierpatch_right)[i][j] = vec4(i / 4.f, .738f + (j / 4.f), 0.f, 1.f);
         }
     }
 
     m_bezierpatch->generate();
+    m_bezierpatch_right->generate();
 
     mat4 scale;
     mat4 trans;
@@ -40,6 +38,7 @@ void gfx::window::initialize() {
     scale.scale(10.f);
 
     m_beziertrans = scale * rot * trans;
+    m_beziertrans_right = scale * rot * trans;
 
     vector<string> skybox_images(6);
     skybox_images[skybox::LEFT] = "img/sorbin/left.ppm";
@@ -89,7 +88,20 @@ void gfx::window::displaycb() {
 
     m_pointlight->bind();
     m_skybox.draw(m_skyboxtrans);
+
+    if(m_useshader) {
+        m_shader->bind();
+    }
+
     m_bezierpatch->draw(m_beziertrans);
+
+    if(m_showbezier_right) {
+        m_bezierpatch_right->draw(m_beziertrans_right);
+    }
+
+    if(m_useshader) {
+        m_shader->unbind();
+    }
 
     glPopMatrix();
     glFlush();
@@ -97,14 +109,25 @@ void gfx::window::displaycb() {
 }
 
 void gfx::window::update(float dt) {
-    m_time += dt / 100000.f;
+    m_time += .015f;
     for(int i = 0; i < 4; ++i) {
         (*m_bezierpatch)[i][1].z = cosf(m_time);
-        (*m_bezierpatch)[i][2].z = cosf(m_time - (M_PI * 90.f / 180.f));
-        (*m_bezierpatch)[i][3].z = cosf(m_time - (M_PI * 180.f / 180.f));
-
+        (*m_bezierpatch)[i][2].z = cosf(m_time - math::radians(90.f));
+        (*m_bezierpatch)[i][3].z = cosf(m_time - math::radians(180.f));
     }
+
+    (*m_bezierpatch_right)[0][0].z = (*m_bezierpatch)[0][3].z;
+    (*m_bezierpatch_right)[1][0].z = (*m_bezierpatch)[0][3].z;
+    (*m_bezierpatch_right)[2][0].z = (*m_bezierpatch)[0][3].z;
+    (*m_bezierpatch_right)[3][0].z = (*m_bezierpatch)[0][3].z;
+
+    (*m_bezierpatch_right)[0][1].z = -(*m_bezierpatch)[0][2].z;
+    (*m_bezierpatch_right)[1][1].z = -(*m_bezierpatch)[1][2].z;
+    (*m_bezierpatch_right)[2][1].z = -(*m_bezierpatch)[2][2].z;
+    (*m_bezierpatch_right)[3][1].z = -(*m_bezierpatch)[3][2].z;
+
     m_bezierpatch->generate();
+    m_bezierpatch_right->generate();
 }
 
 void gfx::window::move_camera(gfx::mat4 & m) {
@@ -125,13 +148,21 @@ void gfx::window::keycb(unsigned char key, int x, int y) {
             scale.scale(.9f);
             m_worldscale = m_worldscale * scale;
             m_beziertrans = m_beziertrans * scale;
+            m_beziertrans_right = m_beziertrans_right * scale;
             m_skyboxtrans = m_skyboxtrans * scale;
             break;
         case 'S':
             scale.scale(1.1f);
             m_worldscale = m_worldscale * scale;
             m_beziertrans = m_beziertrans * scale;
+            m_beziertrans_right = m_beziertrans_right * scale;
             m_skyboxtrans = m_skyboxtrans * scale;
+            break;
+        case 'z':
+            m_useshader = !m_useshader;
+            break;
+        case 'x':
+            m_showbezier_right = !m_showbezier_right;
             break;
         default:
             break;
