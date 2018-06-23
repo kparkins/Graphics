@@ -1,5 +1,3 @@
-# CSE 167 Fall 2014 Makefile for Mac OSX 10.9 by Tyler Levine
-# Adapted from Aaron Schwartz' OSX Makefile from Fall 2010
 
 NAME    = cube
 ECHO    = @echo
