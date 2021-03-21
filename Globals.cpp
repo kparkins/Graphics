@@ -1,1 +1,0 @@
-#include "Globals.h"Camera Globals::camera;Light Globals::light;DrawData Globals::drawData;UpdateData Globals::updateData;
