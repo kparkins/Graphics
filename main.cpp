@@ -44,8 +44,9 @@ int main(int argc, char *argv[]) {
     //GLUT and OpenGL Configuration
     glutInit(&argc, argv);                                      //Initialize GLUT
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);   //Open an OpenGL context with double buffering, RGB colors, and depth buffering
+
     glutInitWindowSize(main_window->width(), main_window->height());          //Set initial window m_size
-    glutCreateWindow("UCSD CSE 167 - Project 1 - OpenGL cube"); //Open window and set window title
+    glutCreateWindow("cube"); //Open window and set window title
     
     glEnable(GL_DEPTH_TEST);                                    //Enable depth buffering
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);                               //Clear depth buffer
